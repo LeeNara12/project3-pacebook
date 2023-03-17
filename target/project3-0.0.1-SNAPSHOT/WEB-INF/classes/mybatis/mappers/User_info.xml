@@ -27,7 +27,11 @@
 	
 	<select id='idCheck' parameterType='PaceUserVO' resultType='PaceUserVO'>
 		select * 
+<<<<<<< HEAD
 		from user_info
+=======
+		form user_info
+>>>>>>> 6b0fc72ecfdc742e9ae1e62a2f6312240d543db9
 		where user_name = #{user_name}
 		and user_birth = #{user_birth}
 		and user_phone = #{user_phone}

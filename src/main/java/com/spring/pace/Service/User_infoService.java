@@ -16,9 +16,9 @@ public class User_infoService {
 
 	
 	@Autowired
-	User_infoDAO user_infoDAO;
+	private User_infoDAO user_infoDAO;
 	
-	public boolean login(PaceUserVO vo) {
+	public Map<String, Object> login(PaceUserVO vo) {
 		return user_infoDAO.login(vo);
 	}
 	
@@ -41,6 +41,7 @@ public class User_infoService {
 		return user_infoDAO.getFollowerList(user_no);
 	}
 	public PaceUserVO getUserInfo(int user_no) {
+		System.out.println(" getUserInfo : "+user_infoDAO);
 		return user_infoDAO.getUserInfo(user_no);
 	}
 

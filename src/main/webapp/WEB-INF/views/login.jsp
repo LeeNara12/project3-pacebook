@@ -88,9 +88,9 @@
                 </div>
                 
                 <div id="input_wrap">
-                    <input id="input" name='id' type="text" value='test1' placeholder=" 아이디입력">
+                    <input id="input" name='user_id' type="text" value='test1' placeholder=" 아이디입력">
                     <div class="input">
-                        <input id="input" name='pw' type="password" value='a123456789!' placeholder=" 비밀번호입력">
+                        <input id="input" name='user_pw' type="password" value='a123456789!' placeholder=" 비밀번호입력">
                         <div class="eyes">
                             <i id="icon" class="bi bi-eye-fill"></i>
                         </div>

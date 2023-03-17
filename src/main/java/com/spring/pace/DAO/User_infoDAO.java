@@ -22,28 +22,27 @@ import com.spring.pace.VO.PaceUserVO;
 
 @Repository
 public class User_infoDAO {
-
-	private Connection con;
-	private PreparedStatement pstmt;
-	private DataSource dataFactory;
-
+	
 	@Autowired
 	SqlSession sqlSession;
 
-	public boolean login(PaceUserVO vo) {// 로그인 메소드
+	public Map<String, Object> login(PaceUserVO vo) {// 로그인 메소드
+		Map<String, Object> map = new HashMap<String,Object>();
 		boolean result = false;
 		System.out.println(vo.getUser_id()+ vo.getUser_pw());//null,null
 		
-		List list = sqlSession.selectList("User_infoDAO.login",vo);
-		System.out.println("list.size() == "+list.size());
+		PaceUserVO puvo = sqlSession.selectOne("User_infoDAO.login",vo);
+		map.put("puvo", puvo);
+		System.out.println("puvo : "+puvo);
 		
-		if(list.size() == 1 ) {
+		if(puvo != null ) {
 			result=true;
 		} else {
 			result=false;
 		}
+		map.put("result", result);
 		
-	return result;
+	return map;
 	}
 
 	public boolean join(PaceUserVO vo) {// 회원가입 메소드
@@ -188,12 +187,11 @@ public class User_infoDAO {
 		map.put("user_no", user_no);
 		map.put("pageNum", pageNum);
 		
-		List<PaceUserVO> nfuList = sqlSession.selectList("User_infoDAO.notFollowers", map);
+		List<PaceUserVO> nfuList = sqlSession.selectList("User_infoDAO.notFollowUsers", map);
 		
 		return nfuList;
+	
 	}
-	
-	
 	
 	// 회원가입 성공 페이지에서 랜덤으로 추천친구 보여주기 
 	// 1.DB에서 총 회원수를 가져온다 COUNT 활용

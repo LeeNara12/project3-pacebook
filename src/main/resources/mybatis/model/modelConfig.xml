@@ -9,5 +9,7 @@
 		<typeAlias alias="PaceCmCommentVO" type="com.spring.pace.VO.PaceCmCommentVO"/>
 		<typeAlias alias="PaceCommentVO" type="com.spring.pace.VO.PaceCommentVO"/>
 		<typeAlias alias="PaceUserVO" type="com.spring.pace.VO.PaceUserVO"/>
+		<typeAlias alias="PaceUBVO" type="com.spring.pace.VO.PaceUBVO"/>
+		<typeAlias alias="PaceUCVO" type="com.spring.pace.VO.PaceUCVO"/>
 	</typeAliases>
 </configuration>

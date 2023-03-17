@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.spring.pace.DAO.CommentDAOImpl;
 import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceCommentVO;
+import com.spring.pace.VO.PaceUCVO;
 
 @Service
 public class CommentService {
@@ -35,5 +36,8 @@ public class CommentService {
 		commentDAO.createCmComment(user_no, comment_no, content);
 	}
 	
+	public List<PaceUCVO> showComment(int board_no) {
+		return commentDAO.showComment(board_no);
+	}
 	
 }

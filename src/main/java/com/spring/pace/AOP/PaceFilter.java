@@ -62,22 +62,20 @@ public class PaceFilter extends HttpFilter implements Filter {
 				
 				response.setContentType("text/html;charset=utf-8");
 				
-				if(url.indexOf("/login") != -1
-						|| url.indexOf("/join") != -1
-						|| url.indexOf("/join_success") != -1						
-						|| url.indexOf("/pacebook") != -1
-						|| url.indexOf("/main") != -1
-						|| url.indexOf("/pwFind1") != -1
-						|| url.indexOf("/pwFind2") != -1//나중에 pwFind1이 성공하면 나오는걸로 바꾸기
-						|| url.indexOf("/idFind1") != -1
-						|| url.indexOf("/idFind2") != -1
-						|| url.indexOf("/setting") != -1
-						|| url.indexOf("/profile") != -1
+				if(url.indexOf("/pacebook") != -1
+//						|| url.indexOf("/join") != -1
+//						|| url.indexOf("/join_success") != -1						
+//						|| url.indexOf("/pacebook") != -1
+//						|| url.indexOf("/main") != -1
+//						|| url.indexOf("/pwFind1") != -1
+//						|| url.indexOf("/pwFind2") != -1//나중에 pwFind1이 성공하면 나오는걸로 바꾸기
+//						|| url.indexOf("/idFind1") != -1
+//						|| url.indexOf("/idFind2") != -1
+//						|| url.indexOf("/setting") != -1
+//						|| url.indexOf("/profile") != -1
 				){
 					System.out.println("그냥 통과");
-					System.out.println(12);
 					chain.doFilter(request, response);
-					
 				} else { //위에 선언한 url주소가 아닌 곳에 갈때 세션 확인
 					session = req.getSession(); 
 					String logon = (String) session.getAttribute("logon"); //세션에 로그인한 기록이 있으면 진행 없으면 로그인페이지로 리턴

@@ -54,26 +54,23 @@ public class PaceUserController {
 		return "main";
 	}
 	
-	@RequestMapping(value={"/login.do"})
+	@RequestMapping("/login.do")
 	public String login(
 			HttpServletRequest request, Model model,
-			@RequestParam("id") String id,
-			@RequestParam("pw") String pw,
 			@ModelAttribute PaceUserVO vo
 			) {
 		String page = "";
-		vo.setUser_id(id);
-		vo.setUser_pw(pw);
-		model.addAttribute("vo", vo);
-		if((id.equals("") || id == null) || (pw.equals("") || pw==null)) {
+		if(("".equals(vo.getUser_id()) || vo.getUser_id() == null) || ("".equals(vo.getUser_pw()) || vo.getUser_pw()==null)) {
 			request.setAttribute("logon", "false");
 			System.out.println("아이디나 비밀번호가 입력이 안됨");
 			page = "login";
 		} else {
-			boolean logon = uService.login(vo);//로그인 가능한지 boolean 리턴값으로 받아옴
-			if(logon) {// 로그인 성공했을 경우
+			Map<String, Object> map = uService.login(vo);//로그인 가능한지 boolean 리턴값으로 받아옴
+			if((boolean) map.get("result")) {// 로그인 성공했을 경우
 				HttpSession se = request.getSession();//세션 생성
-				se.setAttribute("user_id", id);// 세션에 값을 넣어줌
+				vo = (PaceUserVO)map.get("puvo");
+				System.out.println(vo.getUser_id()+" , "+vo.getUser_no());
+				se.setAttribute("user_id", vo.getUser_id());// 세션에 값을 넣어줌
 				se.setAttribute("user_no", vo.getUser_no());
 				se.setAttribute("logon", "true");// 로그인이 되었다는걸 세션어트리뷰트에 넣어줌
 				System.out.println("로그인 페이지에서 메인페이지로 이동");

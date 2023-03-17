@@ -10,16 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.pace.Service.BoardService;
 import com.spring.pace.Service.CommentService;
 import com.spring.pace.Service.User_infoService;
 import com.spring.pace.VO.PaceBoardVO;
+import com.spring.pace.VO.PaceUBVO;
+import com.spring.pace.VO.PaceUCVO;
 import com.spring.pace.VO.PaceUserVO;
 
 @Controller
@@ -109,7 +111,8 @@ public class PaceBookController{
 	public String getBoard(
 			HttpServletRequest request
 			) {
-		List<PaceBoardVO> boardList = bService.getBoard(1);
+		List<PaceUBVO> boardList = bService.getBoard(1);
+		//////////////////////////////////
 		request.setAttribute("boardList", boardList);
 		return "main";
 	}
@@ -151,12 +154,15 @@ public class PaceBookController{
 			) {
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");	
+		System.out.println("user_no : "+user_no);
 		PaceUserVO puvo = uService.getUserInfo(user_no);
 		se.setAttribute("puvo", puvo);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
-		List<PaceBoardVO> boardList = bService.getBoard(1);
-		request.setAttribute("boardList", boardList);
+		//////////////////////////
+		List<PaceUBVO> UBList = bService.getBoard(1);
+		request.setAttribute("UBList", UBList);
+		//////////////////////////
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, 1);
 		request.setAttribute("nfuList", nfuList);
 		return "main";
@@ -181,7 +187,7 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("pagenum") int pageNum
 			) {
-		List<PaceBoardVO> boardList = bService.getBoard(pageNum);
+		List<PaceUBVO> boardList = bService.getBoard(pageNum);
 		request.setAttribute("boardList", boardList);
 		return "main";
 	}
@@ -196,5 +202,15 @@ public class PaceBookController{
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, pageNum);
 		request.setAttribute("nfuList", nfuList);
 		return "main";
+	}
+	
+	@RequestMapping(value="/showcomment", method= {RequestMethod.POST})
+	@ResponseBody
+	public List<PaceUCVO> showComment(
+			@RequestParam("board_no") int board_no,
+			HttpServletRequest request
+			) {
+		List<PaceUCVO> UClist = cService.showComment(board_no);
+		return UClist;
 	}
 }
