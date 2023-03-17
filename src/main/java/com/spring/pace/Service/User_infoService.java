@@ -1,6 +1,7 @@
 package com.spring.pace.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class User_infoService {
 	@Autowired
 	User_infoDAO user_infoDAO;
 	
-	public boolean login(PaceUserVO vo) {
+	public Map<String, Object> login(PaceUserVO vo) {
 		return user_infoDAO.login(vo);
 	}
 	

@@ -151,6 +151,7 @@ public class PaceBookController{
 			) {
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");	
+		System.out.println("user_no : "+user_no);
 		PaceUserVO puvo = uService.getUserInfo(user_no);
 		se.setAttribute("puvo", puvo);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
