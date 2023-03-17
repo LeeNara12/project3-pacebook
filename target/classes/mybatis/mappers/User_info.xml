@@ -172,24 +172,26 @@
 	
 	<select id='rFriend' parameterType='int' >
 		SELECT * 
-			from(
-			     SELECT 
-			     	rownum AS rnum,
-			        user_no,
-			        user_profile,
-			        board_url
-			     FROM 
-			     (
-			     	SELECT
-			        	user_no,
-			            user_profile
-			        FROM 
-			        USER_info
-			      )u 
-			      JOIN board b using(user_no)
-			      WHERE user_no = #{_parameter}
-			      )
-			  WHERE rnum < 3	
+		from(
+		     SELECT 
+		     	rownum AS rnum,
+		        user_no,
+		        user_profile,
+		        board_url
+		     FROM 
+		     (
+		     	SELECT
+		        	user_no,
+		            user_profile
+		        FROM 
+		        USER_info
+		      )u 
+		      JOIN board b using(user_no)
+		      WHERE user_no = #{_parameter}
+		      )
+		<![CDATA[
+		WHERE rnum < 3			
+		]]>      
 	
 	</select>
 	
