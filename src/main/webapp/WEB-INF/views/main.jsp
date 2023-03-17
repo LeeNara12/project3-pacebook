@@ -170,10 +170,10 @@
                     <c:forEach var="board" items="${boardList }">
                     <c:set var="curBoard" value="${board }"/>
                     <%
-                    	User_infoService service = new User_infoService();
+                    	User_infoService uService = new User_infoService();
                     	PaceBoardVO curPbvo = (PaceBoardVO) pageContext.getAttribute("curBoard");
                     	int boardUser_no = curPbvo.getUser_no();
-                    	PaceUserVO boardPuvo = service.getUserInfo(boardUser_no);
+                    	PaceUserVO boardPuvo = uService.getUserInfo(boardUser_no);
                     	pageContext.setAttribute("boardPuvo", boardPuvo);
                     %>
                         <li id="board">
@@ -196,7 +196,7 @@
                                 <div id="board_menu_box">
                                     <div id="board_menu_arrow"></div>
                                     <c:if test="${sessionScope.user_no != boardPuvo.user_no}">
-                                        <c:set var="service" value="<%= service %>"/>
+                                        <c:set var="service" value="<%= uService %>"/>
                                         <button class="board_menus board_follow_btn" data-un="${boardPuvo.user_no }">
                                             <c:choose>
                                                 <c:when test="${service.isFollow(sessionScope.user_no, boardPuvo.user_no)}">
@@ -298,7 +298,7 @@
                                     <% 
                                     	PaceCommentVO curPcvo = (PaceCommentVO)pageContext.getAttribute("curComment");
                                     	int cUserNo = curPcvo.getUser_no();
-                                    	PaceUserVO cPuvo = service.getUserInfo(cUserNo);
+                                    	PaceUserVO cPuvo = uService.getUserInfo(cUserNo);
                                     	pageContext.setAttribute("cPuvo", cPuvo);
                                     %>
                                         <li id="comment">
@@ -361,7 +361,7 @@
                                             	<%
 	                                            	PaceCmCommentVO curPccvo = (PaceCmCommentVO)pageContext.getAttribute("curCmComment");
 	                                            	int ccUserNo = curPccvo.getUser_no();
-	                                            	PaceUserVO ccPuvo = service.getUserInfo(ccUserNo);
+	                                            	PaceUserVO ccPuvo = uService.getUserInfo(ccUserNo);
 	                                            	pageContext.setAttribute("ccPuvo", ccPuvo);
                                             	%>
                                                 <li id="c_comment">
