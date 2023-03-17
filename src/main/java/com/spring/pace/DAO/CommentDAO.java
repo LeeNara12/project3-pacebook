@@ -7,29 +7,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import org.springframework.stereotype.Repository;
 
 import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceCommentVO;
 
+@Repository
 public class CommentDAO {
 	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private DataSource dataFactory;
 	
-	public CommentDAO() {
-		try {
-			Context ctx = new InitialContext();
-			Context envContext = (Context)ctx.lookup("java:/comp/env"); //JNDI 사용을 위한 설정
-			dataFactory = (DataSource)envContext.lookup("jdbc/oracle2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+//	public CommentDAO() {
+//		try {
+//			Context ctx = new InitialContext();
+//			Context envContext = (Context)ctx.lookup("java:/comp/env"); //JNDI 사용을 위한 설정
+//			dataFactory = (DataSource)envContext.lookup("jdbc/oracle2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void createComment(int user_no, int board_no,String content) {//댓글 작성 메소드
 		try {

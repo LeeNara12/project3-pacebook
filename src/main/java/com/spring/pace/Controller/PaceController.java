@@ -14,60 +14,97 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.spring.pace.Service.PaceService;
+import com.spring.pace.Service.BoardService;
+import com.spring.pace.Service.CommentService;
+import com.spring.pace.Service.User_infoService;
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUserVO;
 
 @Controller
+@RequestMapping(value="/pacebook")
 public class PaceController{
+	
 	private static final Logger logger = LoggerFactory.getLogger(PaceController.class);
 
 	@Autowired
-	PaceService service;
+	User_infoService uService;
+	
+	@Autowired
+	CommentService cService;
+	
+	@Autowired
+	BoardService bService;
+	
+	
+	@RequestMapping(value="")
+	public String settingPage() {
+		
+		System.out.println("기본페이지로 로그인 페이지 실행");
+		
+		return "login";
+	}
 	
 	@RequestMapping(value="/join_succes.do")
 	public String joinSucces(
 			HttpServletRequest request
 			) {
 		
-		List<PaceUserVO> puvoList = service.a();
+		List<PaceUserVO> puvoList = uService.rNum();
 		request.setAttribute("puvoList", puvoList);
-		List<PaceBoardVO> pbvoList1 = service.getBoard2(puvoList.get(0).getUser_no());
+		List<PaceBoardVO> pbvoList1 = uService.rFriend(puvoList.get(0).getUser_no());
 		request.setAttribute("pbvoList1", pbvoList1);
-		List<PaceBoardVO> pbvoList2 = service.getBoard2(puvoList.get(1).getUser_no());
+		List<PaceBoardVO> pbvoList2 = uService.rFriend(puvoList.get(1).getUser_no());
 		request.setAttribute("pbvoList2", pbvoList2);
 		
 		return "main";
 	}
 	
-	@RequestMapping(value="/login.do")
+	@RequestMapping(value={"/login.do"})
 	public String login(
-			HttpServletRequest request,
+			HttpServletRequest request, Model model,
 			@RequestParam("id") String id,
 			@RequestParam("pw") String pw,
-			@ModelAttribute("vo") 
+			@ModelAttribute PaceUserVO vo
 			) {
-		PaceUserVO vo = new PaceUserVO();
+		
+		System.out.println("login 페이지 진입");
+		String page = "";
+		
 		vo.setUser_id(id);
 		vo.setUser_pw(pw);
+		model.addAttribute("vo", vo);
+		
 		if((id.equals("") || id == null) || (pw.equals("") || pw==null)) {
 			request.setAttribute("logon", "false");
+			System.out.println("아이디나 비밀번호가 입력이 안됨");
+			page = "login";
+			
 		} else {
-			boolean logon = service.login(vo);//로그인 가능한지 boolean 리턴값으로 받아옴
+			boolean logon = uService.login(vo);//로그인 가능한지 boolean 리턴값으로 받아옴
 			if(logon) {// 로그인 성공했을 경우
 				HttpSession se = request.getSession();//세션 생성
 				se.setAttribute("user_id", id);// 세션에 값을 넣어줌
 				se.setAttribute("user_no", vo.getUser_no());
 				se.setAttribute("logon", "true");// 로그인이 되었다는걸 세션어트리뷰트에 넣어줌
+				System.out.println("로그인 페이지에서 메인페이지로 이동");
+				page = "main";
+				
 			} else {// 로그인 실패했을 경우
-				request.setAttribute("logon", "false");// 로그인이 실패했다는걸 request에 넣어줌  
+				request.setAttribute("logon", "false");// 로그인이 실패했다는걸 request에 넣어줌
+				System.out.println("로그인값과 비밀번호값이 존재하지 않는 값임");
+				page = "login";
+				
 			}
 		}
 		
-		return "main";
+		
+		
+		return page;
 	}
 	
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -12,23 +12,26 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.springframework.stereotype.Repository;
+
 import com.spring.pace.VO.PaceBoardVO;
 
+@Repository
 public class BoardDAO {
 	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private DataSource dataFactory;
 	
-	public BoardDAO() {
-		try {
-			Context ctx = new InitialContext();
-			Context envContext = (Context)ctx.lookup("java:/comp/env"); //JNDI 사용을 위한 설정
-			dataFactory = (DataSource)envContext.lookup("jdbc/oracle2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+//	public BoardDAO() {
+//		try {
+//			Context ctx = new InitialContext();
+//			Context envContext = (Context)ctx.lookup("java:/comp/env"); //JNDI 사용을 위한 설정
+//			dataFactory = (DataSource)envContext.lookup("jdbc/oracle2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void createBoard(int user_no, PaceBoardVO pbvo) {//게시글 작성 메소드
 			
