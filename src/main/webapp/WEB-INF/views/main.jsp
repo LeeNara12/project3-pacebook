@@ -167,23 +167,17 @@
             <div id="main_middle">
                 <div id="board_area">
                     <ul id="board_list">
-                    <c:forEach var="board" items="${boardList }">
-                    <c:set var="curBoard" value="${board }"/>
-                    <%
-                    	User_infoService uService = new User_infoService();
-                    	PaceBoardVO curPbvo = (PaceBoardVO) pageContext.getAttribute("curBoard");
-                    	int boardUser_no = curPbvo.getUser_no();
-                    	PaceUserVO boardPuvo = uService.getUserInfo(boardUser_no);
-                    	pageContext.setAttribute("boardPuvo", boardPuvo);
-                    %>
+                    <c:forEach var="UB" items="${UBList }">
+                    <c:set var="curBoard" value="${UB.paceBoardVO }"/>
+                    <c:set var="BoardUser" value="${UB.paceUserVO }"/>
                         <li id="board">
                             <div id="board_top">
                                 <div id="board_top_left">
                                     <div id="board_profile" class="profile_div">
-                                        <img class="profile" src="/${boardPuvo.user_profile }">
+                                        <img class="profile" src="/${BoardUser.user_profile }">
                                     </div>
                                     <div id="board_id">
-                                    	${boardPuvo.user_id }
+                                    	${BoardUser.user_id }
                                     </div>
                                 </div>
                                 <button id="board_menu" class="board_btn">
@@ -195,11 +189,10 @@
                                 </button>
                                 <div id="board_menu_box">
                                     <div id="board_menu_arrow"></div>
-                                    <c:if test="${sessionScope.user_no != boardPuvo.user_no}">
-                                        <c:set var="service" value="<%= uService %>"/>
-                                        <button class="board_menus board_follow_btn" data-un="${boardPuvo.user_no }">
+                                    <c:if test="${sessionScope.user_no != BoardUser.user_no}">
+                                        <button class="board_menus board_follow_btn" data-un="${BoardUser.user_no }">
                                             <c:choose>
-                                                <c:when test="${service.isFollow(sessionScope.user_no, boardPuvo.user_no)}">
+                                                <c:when test="0">
                                                     <span>팔로우 취소</span>
                                                 </c:when>
                                                 <c:otherwise>
@@ -214,7 +207,7 @@
                                 </div>
                             </div>
                             <div id="board_image">
-                                <img class="board_image" src="/${board.board_url }">
+                                <img class="board_image" src="/${curBoard.board_url }">
                             </div>
                             <div id="board_tool">
                                 <div id="board_tool_left">
@@ -251,15 +244,15 @@
                             <div id="board_bottom">
                                 <div id="like_count">
                             	<c:choose>
-                            		<c:when test="${board.board_like != 0 }">
-                                    	<span>좋아요 ${board.board_like }개</span>
+                            		<c:when test="${curBoard.board_like != 0 }">
+                                    	<span>좋아요 ${curBoard.board_like }개</span>
                                    	</c:when>
                                 </c:choose>
                                 </div>
                                 <div class="board_content">
                                     <div class="board_content_text">
                                         <span>
-                                            ${board.board_content }
+                                            ${curBoard.board_content }
                                         </span>
                                     </div>
                                     <span class="show_more_box">
@@ -267,40 +260,28 @@
                                         <span class="show_more_btn">더보기</span>
                                     </span>
                                 </div>
-                                <%
-                                	int curBoard_no = curPbvo.getBoard_no();
-                                	CommentService cService = new CommentService();
-                                	List<PaceCommentVO> commentList = cService.comment(curBoard_no);
-                                	pageContext.setAttribute("commentList", commentList);
-                                %>
                                 <c:choose>
-	                                <c:when test="${commentList.size() != 0}">
+	                                <c:when test="${curBoard.board_comment_cnt != 0}">
 		                                <div id="comment_count">
-		                                	<span class="show_comment" data-bon="${board.board_no }">댓글 ${commentList.size() }개 모두보기</span>
+		                                	<span class="show_comment" data-bon="${curBoard.board_no }">댓글 ${curBoard.board_comment_cnt }개 모두보기</span>
                                 		</div>
 	                                </c:when>
-	                                <c:when test="${commentList.size() == 0}">
+	                                <c:when test="${curBoard.board_comment_cnt == 0}">
 		                                <div id="comment_count">
-		                                	<span class="show_comment" data-bon="${board.board_no }">댓글 달기</span>
+		                                	<span class="show_comment" data-bon="${curBoard.board_no }">댓글 달기</span>
 	                                	</div>
 	                                </c:when>
                                 </c:choose>
                                 <div id="board_time">
                                     <span>
                                     	<c:set var="time" value="<%= new Time() %>"/>
-                                    	${time.calculateTime(board.board_time) }
+                                    	${time.calculateTime(curBoard.board_time) }
                                     </span>
                                 </div>
                                 <div id="board_comment_area">
                                     <ul id="comment_list">
                                     <c:forEach var="comment" items="${commentList }">
                                     <c:set var="curComment" value="${comment }"/>
-                                    <% 
-                                    	PaceCommentVO curPcvo = (PaceCommentVO)pageContext.getAttribute("curComment");
-                                    	int cUserNo = curPcvo.getUser_no();
-                                    	PaceUserVO cPuvo = uService.getUserInfo(cUserNo);
-                                    	pageContext.setAttribute("cPuvo", cPuvo);
-                                    %>
                                         <li id="comment">
                                             <div id="comment_top">
                                                 <div id="board_comment_profile" class="profile_div">
@@ -337,11 +318,6 @@
                                                         <div>
                                                            	<span>좋아요 ${comment.comment_like }개</span>
                                                         </div>
-                                                        <%
-                                                        	int curComment_no = curPcvo.getComment_no();
-                                                        	List<PaceCmCommentVO> cmCommentList = cService.cmComment(curComment_no);
-                                                       		pageContext.setAttribute("cmCommentList", cmCommentList);
-                                                        %>
                                                         <div id="comment_comment">
                                                         	<c:choose>
                                                         		<c:when test="${cmCommentList.size() == 0 }">
@@ -358,12 +334,6 @@
                                             <ul id="c_comment_list">
                                             	<c:forEach var="cmComment" items="${cmCommentList }">
                                             	<c:set var="curCmComment" value="${cmComment }"/>
-                                            	<%
-	                                            	PaceCmCommentVO curPccvo = (PaceCmCommentVO)pageContext.getAttribute("curCmComment");
-	                                            	int ccUserNo = curPccvo.getUser_no();
-	                                            	PaceUserVO ccPuvo = uService.getUserInfo(ccUserNo);
-	                                            	pageContext.setAttribute("ccPuvo", ccPuvo);
-                                            	%>
                                                 <li id="c_comment">
                                                     <span id="c_commet_arrow">└</span>
                                                     <div id="board_comment_profile" class="profile_div">
@@ -404,11 +374,11 @@
                                                                     좋아요 ${cmComment.cmComment_like }개
                                                                 </span>
                                                             </div>
-                                                            <!-- <div id="comment_comment">
+                                                            <div id="comment_comment">
                                                                 <span>
                                                                     답글달기
                                                                 </span>
-                                                            </div> -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </li>

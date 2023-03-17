@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
-    <link rel="stylesheet" href="/project2/css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -64,7 +64,7 @@
 
 </head>
 <body>
-<form action="/project2/pacebook/login" method="post">
+<form action="/pacebook/user/login.do" method="post">
 
     <div id="wrap">
         <div id="logo_wrap">
@@ -74,10 +74,10 @@
             <div id="image_wrap">
                 <div id="slide">
 
-                    <img src="/project2/image/slide1.jpg">
-                    <img src="/project2/image/slide2.jpg">
-                    <img src="/project2/image/slide3.jpg">
-                    <img src="/project2/image/slide4.jpg">
+                    <img src="/image/slide1.jpg">
+                    <img src="/image/slide2.jpg">
+                    <img src="/image/slide3.jpg">
+                    <img src="/image/slide4.jpg">
                  
                 </div>
             </div>
@@ -88,9 +88,9 @@
                 </div>
                 
                 <div id="input_wrap">
-                    <input id="input" name='id' type="text" placeholder=" 아이디입력">
+                    <input id="input" name='user_id' type="text" value='test1' placeholder=" 아이디입력">
                     <div class="input">
-                        <input id="input" name='pw' type="password" placeholder=" 비밀번호입력">
+                        <input id="input" name='user_pw' type="password" value='a123456789!' placeholder=" 비밀번호입력">
                         <div class="eyes">
                             <i id="icon" class="bi bi-eye-fill"></i>
                         </div>

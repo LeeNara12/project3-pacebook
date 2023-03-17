@@ -102,9 +102,7 @@ public class User_infoDAO {
 	
 	//User_infoVO객체 가져와서 vo에 전체 저장
 	public PaceUserVO getUserInfo(int user_no) {// 댓글페이지 여는 메소드//댓글정보들을 가져와서 넘기는 메소드
-		System.out.println(" dao user_no : "+user_no);
 		PaceUserVO vo = sqlSession.selectOne("User_infoDAO.getUserInfo",user_no);
-		System.out.println(" dao vo : "+vo);
 		return vo;
 	}
 	

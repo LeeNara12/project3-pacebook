@@ -11,6 +11,7 @@ public class PaceBoardVO {
 	private int user_no; // 회원넘버
 	private int board_like; // 좋아요 
 	private Date board_modify_time;// 게시글 수정 시간 
+	private int board_comment_cnt;// 댓글 갯수
 	
 	
 	public String getBoard_url() {
@@ -63,6 +64,12 @@ public class PaceBoardVO {
 	}
 	public void setBoard_modify_time(Date board_modify_time) {
 		this.board_modify_time = board_modify_time;
+	}
+	public int getBoard_comment_cnt() {
+		return board_comment_cnt;
+	}
+	public void setBoard_comment_cnt(int board_comment_cnt) {
+		this.board_comment_cnt = board_comment_cnt;
 	}
 	
 }

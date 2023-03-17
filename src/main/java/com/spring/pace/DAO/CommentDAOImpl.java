@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceCommentVO;
+import com.spring.pace.VO.PaceUCVO;
 
 @Repository
 public class CommentDAOImpl implements CommentDAO{
@@ -55,5 +56,12 @@ public class CommentDAOImpl implements CommentDAO{
 		map.put("user_no", user_no);
 		map.put("comment_no", comment_no);
 		sqlSession.insert("CommentDAO.insertCmComment", map);
+	}
+
+	@Override
+	public List<PaceUCVO> showComment(int board_no) {
+		List<PaceUCVO> list = new ArrayList<PaceUCVO>();
+		list = sqlSession.selectList("selectShowComment", board_no);
+		return list;
 	}
 }

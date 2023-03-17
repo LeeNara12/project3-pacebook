@@ -1,5 +1,5 @@
-<%@page import="VO.PaceUserVO"%>
-<%@page import="Service.PaceService"%>
+<%@page import="com.spring.pace.VO.PaceUserVO"%>
+<%@page import="com.spring.pace.Service.User_infoService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -56,10 +56,8 @@
 						<c:if test="${vo1.user_no != vo.user_no }">
 							<a
 								href="/project2/pacebook/profilefollow?user_no=${vo1.user_no }"
-								class="follow"> <%
- PaceService service = new PaceService();
- %>
-								<c:set var="service" value="<%=service%>" /> <c:if
+								class="follow"> <%User_infoService uService = new User_infoService(); %>
+								<c:set var="service" value="<%=uService%>" /> <c:if
 									test="${service.isFollow(vo.user_no,vo1.user_no)==true }">
 						팔로우됨
 						</c:if> <c:if test="${service.isFollow(vo.user_no,vo1.user_no)==false }">

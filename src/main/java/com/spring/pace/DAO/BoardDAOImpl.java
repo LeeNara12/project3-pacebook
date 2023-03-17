@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.pace.VO.PaceBoardVO;
+import com.spring.pace.VO.PaceUBVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -37,8 +38,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<PaceBoardVO> getBoard(int pageNum) {//게시물 가져오는 메소드
-		List<PaceBoardVO> list = new ArrayList<PaceBoardVO>();
+	public List<PaceUBVO> getBoard(int pageNum) {//게시물 가져오는 메소드
+		List<PaceUBVO> list = new ArrayList<PaceUBVO>();
 		list = sqlSession.selectList("BoardDAO.selectBoard", pageNum);
 		return list;
 	}

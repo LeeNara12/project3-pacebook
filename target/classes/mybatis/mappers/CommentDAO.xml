@@ -3,6 +3,36 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CommentDAO">
+
+	<resultMap type="PaceCommentVO" id="rmPaceCommentVO">
+		<result property="comment_no" column="comment_no"/>
+		<result property="comment_time" column="comment_time"/>
+		<result property="comment_content" column="comment_content"/>
+		<result property="user_no" column="user_no"/>
+		<result property="board_no" column="board_no"/>
+		<result property="comment_like" column="comment_like"/>
+		<result property="comment_modify" column="comment_modify"/>
+		<result property="comment_modify_time" column="comment_modify_time"/>
+	</resultMap>
+	<resultMap type="PaceUserVO" id="rmPaceUserVO">
+		<result property="user_no" column="user_no"/>
+		<result property="user_id" column="user_id"/>
+		<result property="user_pw" column="user_pw"/>
+		<result property="user_time" column="user_time"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_email" column="user_email"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="user_profile" column="user_profile"/>
+		<result property="user_birth" column="user_birth"/>
+		<result property="user_gender" column="user_gender"/>
+		<result property="user_board_oc" column="user_board_oc"/>
+		<result property="user_sleep" column="user_sleep"/>
+	</resultMap>
+	<resultMap type="PaceUCVO" id="rmPaceUCVO">
+		<collection property="paceUserVO" resultMap="rmPaceUserVO"/>
+		<collection property="paceBoardVO" resultMap="rmPaceBoardVO"/>
+	</resultMap>
+
 	<insert id="insertBoardComment" parameterType="java.util.HashMap">
 		INSERT INTO board_comment(
 			comment_no, comment_time, comment_content,
@@ -30,4 +60,13 @@
 			user_no, comment_no, cmComment_like, cmComment_modify, cmComment_modify_time)
 		VALUES(seq_cmcomment.nextval, current_date, #{content}, #{user_no}, #{comment_no}, 0, 0, null)
 	</insert>
+	<select id="selectShowComment" parameterType="int" resultMap="rmPaceUCVO">
+		SELECT *
+		from(
+			SELECT * 
+			FROM board_comment
+			WHERE board_no = #{_parameter}
+			ORDER BY comment_time asc
+			) a JOIN user_info b ON (a.user_no = b.user_no)
+	</select>
 </mapper>

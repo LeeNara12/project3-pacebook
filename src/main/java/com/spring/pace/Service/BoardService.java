@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.pace.DAO.BoardDAO;
 import com.spring.pace.VO.PaceBoardVO;
+import com.spring.pace.VO.PaceUBVO;
 
 @Service
 public class BoardService {
@@ -28,7 +29,7 @@ public class BoardService {
 		return boardDAO.search(search_content);
 	}
 	
-	public List<PaceBoardVO> getBoard(int pageNum){
+	public List<PaceUBVO> getBoard(int pageNum){
 		return boardDAO.getBoard(pageNum);
 	}
 	public List<PaceBoardVO> myBoard(int user_no){

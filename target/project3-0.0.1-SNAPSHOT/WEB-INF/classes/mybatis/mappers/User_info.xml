@@ -7,9 +7,208 @@
 	<select id='login' parameterType='PaceUserVO' resultType='PaceUserVO'>
 		select * 
 		from user_info
-		where user_id = #{id}
-		and user_pw = #{pw} 
+		where user_id = #{user_id}
+		and user_pw = #{user_pw} 
 	</select>
+	
+	
+	
+	<select id="join1" parameterType='PaceUserVO' resultType='PaceUserVO'>
+		select *
+		from user_info
+		where user_id = #{user_id}
+	</select>
+	<insert id='join2' parameterType='PaceUserVO' >
+		insert into user_info
+		values(seq_user.nextval, #{user_id}, #{user_pw}, current_date, #{user_name}, #{user_email}, #{user_phone}, 'image/profile.jpg', #{user_birth},#{user_gender}, 0, 0)	
+	</insert>
+	
+	
+	
+	<select id='idCheck' parameterType='PaceUserVO' resultType='PaceUserVO'>
+		select * 
+		form user_info
+		where user_name = #{user_name}
+		and user_birth = #{user_birth}
+		and user_phone = #{user_phone}
+	</select>
+	
+	
+	
+	<select id='pwCheck1' parameterType='PaceUserVO' resultType='PaceUserVO'>
+		select * 
+		form user_info
+		where user_name = #{user_name}
+		and user_id = #{user_id}
+	</select>
+	<update id='pwCheck2' parameterType='java.util.HashMap'>
+		update user_info
+		set user_pw = #{temPW}
+		where user_name = #{vo.user_name}
+		and user_id = #{vo.user_id}
+	</update>
+	
+	
+	
+	
+	<select id='getUserInfo' parameterType='int' resultType='PaceUserVO'>
+		select *
+		from user_info
+		where user_no = #{_parameter}
+	</select>
+	
+	
+	
+	<select id="profile" parameterType='int' resultType='String'>
+		select user_profile
+		from user_info
+		where user_no = #{_parameter}
+	</select>
+	
+	
+	
+	
+	<select id='getFollowList' parameterType='int' resultType='PaceUserVO'>
+		select *
+		from user_info
+		where user_no in 
+		(
+			select follow_u_no
+			from follow_list
+			where user_no = #{_parameter}
+		)
+	</select>
+	
+	
+	
+	
+	<select id='getFollowerList' parameterType='int' resultType='PaceUserVO'>
+		select *
+		from user_info
+		where user_no in
+		(
+			select follower_u_no
+			from follower_list
+			where user_no= #{_parameter} 
+		)
+	</select>
+	
+	
+	
+	<select id="follow1" parameterType='java.util.HashMap' resultType='PaceUserVO'>
+		select *
+		from follow_list
+		where user_no = #{user_no}
+	</select>
+	<delete id="follow2" parameterType='java.util.HashMap'>
+		delete 
+		from follow_list
+		where user_no = #{user_no} and follow_u_no = #{buser_no}
+	</delete>
+	<insert id="follow3" parameterType='java.util.HashMap'>
+		insert into follow_list
+		values(#{user_no}, #{buser_no})
+	</insert>
+	
+	
+	
+	<select id="isFollow" parameterType='java.util.HashMap' resultType='PaceUserVO'>
+		select *
+		from follow_list
+		where user_no = #{user_no}
+		and follow_u_no = #{buser_no}
+	</select>
+	
+	
+	
+	<select id='notFollowUsers' parameterType='java.util.HashMap' resultType='PaceUserVO'>
+		
+		select *
+		from user_info
+		where user_no in
+		(
+			SELECT 
+				user_no
+			FROM(
+				SELECT 
+					rownum,
+					user_no
+				from(
+					SELECT
+						u2.user_no
+					FROM user_info u1 LEFT outer JOIN user_info u2 ON (u1.user_no != u2.user_no)
+					WHERE u1.user_no = #{user_no}
+					minus
+					SELECT
+						follow_u_no
+					FROM follow_list
+					WHERE user_no = #{user_no}
+					)
+			)
+			WHERE rownum BETWEEN (#{pageNum} -1)*20 AND #{pageNum}*20
+		)	
+		
+	</select>
+	
+	
+	
+	<select id='rNum1' resultType='int'>
+		select max(rownum)
+		from user_info
+	</select>
+	<select id='rNum2' parameterType='java.util.HashMap' resultType='PaceUserVO'>
+		
+		select *
+		from
+		(
+			select rownum as rnum, ui.*
+			from user_info ui
+		)
+		where rnum = #{a}
+		or rnum = #{b}
+	</select>
+	
+	
+	
+	<select id='rFriend' parameterType='int' >
+		SELECT * 
+		from(
+		     SELECT 
+		     	rownum AS rnum,
+		        user_no,
+		        user_profile,
+		        board_url
+		     FROM 
+		     (
+		     	SELECT
+		        	user_no,
+		            user_profile
+		        FROM 
+		        USER_info
+		      )u 
+		      JOIN board b using(user_no)
+		      WHERE user_no = #{_parameter}
+		      )
+		<![CDATA[
+		WHERE rnum < 3			
+		]]>      
+	
+	</select>
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>
