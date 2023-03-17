@@ -64,7 +64,7 @@
 
 </head>
 <body>
-<form action="/pacebook/login.do" method="post">
+<form action="/pacebook/user/login.do" method="post">
 
     <div id="wrap">
         <div id="logo_wrap">

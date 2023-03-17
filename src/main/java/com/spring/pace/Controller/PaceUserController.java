@@ -76,7 +76,7 @@ public class PaceUserController {
 				se.setAttribute("user_no", vo.getUser_no());
 				se.setAttribute("logon", "true");// 로그인이 되었다는걸 세션어트리뷰트에 넣어줌
 				System.out.println("로그인 페이지에서 메인페이지로 이동");
-				page = "main";
+				page = "forward:/pacebook/main";
 			} else {// 로그인 실패했을 경우
 				request.setAttribute("logon", "false");// 로그인이 실패했다는걸 request에 넣어줌
 				System.out.println("로그인값과 비밀번호값이 존재하지 않는 값임");
