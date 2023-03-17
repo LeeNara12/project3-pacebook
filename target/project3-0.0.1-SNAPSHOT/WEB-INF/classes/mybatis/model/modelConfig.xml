@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- VO이름들 모음 -->
+		<typeAlias alias="PaceBoardVO" type="com.spring.pace.VO.PaceBoardVO"/>
+		<typeAlias alias="PaceCmCommentVO" type="com.spring.pace.VO.PaceCmCommentVO"/>
+		<typeAlias alias="PaceCommentVO" type="com.spring.pace.VO.PaceCommentVO"/>
+		<typeAlias alias="PaceUserVO" type="com.spring.pace.VO.PaceUserVO"/>
+	</typeAliases>
+</configuration>

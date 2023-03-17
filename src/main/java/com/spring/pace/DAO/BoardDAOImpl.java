@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+<<<<<<< HEAD:src/main/java/com/spring/pace/DAO/BoardDAOImpl.java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -24,11 +25,20 @@ import com.spring.pace.VO.PaceBoardVO;
 public class BoardDAOImpl implements BoardDAOImpl {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardDAOImpl.class);
+=======
+import org.springframework.stereotype.Repository;
+
+import com.spring.pace.VO.PaceBoardVO;
+
+@Repository
+public class BoardDAO {
+>>>>>>> 1a19f5c50e5db310c463fe08c79df785a0a06c78:src/main/java/com/spring/pace/DAO/BoardDAO.java
 	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private DataSource dataFactory;
 	
+<<<<<<< HEAD:src/main/java/com/spring/pace/DAO/BoardDAOImpl.java
 	public BoardDAOImpl() {
 		try {
 			Context ctx = new InitialContext();
@@ -38,6 +48,17 @@ public class BoardDAOImpl implements BoardDAOImpl {
 			e.printStackTrace();
 		}
 	}
+=======
+//	public BoardDAO() {
+//		try {
+//			Context ctx = new InitialContext();
+//			Context envContext = (Context)ctx.lookup("java:/comp/env"); //JNDI 사용을 위한 설정
+//			dataFactory = (DataSource)envContext.lookup("jdbc/oracle2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
+>>>>>>> 1a19f5c50e5db310c463fe08c79df785a0a06c78:src/main/java/com/spring/pace/DAO/BoardDAO.java
 	
 	public void createBoard(int user_no, PaceBoardVO pbvo) {//게시글 작성 메소드
 			

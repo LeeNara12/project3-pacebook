@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="Service.*"
-    import="Algorithm.*"
-    import="VO.*" 
+    import="com.spring.pace.Service.*"
+    import="com.spring.pace.Algorithm.*"
+    import="com.spring.pace.VO.*" 
     import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,13 +14,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pacebook</title>
-    <link rel="stylesheet" href="/project2/css/main.css">
-    <script type="text/javascript" src="/project2/script/main.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <script type="text/javascript" src="/script/main.js"></script>
 </head>
 
 <body>
     <div id="top">
-        <a href="/project2/pacebook/main" id="logo">PACEBOOK</a>
+        <a href="/pacebook/main" id="logo">PACEBOOK</a>
         <div id="top_right">
             <div id="search">
                 <button id="search_btn">
@@ -33,7 +33,7 @@
                 <input id="search_text" type="text">
             </div>
             <div id="top_profile" class="profile_div">
-                <img class="profile" src="/project2/${sessionScope.puvo.user_profile }">
+                <img class="profile" src="/${sessionScope.puvo.user_profile }">
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
         <div id="side">
             <div id="profile_box">
                 <div id="profile" class="profile_div">
-                    <img class="profile" src="/project2/${sessionScope.puvo.user_profile }">
+                    <img class="profile" src="/${sessionScope.puvo.user_profile }">
                 </div>
                 <div id="show_id">
                     <span>${sessionScope.puvo.user_id }</span>
@@ -50,7 +50,7 @@
             <div id="side_tool">
                 <ul>
                     <li id="home_btn" class="side_btn" >
-                        <a href="/project2/pacebook/main" class="side_atag">
+                        <a href="/pacebook/main" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                                 <path
@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li id="profile_btn" class="side_btn">
-                        <a href="/project2/pacebook/profile?user_no=${sessionScope.puvo.user_no }" class="side_atag">
+                        <a href="/pacebook/profile?user_no=${sessionScope.puvo.user_no }" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                                 <path
@@ -92,7 +92,7 @@
                         </div>
                     </li>
                     <li id="make_btn" class="side_btn">
-                        <a href="/project2/pacebook/makeboard" class="side_atag">
+                        <a href="/pacebook/makeboard" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                 <path
@@ -104,7 +104,7 @@
                         </a>
                     </li>
                     <li id="set_btn" class="side_btn">
-                        <a href="/project2/pacebook/setting" class="side_atag">
+                        <a href="/pacebook/setting" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                                 <path
@@ -149,10 +149,10 @@
                 	<c:forEach var="followUser" items="${followList }">
 	                    <li id="pl" data-un="${followUser.user_no}">
 	                        <div class="friend_profile_outline1">
-		                    	<a href="/project2/pacebook/profile?user_no=${followUser.user_no }" class="friend_profile_a">
+		                    	<a href="/pacebook/profile?user_no=${followUser.user_no }" class="friend_profile_a">
 		                           	<div class="friend_profile_outline2">
 		                                <div id="friend_profile" class="profile_div">
-			                            	<img class="profile" src="/project2/${followUser.user_profile }">
+			                            	<img class="profile" src="/${followUser.user_profile }">
 		                     			</div>
 		                            </div>
 		                    	</a>
@@ -170,7 +170,7 @@
                     <c:forEach var="board" items="${boardList }">
                     <c:set var="curBoard" value="${board }"/>
                     <%
-                    	PaceService service = new PaceService();
+                    	User_infoService service = new User_infoService();
                     	PaceBoardVO curPbvo = (PaceBoardVO) pageContext.getAttribute("curBoard");
                     	int boardUser_no = curPbvo.getUser_no();
                     	PaceUserVO boardPuvo = service.getUserInfo(boardUser_no);
@@ -180,7 +180,7 @@
                             <div id="board_top">
                                 <div id="board_top_left">
                                     <div id="board_profile" class="profile_div">
-                                        <img class="profile" src="/project2/${boardPuvo.user_profile }">
+                                        <img class="profile" src="/${boardPuvo.user_profile }">
                                     </div>
                                     <div id="board_id">
                                     	${boardPuvo.user_id }
@@ -214,7 +214,7 @@
                                 </div>
                             </div>
                             <div id="board_image">
-                                <img class="board_image" src="/project2/${board.board_url }">
+                                <img class="board_image" src="/${board.board_url }">
                             </div>
                             <div id="board_tool">
                                 <div id="board_tool_left">
@@ -269,7 +269,8 @@
                                 </div>
                                 <%
                                 	int curBoard_no = curPbvo.getBoard_no();
-                                	List<PaceCommentVO> commentList = service.comment(curBoard_no);
+                                	CommentService cService = new CommentService();
+                                	List<PaceCommentVO> commentList = cService.comment(curBoard_no);
                                 	pageContext.setAttribute("commentList", commentList);
                                 %>
                                 <c:choose>
@@ -303,7 +304,7 @@
                                         <li id="comment">
                                             <div id="comment_top">
                                                 <div id="board_comment_profile" class="profile_div">
-                                                    <img class="profile" src="/project2/${cPuvo.user_profile }">
+                                                    <img class="profile" src="/${cPuvo.user_profile }">
                                                 </div>
                                                 <div>
                                                     <div class="comment_text_box_top">
@@ -338,7 +339,7 @@
                                                         </div>
                                                         <%
                                                         	int curComment_no = curPcvo.getComment_no();
-                                                        	List<PaceCmCommentVO> cmCommentList = service.cmComment(curComment_no);
+                                                        	List<PaceCmCommentVO> cmCommentList = cService.cmComment(curComment_no);
                                                        		pageContext.setAttribute("cmCommentList", cmCommentList);
                                                         %>
                                                         <div id="comment_comment">
@@ -366,7 +367,7 @@
                                                 <li id="c_comment">
                                                     <span id="c_commet_arrow">└</span>
                                                     <div id="board_comment_profile" class="profile_div">
-                                                        <img class="profile" src="/project2/${ccPuvo.user_profile }">
+                                                        <img class="profile" src="/${ccPuvo.user_profile }">
                                                     </div>
                                                     <div>
                                                         <div class="comment_text_box_top">
@@ -417,7 +418,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <form method="post" action="/project2/pacebook/bcomment">
+                                <form method="post" action="/pacebook/bcomment">
                                     <div id="board_comment_box">
                                     	<input id="hidden_board_comment" type="hidden" name="no" value="${board.board_no }">
                                         <input id="board_comment" type="text" name="content">
@@ -432,10 +433,10 @@
                 <ul id="friend_list">
                     <c:forEach var="nfuser" items="${nfuList}">
                     <li id="friend">
-                        <a href="/project2/pacebook/profile?user_no=${nfuser.user_no}" class="friend_box">
+                        <a href="/pacebook/profile?user_no=${nfuser.user_no}" class="friend_box">
                             <div class="friend_profile_outline2">
                                 <div id="right_profile" class="profile_div">
-                                    <img class="profile" src="/project2/${nfuser.user_profile}">
+                                    <img class="profile" src="/${nfuser.user_profile}">
                                 </div>
                             </div>
                             <div id="right_name">
@@ -455,7 +456,7 @@
         <div id="message_room_top">
             <div id="message_room_top1">
                 <div id="target_image" class="profile_div">
-                    <img class="profile" src="http://127.0.0.1:8080/project2/image/slide1.jpg">
+                    <img class="profile" src="http://127.0.0.1:8080/image/slide1.jpg">
                 </div>
                 <div id="target_name">
                     <span>서한수</span>
