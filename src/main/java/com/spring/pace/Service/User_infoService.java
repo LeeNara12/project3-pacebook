@@ -1,10 +1,10 @@
 package com.spring.pace.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import com.spring.pace.DAO.User_infoDAO;
 import com.spring.pace.VO.PaceBoardVO;
@@ -26,7 +26,7 @@ public class User_infoService {
 		return user_infoDAO.join(vo);
 	}
 	
-	public boolean idCheck(PaceUserVO vo) {
+	public Map<String, Object> idCheck(PaceUserVO vo) {
 		return user_infoDAO.idCheck(vo);
 	}
 	

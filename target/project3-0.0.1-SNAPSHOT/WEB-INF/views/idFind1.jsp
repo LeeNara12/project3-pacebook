@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아이디찾기1</title>
-    <link rel="stylesheet" href="/project2/css/idFind1.css">
+    <link rel="stylesheet" href="/css/idFind1.css">
 </head>
 <script>
 	
@@ -126,11 +126,11 @@
         <div id="content">
             <div id="content_wrap">
 
-				<form action='/project2/pacebook/idFind1' method='post'>
+				<form action='/pacebook/user/idFind1' method='post'>
                 <div class="detail_wrap" id="margin_top">
                     <div class="name"> <span class="margin_left2">이름</span> <span class="star">*</span></div>
                     <div class="detail">
-                        <input class="input_text" type="text" name='name'>
+                        <input class="input_text" type="text" name='user_name'>
                     </div>
                 </div>
                 <div class="detail_wrap">
@@ -138,7 +138,7 @@
                         <span class="star">*</span>
                     </div>
                     <div class="detail">
-                        <input class="input_text " type="text" name='birth' id='date' maxlength='10'>
+                        <input class="input_text " type="text" name='user_birth' id='date' maxlength='10'>
                         <span class="margin_left3 " id="warning">유효하지 않은 날짜입니다.</span>
                     </div>
                     <span id="margin_left2">예)19990101</span>
@@ -156,7 +156,7 @@
                 <div id="idFind_wrap">
                     <input id="idFind_btn" type="submit" value="아이디찾기" >
                     <span id="space"></span>
-                    <a id="idFind_btn" href="/project2/login.jsp"><input id="idFind_btn1" type="button" value="로그인하러가기"></a>
+                    <a id="idFind_btn" href="/pacebook/user"><input id="idFind_btn1" type="button" value="로그인하러가기"></a>
                 </div>
 				</form>
 

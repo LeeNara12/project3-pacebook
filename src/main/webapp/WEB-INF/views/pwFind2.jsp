@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호찾기2</title>
-    <link rel="stylesheet" href="/project2/css/pwFind2.css">
+    <link rel="stylesheet" href="/css/pwFind2.css">
 </head>
 <body>
     <div id="wrap">
@@ -23,7 +23,7 @@
             <p>비밀번호를 꼭 수정해주세요.</p>
         </div>
         <div id="btn_wrap">
-            <a href='/project2/login.jsp' class="btn2"><input class="btn" type="button" value="로그인"></a>
+            <a href='/pacebook/user' class="btn2"><input class="btn" type="button" value="로그인"></a>
         </div>
     </div>
 </body>

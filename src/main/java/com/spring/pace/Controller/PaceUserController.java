@@ -1,6 +1,7 @@
 package com.spring.pace.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -86,11 +87,20 @@ public class PaceUserController {
 		return page;
 	}
 	
+	@RequestMapping(value="/join_page")
+	public String join_page() {
+		System.out.println("아이디 찾기 진입");
+		return "join";
+	}
+	
+	
 	@RequestMapping("/join")
 	public String join(
 			@ModelAttribute PaceUserVO vo,
 			HttpServletRequest request
 			) {
+		
+		System.out.println("join메소드 진입");
 		boolean result = uService.join(vo); 
 		if (result) {// 회원가입이 성공했을 때
 			return "join_success";
@@ -100,16 +110,38 @@ public class PaceUserController {
 		    }
 	}
 	
+	@RequestMapping(value="/idFind1_page")
+	public String idFind1_page() {
+		System.out.println("아이디 찾기1 진입");
+		return "idFind1";
+	}
+	
+	
 	@RequestMapping("/idFind1")
 	public String idFind1(
-			@ModelAttribute PaceUserVO vo,
-			@RequestParam("name") String name,
+			@ModelAttribute("vo") PaceUserVO vo,
+			@RequestParam("phone1") String phone1,
+			@RequestParam("phone2") String phone2,
+			@RequestParam("phone3") String phone3,
+			
 			HttpServletRequest request
 			) {
-		boolean check = uService.idCheck(vo);
+	
+		System.out.println("아이디찾기 진입");
+		String phone = phone1 + "-" + phone2 + "-" + phone3;
+		vo.setUser_phone(phone);
+		
+		System.out.println("vo.getUser_phone + "+vo.getUser_phone());
+		System.out.println("vo.getUser_name + "+vo.getUser_name());
+		System.out.println("vo.getUser_birth + "+vo.getUser_birth());
+		
+		Map<String, Object> map = uService.idCheck(vo);
 //		String id = str.replace(str.substring(4),"****");
-		if(check) {
-			String str = vo.getUser_id();
+		boolean result = (boolean)map.get("result");
+		PaceUserVO puvo = (PaceUserVO)map.get("vo");
+		
+		if(result) {
+			String str = puvo.getUser_id();
 			StringBuffer sb = new StringBuffer();
 			sb.append(str.substring(0,4));
 			while(sb.length() < str.length()){
@@ -117,9 +149,10 @@ public class PaceUserController {
 			}
 			String id = sb.toString();
 			System.out.println("idCheck 성공");
-			request.setAttribute("name", name);
+			request.setAttribute("name", vo.getUser_name());
 			request.setAttribute("alert", false);
 			request.setAttribute("id", id);
+			System.out.println("user_id + " +puvo.getUser_id());
 			return "idFind2";
 		}else {
 			System.out.println("idCheck 실패");
@@ -129,22 +162,32 @@ public class PaceUserController {
 		}
 	}
 	
+	@RequestMapping(value="/pwFind1_page")
+	public String pwFind1_page() {
+		System.out.println("비밀번호 찾기 페이지 진입");
+		return "pwFind1";
+	}
+	
 	@RequestMapping("/pwFind1")
 	public String pwFind1(
 			@ModelAttribute PaceUserVO vo,
-			@RequestParam("id") String id,
 			HttpServletRequest request
 			) {
+		
+		System.out.println("비밀번호 찾기 진입111");
+		System.out.println("vo.getUser_id + "+vo.getUser_id());
+		System.out.println("vo.getUser_name + "+vo.getUser_name());
 		boolean check = uService.pwCheck(vo);
+		
 		if(check) {
 			System.out.println("비밀번호는 true");
-			String str = id;
+			String str = vo.getUser_id();
 			StringBuffer sb = new StringBuffer();
 			sb.append(str.substring(0, 4));
 			while(sb.length() < str.length()) {
 				sb.append("*");
 			}
-			id = sb.toString();
+			String id = sb.toString();
 			System.out.println("아이디는 "+id);
 			request.setAttribute("id", id);
 			request.setAttribute("pw", vo.getUser_pw());

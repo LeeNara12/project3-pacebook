@@ -106,9 +106,9 @@
                
                 
                 <div id="detail_wrap">
-                    <a id="detail" href="idFind1.jsp">아이디 찾기</a> |
-                    <a id="detail" href="pwFind1.jsp">비밀번호 찾기</a> |
-                    <a id="detail" href="join.jsp">회원가입</a> 
+                    <a id="detail" href="/pacebook/user/idFind1_page">아이디 찾기</a> |
+                    <a id="detail" href="/pacebook/user/pwFind1_page">비밀번호 찾기</a> |
+                    <a id="detail" href="/pacebook/user/join_page">회원가입</a> 
                 </div>
             </div>
         </div>

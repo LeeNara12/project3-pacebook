@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호찾기1</title>
-    <link rel="stylesheet" href="/project2/css/pwFind1.css">
+    <link rel="stylesheet" href="/css/pwFind1.css">
 </head>
 <script>
 	//page이동되자마자 alert창 띄우기
@@ -20,7 +20,7 @@
 
 <body>
     <div id="wrap">
- 	<form action='/project2/pacebook/pwFind1' method='post'>
+ 	<form action='/pacebook/user/pwFind1' method='post'>
 
         <div id="top_box">
             <span id="margin_left">비밀번호찾기</span>
@@ -32,7 +32,7 @@
                 <div class="detail_wrap" id="margin_top">
                     <div class="name"> <span id="margin_left">이름</span> <span class="star">*</span></div>
                     <div class="detail">
-                        <input class="input_text" type="text" name='name'>
+                        <input class="input_text" type="text" name='user_name'>
                     </div>
                 </div>
                 <div class="detail_wrap" id="border_bottom">
@@ -40,7 +40,7 @@
                         <span class="star">*</span>
                     </div>
                     <div class="detail">
-                        <input class="input_text" type="text" name='id'>
+                        <input class="input_text" type="text" name='user_id'>
                     </div>
                     
                 </div>
@@ -48,7 +48,7 @@
                 <div id="pwFind_wrap">
                     <input id="pwFind_btn" type="submit" value="비밀번호 찾기">
                     <span id="space"></span>
-                    <a id="pwFind_btn" href="/project2/login.jsp"><input id="pwFind_btn1" type="button" value="로그인하러가기"></a>
+                    <a id="pwFind_btn" href="/pacebook/user"><input id="pwFind_btn1" type="button" value="로그인하러가기"></a>
                 </div>
 				
             </div>

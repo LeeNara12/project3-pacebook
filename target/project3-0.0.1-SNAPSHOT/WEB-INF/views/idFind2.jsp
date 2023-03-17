@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>아이디찾기2</title>
-    <link rel="stylesheet" href="/project2/css/idFind2.css">
+    <link rel="stylesheet" href="/css/idFind2.css">
 </head>
 <body>
     <div id="wrap">
@@ -22,9 +22,9 @@
             <p>${id } 입니다.</p>
         </div>
         <div id="btn_wrap">
-            <a class="btn2" href='/project2/login.jsp'><input class="btn" type="button" value="로그인"></a>
+            <a class="btn2" href='/pacebook/user'><input class="btn" type="button" value="로그인"></a>
             <span id="width"></span>
-            <a class="btn2" href='/project2/pwFind1.jsp'><input class="btn" type="button" value="비밀번호찾기"></a>
+            <a class="btn2" href='/pacebook/user/pwFind1_page'><input class="btn" type="button" value="비밀번호찾기"></a>
         </div>
     </div>
 </body>

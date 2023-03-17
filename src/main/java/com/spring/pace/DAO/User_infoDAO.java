@@ -64,20 +64,26 @@ public class User_infoDAO {
 	}
 	
 
-	public boolean idCheck(PaceUserVO vo) {// 아이디찾기 메소드
+	public Map<String , Object> idCheck(PaceUserVO vo) {// 아이디찾기 메소드
+		Map<String , Object> map = new HashMap();
+		
+		System.out.println("idCheck로 진입 + vo 는? "+vo);
 		boolean result = false;
 		List list = sqlSession.selectList("User_infoDAO.idCheck",vo);
 		
 		if(list.size() == 1) {
 			result = true;
+			map.put("result", result);
+			map.put("vo", list.get(0));
 		}
-		return result;
+		return map;
 	}
 	
 	
 
 	public boolean pwCheck(PaceUserVO vo) {// 비밀번호 일치 불일치 메소드
 		boolean result = false;
+		System.out.println("pwCheck메소드 진입");
 		Map map = new HashMap();
 		
 		TemporaryPW tem = new TemporaryPW();
