@@ -12,15 +12,24 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
+import com.spring.ex01.emp.dao.EmpDAO;
+import com.spring.ex01.emp.dao.EmpDAOImpl;
 import com.spring.pace.VO.PaceBoardVO;
 
-public class BoardDAO {
+@Repository
+public class BoardDAOImpl implements BoardDAOImpl {
+	
+	private static final Logger logger = LoggerFactory.getLogger(BoardDAOImpl.class);
 	
 	private Connection con;
 	private PreparedStatement pstmt;
 	private DataSource dataFactory;
 	
-	public BoardDAO() {
+	public BoardDAOImpl() {
 		try {
 			Context ctx = new InitialContext();
 			Context envContext = (Context)ctx.lookup("java:/comp/env"); //JNDI 사용을 위한 설정

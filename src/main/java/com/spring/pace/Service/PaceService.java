@@ -2,7 +2,7 @@ package com.spring.pace.Service;
 
 import java.util.List;
 
-import com.spring.pace.DAO.BoardDAO;
+import com.spring.pace.DAO.BoardDAOImpl;
 import com.spring.pace.DAO.CommentDAO;
 import com.spring.pace.DAO.PaceDAO;
 import com.spring.pace.DAO.User_infoDAO;
@@ -13,7 +13,7 @@ import com.spring.pace.VO.PaceUserVO;
 
 public class PaceService {
 	User_infoDAO user_infoDAO = new User_infoDAO();
-	BoardDAO boardDAO = new BoardDAO();
+	BoardDAOImpl boardDAO = new BoardDAOImpl();
 	CommentDAO commentDAO = new CommentDAO();
 	
 	
