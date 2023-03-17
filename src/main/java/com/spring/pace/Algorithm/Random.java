@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Random {
 
-public Map map(int c) {
+public Map randomFriend(int c) {
 		
 		Map map = new HashMap();
 		
