@@ -46,6 +46,12 @@ public class PaceBookController{
 		return "login";
 	}
 	
+	@RequestMapping("/board_page")
+	public String board_page() {
+		System.out.println("게시판 작성 페이지 실행");
+		return "board";
+	}
+	
 	@RequestMapping("/board")
 	public String board(
 			@ModelAttribute PaceBoardVO pbvo,

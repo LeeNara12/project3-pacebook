@@ -92,7 +92,7 @@
                         </div>
                     </li>
                     <li id="make_btn" class="side_btn">
-                        <a href="/pacebook/makeboard" class="side_atag">
+                        <a href="/pacebook/board_page" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                 <path

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pacebook</title>
-    <link rel="stylesheet" href="/project2/css/board.css">
+    <link rel="stylesheet" href="/css/board.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <script>
@@ -155,15 +155,15 @@
 </head>
 <body>
     <div class="blackLayer"></div>
-    <form action="/project2/pacebook/main" method="post">
+    <form action="/pacebook/main" method="post">
     <div id="top">
-        <a href='/project2/pacebook/main' class='a'><span id="logo">PACEBOOK</span></a>
+        <a href='/pacebook/main' class='a'><span id="logo">PACEBOOK</span></a>
         <div id="top_right">
             <button type="button" id="back_btn" class="top_btn">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
                 </svg>
-                <a href='/project2/pacebook/main' class='a'><span class='btn_text'>뒤로가기</span></a>
+                <a href='/pacebook/main' class='a'><span class='btn_text'>뒤로가기</span></a>
             </button>
             <input type="file" style="display:none" id="input_file" multiple="multiple">
             <button type="button" id="file_upload_btn" class="top_btn">
@@ -187,7 +187,7 @@
                 <div id="profile_box">
                     <div id="profile_top">
                         <div id="profile" class="profile_div">
-                            <img class="profile" id='profile123' src="/project2/photo/인스타감성1.jpg">
+                            <img class="profile" id='profile123' src="/photo/인스타감성1.jpg">
                         </div>
                         <div id="id">
                             <span>user_id</span>
@@ -274,7 +274,7 @@
         </div>
     </div>
     <div id="popup_profile_wrap">
-        <img id="popup_profile" src="/project2/photo/인스타감성1.jpg">
+        <img id="popup_profile" src="/photo/인스타감성1.jpg">
     </div>    
     </form>
 </body>

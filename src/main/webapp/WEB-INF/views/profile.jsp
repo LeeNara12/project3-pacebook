@@ -11,7 +11,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>pacebook</title>
-<link rel="stylesheet" href="/project2/css/profile.css">
+<link rel="stylesheet" href="/css/profile.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@
 	%>
 
 	<div id="top">
-		<div id="logo">PACEBOOK</div>
+		<div id="logo"><a href='/pacebook/main'>PACEBOOK</a></div>
 		<div id="top_right">
 			<div id="search">
 				<button id="search_btn">
@@ -38,7 +38,7 @@
 				<input id="search_text" type="text">
 			</div>
 			<div id="top_profile">
-				<img class="profile" src="/project2/${vo1.user_profile }">
+				<img class="profile" src="/${vo1.user_profile }">
 			</div>
 		</div>
 	</div>
@@ -46,7 +46,7 @@
 		<div id="side">
 			<div id="profile_box">
 				<div id="profile">
-					<img class="profile" src="/project2/${vo.user_profile }">
+					<img class="profile" src="/${vo.user_profile }">
 				</div>
 				<div id="show_id">
 					<span>${vo.user_id }</span>
@@ -55,7 +55,7 @@
 					<div id="followme">
 						<c:if test="${vo1.user_no != vo.user_no }">
 							<a
-								href="/project2/pacebook/profilefollow?user_no=${vo1.user_no }"
+								href="/pacebook/profilefollow?user_no=${vo1.user_no }"
 								class="follow"> <%User_infoService uService = new User_infoService(); %>
 								<c:set var="service" value="<%=uService%>" /> <c:if
 									test="${service.isFollow(vo.user_no,vo1.user_no)==true }">
@@ -74,7 +74,7 @@
 			<div id="side_tool">
 				<ul>
 					<li id="home_btn" class="side_btn"><a
-						href="/project2/pacebook/main" class="side_atag"> <svg
+						href="/pacebook/main" class="side_atag"> <svg
 								class="icon" xmlns="http://www.w3.org/2000/svg" width="22"
 								height="22" fill="currentColor" class="bi bi-house"
 								viewBox="0 0 16 16">
@@ -83,7 +83,7 @@
                             </svg> <span>홈</span>
 					</a></li>
 					<li id="profile_btn" class="side_btn"><a
-						href="/project2/pacebook/profile" class="side_atag"> <svg
+						href="/pacebook/profile" class="side_atag"> <svg
 								class="icon" xmlns="http://www.w3.org/2000/svg" width="22"
 								height="22" fill="currentColor" class="bi bi-person"
 								viewBox="0 0 16 16">
@@ -117,7 +117,7 @@
 						</div>
 					</li>
 					<li id="make_btn" class="side_btn"><a
-						href="/project2/pacebook/makeboard" class="side_atag"> <svg
+						href="/pacebook/makeboard" class="side_atag"> <svg
 								class="icon" xmlns="http://www.w3.org/2000/svg" width="22"
 								height="22" fill="currentColor" class="bi bi-plus-square"
 								viewBox="0 0 16 16">
@@ -128,7 +128,7 @@
                             </svg> <span>만들기</span>
 					</a></li>
 					<li id="set_btn" class="side_btn"><a
-						href="/project2/pacebook/setting" class="side_atag"> <svg
+						href="/pacebook/setting" class="side_atag"> <svg
 								class="icon" xmlns="http://www.w3.org/2000/svg" width="22"
 								height="22" fill="currentColor" class="bi bi-gear"
 								viewBox="0 0 16 16">
@@ -156,7 +156,7 @@
 									<c:forEach var="board" items="${boardList }">
 										<a href="naver"><img
 											style="width: 300px; height: 300px; border-radius: 30px;"
-											src="/project2/${board.board_url }" alt=""></a>
+											src="/${board.board_url }" alt=""></a>
 									</c:forEach>
 								</div>
 							</div>
