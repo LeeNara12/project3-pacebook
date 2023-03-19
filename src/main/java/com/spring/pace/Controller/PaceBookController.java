@@ -1,5 +1,6 @@
 package com.spring.pace.Controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,17 +12,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.pace.Algorithm.Time;
 import com.spring.pace.Service.BoardService;
 import com.spring.pace.Service.CommentService;
 import com.spring.pace.Service.User_infoService;
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUBVO;
 import com.spring.pace.VO.PaceUCVO;
+import com.spring.pace.VO.PaceUCmCVO;
 import com.spring.pace.VO.PaceUserVO;
 
 @Controller
@@ -71,22 +75,22 @@ public class PaceBookController{
 		return "main";
 	}
 	
-	@RequestMapping("/bcomment")
-	public String bComment(
+	@RequestMapping(value="/bcomment", method= {RequestMethod.POST})
+	public void bComment(
 			@RequestParam("no") int board_no,
-			@RequestParam("content") String comment_content,
+			@RequestBody String comment_content,
 			HttpServletRequest request
 			) {
+		System.out.println();
         HttpSession se = request.getSession();
         int user_no = (int)se.getAttribute("user_no");
         cService.createComment(user_no, board_no, comment_content);
-        return "/main";
 	}
 	
 	@RequestMapping("/ccomment")
 	public String cComment(
 			HttpServletRequest request,
-			@RequestParam("content") String content,
+			@RequestBody String content,
 			@RequestParam("no") int comment_no
 			) {
 		HttpSession se = request.getSession();
@@ -118,7 +122,6 @@ public class PaceBookController{
 			HttpServletRequest request
 			) {
 		List<PaceUBVO> boardList = bService.getBoard(1);
-		//////////////////////////////////
 		request.setAttribute("boardList", boardList);
 		return "main";
 	}
@@ -160,15 +163,12 @@ public class PaceBookController{
 			) {
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");	
-		System.out.println("user_no : "+user_no);
 		PaceUserVO puvo = uService.getUserInfo(user_no);
 		se.setAttribute("puvo", puvo);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
-		//////////////////////////
 		List<PaceUBVO> UBList = bService.getBoard(1);
 		request.setAttribute("UBList", UBList);
-		//////////////////////////
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, 1);
 		request.setAttribute("nfuList", nfuList);
 		return "main";
@@ -188,26 +188,30 @@ public class PaceBookController{
 		return "main";
 	}
 	
-	@RequestMapping("/moreboard")
-	public String moreboard(
-			HttpServletRequest request,
+	@RequestMapping(value="/moreboard", method= {RequestMethod.POST})
+	@ResponseBody
+	public List<PaceUBVO> moreboard(
 			@RequestParam("pagenum") int pageNum
 			) {
 		List<PaceUBVO> boardList = bService.getBoard(pageNum);
-		request.setAttribute("boardList", boardList);
-		return "main";
+		for(int i=0; i<boardList.size(); i++) {
+			Date boardTime = boardList.get(i).getPaceBoardVO().getBoard_time();
+			String bt = Time.calculateTime(boardTime);
+			boardList.get(i).getPaceBoardVO().setBoard_time_s(bt);
+		}
+		return boardList;
 	}
 	
-	@RequestMapping("/notfollow")
-	public String notfollow(
+	@RequestMapping(value="/notfollow", method= {RequestMethod.POST})
+	@ResponseBody
+	public List<PaceUserVO> notfollow(
 			HttpServletRequest request,
 			@RequestParam("pagenum") int pageNum
 			) {
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, pageNum);
-		request.setAttribute("nfuList", nfuList);
-		return "main";
+		return nfuList;
 	}
 	
 	@RequestMapping(value="/showcomment", method= {RequestMethod.POST})
@@ -217,6 +221,26 @@ public class PaceBookController{
 			HttpServletRequest request
 			) {
 		List<PaceUCVO> UClist = cService.showComment(board_no);
+		for(int i=0; i<UClist.size(); i++) {
+			Date commentTime = UClist.get(i).getPaceCommentVO().getComment_time();
+			String ct = Time.calculateTime(commentTime);
+			UClist.get(i).getPaceCommentVO().setComment_time_s(ct);
+		}
 		return UClist;
+	}
+	
+	@RequestMapping(value="/showcmcomment", method= {RequestMethod.POST})
+	@ResponseBody
+	public List<PaceUCmCVO> showCmComment(
+			@RequestParam("comment_no") int comment_no,
+			HttpServletRequest request
+			) {
+		List<PaceUCmCVO> UCmClist = cService.showCmComment(comment_no);
+		for(int i=0; i<UCmClist.size(); i++) {
+			Date commentTime = UCmClist.get(i).getPaceCmCommentVO().getCmComment_time();
+			String cmct = Time.calculateTime(commentTime);
+			UCmClist.get(i).getPaceCmCommentVO().setCmComment_time_s(cmct);
+		}
+		return UCmClist;
 	}
 }

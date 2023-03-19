@@ -11,7 +11,21 @@ public class PaceCommentVO {
 	private int comment_like; // 좋아요
 	private int comment_modify; // 
 	private Date comment_modify_time;
+	private int comment_cmc_cnt;
+	private String comment_time_s;
 	
+	public int getComment_cmc_cnt() {
+		return comment_cmc_cnt;
+	}
+	public void setComment_cmc_cnt(int comment_cmc_cnt) {
+		this.comment_cmc_cnt = comment_cmc_cnt;
+	}
+	public String getComment_time_s() {
+		return comment_time_s;
+	}
+	public void setComment_time_s(String comment_time_s) {
+		this.comment_time_s = comment_time_s;
+	}
 	public int getComment_no() {
 		return comment_no;
 	}

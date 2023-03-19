@@ -11,6 +11,7 @@ public class PaceCmCommentVO {
 	private int cmComment_like;
 	private int cmComment_modify;
 	private Date cmComment_modify_time;
+	private String cmComment_time_s;
 	
 	
 	public int getCmComment_no() {
@@ -60,6 +61,12 @@ public class PaceCmCommentVO {
 	}
 	public void setCmComment_modify_time(Date cmComment_modify_time) {
 		this.cmComment_modify_time = cmComment_modify_time;
+	}
+	public String getCmComment_time_s() {
+		return cmComment_time_s;
+	}
+	public void setCmComment_time_s(String cmComment_time_s) {
+		this.cmComment_time_s = cmComment_time_s;
 	}
 	
 	

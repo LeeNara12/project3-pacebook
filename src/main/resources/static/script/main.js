@@ -81,10 +81,9 @@ window.onload = function () {
         return false;
     }
 
-    let cmbArrayB = new Array(); // 게시글 댓글 더보기 버튼 담는 배열
-        let cmbArrayC = new Array(); // 댓글 답글 더보기 버튼 담는 배열
-    function pagingAfter(){
-        // 내용이 길면 더보기 버튼 생기기
+    
+    // 내용이 길면 더보기 버튼 생기기
+    function showMoreBtn() {
         let smx = document.querySelectorAll(".show_more_box");
         smx.forEach(function(box){
             if(box.previousElementSibling.clientWidth >= 255){
@@ -101,8 +100,10 @@ window.onload = function () {
                 }
             }
         })
-        
-        // 게시글 내용, 댓글 더보기 버튼
+    }
+
+    // 게시글 내용, 댓글 더보기 버튼
+    function showMoreBtn2() {
         let moreBtn = document.querySelectorAll(".show_more_btn");
         
         moreBtn.forEach(function(btn){
@@ -111,16 +112,83 @@ window.onload = function () {
                 e.target.parentNode.style.display = "none";
             })
         })
-        
-        //게시글 댓글 모두보기 버튼
+    }
+    
+    let cmbArrayB = new Array(); // 게시글 댓글 더보기 버튼 담는 배열
+    let cmbArrayC = new Array(); // 댓글 답글 더보기 버튼 담는 배열
+    //게시글 댓글 모두보기 버튼
+    function showComment(){
         let bcs = document.querySelectorAll("#comment_top");   
         let cmb = document.querySelectorAll(".show_comment");
         cmb.forEach(function(btn){
             btn.addEventListener("click", function(e){
-                e.target.parentElement.parentElement.lastElementChild.action 
-                = "/project2/pacebook/bcomment";
+    
                 let number = e.target.getAttribute("data-bon");
+                e.target.parentElement.parentElement.lastElementChild.lastElementChild.setAttribute("data-url", "bcomment");
                 if(e.target.innerHTML.indexOf("모두보기") != -1){
+                    let xhr = new XMLHttpRequest();
+                    let nextURL = "/pacebook/showcomment?board_no="+number;
+                    xhr.open("POST", nextURL);
+                    xhr.setRequestHeader('Accept', 'application/json');
+                    xhr.send();
+                    xhr.onload = function(){
+                        let data = JSON.parse(xhr.response);
+                        data.forEach( uc => {
+                            let comment_html = "        <li id='comment'>"
+                            + "        <div id='comment_top'>"
+                            + "            <div id='board_comment_profile' class='profile_div'>"
+                            + "                <img class='profile' src='/"+uc.paceUserVO.user_profile+"'/>"
+                            + "            </div>"
+                            + "            <div>"
+                            + "                <div class='comment_text_box_top'>"
+                            + "                    <div class='comment_id'>"
+                            + "                        <span>"
+                            + "                            "+uc.paceUserVO.user_id
+                            + "                        </span>"
+                            + "                    </div>"
+                            + "                    <div class='comment_time'>"
+                            + "                        <span>"+uc.paceCommentVO.comment_time_s+"</span>"
+                            + "                    </div>"
+                            + "                    <div class='comment_modify'>";
+                            if(uc.paceCommentVO.comment_modify != 0){
+                                comment_html += "<span>(수정됨)</span>"
+                            }
+                            comment_html +="       </div>"
+                            + "                </div>"
+                            + "                <div class='comment_text'>"
+                            + "                    <div class='board_content_text'>"
+                            + "                        <span>"
+                            + "                            "+uc.paceCommentVO.comment_content
+                            + "                        </span>"
+                            + "                    </div>"
+                            + "                    <span class='show_more_box'>"
+                            + "                        <span>... </span>"
+                            + "                        <span class='show_more_btn'>더보기</span>"
+                            + "                    </span>"
+                            + "                </div>"
+                            + "                <div class='comment_text_box_bottom'>"
+                            + "                    <div>"
+                            + "                           <span>좋아요 "+uc.paceCommentVO.comment_like+"개</span>"
+                            + "                    </div>"
+                            + "                    <div id='comment_comment'>";
+                            if(uc.paceCommentVO.comment_cmc_cnt != 0){
+                                comment_html += "<span id='c_comment_btn' data-con='"+uc.paceCommentVO.comment_no+"'>답글 "+uc.paceCommentVO.comment_cmc_cnt+"개 더보기</span>"
+                            } else {
+                                comment_html += "<span id='c_comment_btn' data-con='"+uc.paceCommentVO.comment_no+"'>답글 달기</span>"
+                            }
+                            comment_html += "      </div>"
+                            + "                </div>"
+                            + "            </div>"
+                            + "        </div>"
+                            + "        <ul id='c_comment_list'>"
+                            + "        </ul>"
+                            + "    </li>";
+                            e.target.parentElement.nextElementSibling.nextElementSibling.firstElementChild.innerHTML += comment_html;
+                            showMoreBtn();
+                            showMoreBtn2();
+                            showCmComment();
+                        })
+                    }
                     let cmbObject = {number, bftext: e.target.innerHTML};
                     cmbArrayB = cmbArrayB.filter(e => e.number !== number);
                     cmbArrayB.push(cmbObject);
@@ -132,34 +200,97 @@ window.onload = function () {
                     let curbtn = cmbArrayB.find(e => e.number === number);
                     e.target.innerHTML = curbtn.bftext;
                     e.target.style.color = "black";
+                    e.target.parentElement.nextElementSibling.nextElementSibling.querySelectorAll("#comment").forEach( x => {
+                        x.remove();
+                    })
                     e.target.parentElement.nextElementSibling.nextElementSibling.style.visibility = "hidden";
                     e.target.parentElement.nextElementSibling.nextElementSibling.style.position = "absolute";
                     bcs.forEach((e) => {
                         e.style.backgroundColor = "white";
                     })
                 } else if(e.target.innerHTML == "댓글 달기"){
-                    e.target.parentElement.parentElement.lastElementChild[1].focus();
+                    e.target.parentElement.parentElement.querySelector("#board_comment").focus();
                 }
-                e.target.parentElement.parentElement.lastElementChild.firstElementChild
-                .firstElementChild.value = number;
+                e.target.parentElement.parentElement.lastElementChild.lastElementChild.setAttribute("data-no", number);
             })
         })
-        
-        //답글 달기 버튼 
+    }
+    
+    //답글 달기 버튼
+    function showCmComment(){
+        let bcs = document.querySelectorAll("#comment_top");
         let ccbtn = document.querySelectorAll("#c_comment_btn");
         ccbtn.forEach(function(btn){
             btn.addEventListener("click", function(e){
                 bcs.forEach((e) => {
                     e.style.backgroundColor = "white";
                 })
-                e.target.offsetParent.nextElementSibling.action 
-                = "/project2/pacebook/ccomment";
+                e.target.offsetParent.nextElementSibling.lastElementChild.setAttribute("data-url", "ccomment");
                 let number = e.target.getAttribute("data-con");
                 if(e.target.innerHTML == "답글 달기"){
                     e.target.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = "rgb(230, 230, 230)";
-                    e.target.offsetParent.parentElement.lastElementChild[0].value = number;
+                    e.target.offsetParent.parentElement.lastElementChild.lastElementChild.setAttribute("data-no", number);
                 } else {
                     if(e.target.innerHTML.indexOf("더보기") != -1){
+                        let xhr = new XMLHttpRequest();
+                        let nextURL = "/pacebook/showcmcomment?comment_no="+number;
+                        xhr.open("POST", nextURL);
+                        xhr.setRequestHeader('Accept', 'application/json');
+                        xhr.send();
+                        xhr.onload = function(){
+                            let data = JSON.parse(xhr.response);
+                            data.forEach( ucmc => {
+                                cmComment_html = "<li id='c_comment'>"
+                                + "<span id='c_commet_arrow'>└</span>"
+                                + "<div id='board_comment_profile' class='profile_div'>"
+                                + "    <img class='profile' src='/"+ucmc.paceUserVO.user_profile+"'>"
+                                + "</div>"
+                                + "<div>"
+                                + "    <div class='comment_text_box_top'>"
+                                + "        <div class='comment_id'>"
+                                + "            <span>"
+                                + "                "+ucmc.paceUserVO.user_id
+                                + "            </span>"
+                                + "        </div>"
+                                + "        <div class='comment_time'>"
+                                + "            <span>"+ucmc.paceCmCommentVO.cmComment_time_s+"</span>"
+                                + "        </div>"
+                                + "        <div class='comment_modify'>";
+                                if(ucmc.paceCmCommentVO.cmComment_modify != 0){
+                                    cmComment_html += "            <span>(수정됨)</span>"
+                                }
+                                cmComment_html += "        </div>"
+                                + "    </div>"
+                                + "    <div class='comment_text'>"
+                                + "        <div class='board_content_text cct'>"
+                                + "            <span>"
+                                + "                "+ucmc.paceCmCommentVO.cmComment_content
+                                + "            </span>"
+                                + "        </div>"
+                                + "        <span class='show_more_box'>"
+                                + "            <span>... </span>"
+                                + "            <span class='show_more_btn'>더보기</span>"
+                                + "        </span>"
+                                + "    </div>"
+                                + "    <div class='comment_text_box_bottom'>"
+                                + "        <div>"
+                                + "            <span>"
+                                + "                좋아요 "+ucmc.paceCmCommentVO.cmComment_like+"개"
+                                + "            </span>"
+                                + "        </div>"
+                                + "        <div id='comment_comment'>"
+                                + "            <span>"
+                                + "                답글달기"
+                                + "            </span>"
+                                + "        </div>"
+                                + "    </div>"
+                                + "</div>"
+                                + "</li>";
+                                e.target.offsetParent.querySelector("#c_comment_list").innerHTML += cmComment_html;
+                            })
+                            showMoreBtn();
+                            showMoreBtn2();
+                        }
                         let cmbObject = {number, bftext: e.target.innerHTML};
                         cmbArrayC = cmbArrayC.filter(e => e.number !== number);
                         cmbArrayC.push(cmbObject);
@@ -169,25 +300,28 @@ window.onload = function () {
                         .style.position = "relative";
                         e.target.innerHTML = "답글 닫기";
                         e.target.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = "rgb(230, 230, 230)";
-                        e.target.offsetParent.parentElement.lastElementChild[0].value = number;
+                        e.target.offsetParent.parentElement.lastElementChild.lastElementChild.setAttribute("data-no", number);
                     } else {
+                        e.target.offsetParent.querySelectorAll("#c_comment").forEach( cc => {
+                            cc.remove();
+                        })
                         e.target.parentElement.parentElement.parentElement.parentElement.nextElementSibling
                         .style.visibility = "hidden";
                         e.target.parentElement.parentElement.parentElement.parentElement.nextElementSibling
                         .style.position = "absolute";
                         let curbtn = cmbArrayC.find(e => e.number === number);
                         e.target.innerHTML = curbtn.bftext;
-                        e.target.offsetParent.parentElement.lastElementChild[0].value = 
-                        e.target.offsetParent.parentElement.children[2].firstElementChild.getAttribute("data-bon");
-                        e.target.offsetParent.nextElementSibling.action 
-                        = "/project2/pacebook/bcomment";
+                        e.target.offsetParent.parentElement.lastElementChild.lastElementChild.setAttribute("data-no", 
+                        e.target.offsetParent.parentElement.children[2].firstElementChild.getAttribute("data-bon"));
+                        e.target.offsetParent.nextElementSibling.lastElementChild.setAttribute("data-url", "bcomment");
                     }
                 }
-                // e.target.offsetParent.nextElementSibling.firstElementChild.children[1].focus();
             })
         })
-    
-        // 게시물 오른쪽 탑 메뉴버튼
+    }
+
+    // 게시물 오른쪽 탑 메뉴버튼
+    function boardMenu() {
         let menuBtn =  document.querySelectorAll("#board_menu");
     
         menuBtn.forEach((btn) => {
@@ -199,9 +333,10 @@ window.onload = function () {
                 }
             })
         })
-    
-        // 댓글 아이콘 버튼
-    
+    }
+
+    // 댓글 아이콘 버튼
+    function boardIcon() {
         let bcb = document.querySelectorAll("#board_comment_btn");
     
         bcb.forEach((btn)=>{
@@ -210,10 +345,12 @@ window.onload = function () {
                 btn.parentElement.parentElement.parentElement.querySelector("#board_comment").focus();
             })
         })
+    }
 
-        //게시물 팔로우 버튼
+    //게시물 팔로우 버튼
+    function boardFollow() {
         let boardFollowBtn = document.querySelectorAll(".board_follow_btn");
-
+    
         boardFollowBtn.forEach((btn)=>{
             btn.addEventListener("click", function(){
                 console.log("클릭");
@@ -247,36 +384,36 @@ window.onload = function () {
                 xhr.responseType = "document";
             })
         })
-        
     }
-    pagingAfter();
     
     // 팔로우버튼
-    let followBtns = document.querySelectorAll(".follow_btn");
-
-    followBtns.forEach((btn) =>{
-        btn.addEventListener("click", function(){
-            let xhr = new XMLHttpRequest();
-            let userNo = btn.getAttribute("data-un");
-            xhr.onreadystatechange = function(){
-                if(xhr.readyState == xhr.DONE){
-                    if(xhr.status === 200 || xhr.status === 201){
-                        let data = xhr.response;
-                        let add = data.querySelector("#pl");
-                        document.querySelector("#profile_list").appendChild(add);
-                        btn.parentElement.remove();
-                        oneTime = false;
-                        pagingAfter();
-                    } else {
-                        console.error(xhr.response);
+    function friendFollow(){
+        let followBtns = document.querySelectorAll(".follow_btn");
+    
+        followBtns.forEach((btn) =>{
+            btn.addEventListener("click", function(){
+                let xhr = new XMLHttpRequest();
+                let userNo = btn.getAttribute("data-un");
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == xhr.DONE){
+                        if(xhr.status === 200 || xhr.status === 201){
+                            let data = xhr.response;
+                            let add = data.querySelector("#pl");
+                            document.querySelector("#profile_list").appendChild(add);
+                            btn.parentElement.remove();
+                            oneTime = false;
+                            pagingAfter();
+                        } else {
+                            console.error(xhr.response);
+                        }
                     }
                 }
-            }
-            xhr.open("get", "/project2/pacebook/follow?user_no="+userNo);
-            xhr.send();
-            xhr.responseType = "document";
+                xhr.open("get", "/project2/pacebook/follow?user_no="+userNo);
+                xhr.send();
+                xhr.responseType = "document";
+            })
         })
-    })
+    }
 
 
     // 페이징
@@ -300,82 +437,183 @@ window.onload = function () {
     function madeBoard(){
         let xhr = new XMLHttpRequest();
         pagenum = Math.ceil(boardCount/5)+1;
-        nextURL = "/project2/pacebook/moreboard?pagenum="+pagenum;
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState == xhr.DONE){
-                if(xhr.status === 200 || xhr.status === 201){
-                    let data = xhr.response;
-                    let addList = data.querySelectorAll("#board");
-                    for(let i=0; i<addList.length; i++){
-                        boardList.appendChild(addList[i]);
+        nextURL = "/pacebook/moreboard?pagenum="+pagenum;
+        xhr.open("POST", nextURL);
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.send();
+        xhr.onload = function(){
+            let data = JSON.parse(xhr.response);
+            if(data.length != 0){
+                data.forEach( e => {
+                    let board_html = "<li id='board'>"
+                    + "<div id='board_top'>"
+                    + "    <div id='board_top_left'>"
+                    + "        <div id='board_profile' class='profile_div'>"
+                    + "            <img class='profile' src='/"+e.paceUserVO.user_profile+"'>"
+                    + "        </div>"
+                    + "        <div id='board_id'>"
+                    + "            "+e.paceUserVO.user_id
+                    + "        </div>"
+                    + "    </div>"
+                    + "    <button id='board_menu' class='board_btn'>"
+                    + "        <svg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='currentColor' class='bi bi-list' viewBox='0 0 16 16'>"
+                    + "            <path fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z'></path>"
+                    + "        </svg>"
+                    + "    </button>"
+                    + "    <div id='board_menu_box'>"
+                    + "        <div id='board_menu_arrow'></div>"
+                    + "        <button class='board_menus'>"
+                    + "            게시글 상세보기"
+                    + "        </button>"
+                    + "    </div>"
+                    + "</div>"
+                    + "<div id='board_image'>"
+                    + "    <img class='board_image' src='"+e.paceBoardVO.board_url+"'>"
+                    + "</div>"
+                    + "<div id='board_tool'>"
+                    + "    <div id='board_tool_left'>"
+                    + "        <button id='board_like_btn' class='board_btn'>"
+                    + "            <svg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='currentColor' class='bi bi-heart' viewBox='0 0 16 16'>"
+                    + "                <path d='m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'></path>"
+                    + "            </svg>"
+                    + "        </button>"
+                    + "        <button id='board_comment_btn' class='board_btn'>"
+                    + "            <svg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='currentColor' class='bi bi-chat' viewBox='0 0 16 16'>"
+                    + "                <path d='M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z'></path>"
+                    + "            </svg>"
+                    + "        </button>"
+                    + "        <button id='board_share_btn' class='board_btn'>"
+                    + "            <svg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='currentColor' class='bi bi-send' viewBox='0 0 16 16'>"
+                    + "                <path d='M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z'></path>"
+                    + "            </svg>"
+                    + "        </button>"
+                    + "    </div>"
+                    + "    <button id='board_save_btn' class='board_btn'>"
+                    + "        <svg xmlns='http://www.w3.org/2000/svg' width='29' height='29' fill='currentColor' class='bi bi-bookmark' viewBox='0 0 16 16'>"
+                    + "            <path d='M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z'></path>"
+                    + "        </svg>"
+                    + "    </button>"
+                    + "</div>"
+                    + "<div id='board_bottom'>"
+                    + "    <div id='like_count'>";
+                    if(e.paceBoardVO.board_like != 0){
+                        board_html += "좋아요 "+e.paceBoardVO.board_like+"개"
                     }
-                    oneTime = false;
-                    boardCount = document.querySelectorAll("#board").length; 
-                    pagingAfter();
-                } else {
-                    console.error(xhr.response);
-                }
+                    board_html += "    </div>"
+                    + "    <div class='board_content'>"
+                    + "        <div class='board_content_text'>"
+                    + "            <span>"
+                    + "                "+e.paceBoardVO.board_content
+                    + "            </span>"
+                    + "        </div>"
+                    + "        <span class='show_more_box' style='display: none;'>"
+                    + "            <span>... </span>"
+                    + "            <span class='show_more_btn'>더보기</span>"
+                    + "        </span>"
+                    + "    </div>"
+                    + "            <div id='comment_count'>";
+                    if(e.paceBoardVO.board_comment_cnt == 0){
+                        board_html += "<span class='show_comment' data-bon='"+e.paceBoardVO.board_no+"'>댓글 달기</span>";
+                    } else {
+                        board_html += " <span class='show_comment' data-bon='"+e.paceBoardVO.board_no+"'>댓글 "+e.paceBoardVO.board_comment_cnt+"개 모두보기</span>";
+                    }
+                    board_html += "            </div>"
+                    + "    <div id='board_time'>"
+                    + "        <span>"
+                    + "            "+e.paceBoardVO.board_time_s
+                    + "        </span>"
+                    + "    </div>"
+                    + "    <div id='board_comment_area'>"
+                    + "        <ul id='comment_list'></ul>"
+                    + "    </div>"
+                    + "    <div id='board_comment_box'>"
+                    + "        <textarea id='board_comment' name='content'></textarea>"
+                    + "        <button id='comment_btn' data-no='"+e.paceBoardVO.board_no+"' data-url='bcomment'>게시</button>"
+                    + "    </div>"
+                    + "</div>"
+                    + "</li>";
+                    document.querySelector("#board_list").innerHTML += board_html;
+                })
+                oneTime = false;
+                boardCount = document.querySelectorAll("#board").length; 
+                pagingAfter();
+            } else {
+                oneTime = true;
             }
         }
-        xhr.open("get", nextURL);
-        xhr.send();
-        xhr.responseType = "document";
     }
 
     // 추천친구목록 페이징
     let friendList = document.querySelector("#friend_list");
+    let friendArea = document.querySelector("#friend_area");
     let friendCount = document.querySelectorAll("#friend").length;
-    
-    document.querySelector("#friend_list").addEventListener("scroll", nfulScroll);
+    let twoTime = false;
+
+    document.querySelector("#friend_area").addEventListener("scroll", nfulScroll);
 
     function nfulScroll(){
         let flHeight = friendList.clientHeight;
-        let scrollPosition = friendList.scrollTop;
-        if(flHeight-100 <= scrollPosition && !oneTime && friendCount%20 == 0){
-            oneTime = true;
+        let scrollPosition = friendArea.scrollTop;
+        if(flHeight-screenHeight <= scrollPosition && !twoTime && friendCount%20 == 0){
+            twoTime = true;
             madefriend();
         }
     }
     function madefriend(){
         let xhr = new XMLHttpRequest();
         pagenum = Math.ceil(friendCount/20)+1;
-        nextURL = "/project2/pacebook/notfollow?pagenum="+pagenum;
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState == xhr.DONE){
-                if(xhr.status === 200 || xhr.status === 201){
-                    let data = xhr.response;
-                    let addList = data.querySelectorAll("#friend");
-                    for(let i=0; i<addList.length; i++){
-                        friendList.appendChild(addList[i]);
-                    }
-                    oneTime = false;
-                    friendCount = document.querySelectorAll("#friend").length; 
-                    pagingAfter();
-                } else {
-                    console.error(xhr.response);
-                }
+        nextURL = "/pacebook/notfollow?pagenum="+pagenum;
+        xhr.open("POST", nextURL);
+        xhr.setRequestHeader("Accept", "application/json")
+        xhr.send();
+        xhr.onload = function(){
+            let data = JSON.parse(xhr.response);
+            if(data.length != 0){
+                data.forEach( e => {
+                    let friend_html = document.querySelector("#friend").cloneNode(true);
+                    friend_html.querySelector("#right_profile > img").src = "/"+e.user_profile;//프로필
+                    friend_html.querySelector("#right_name > span").innerHTML = e.user_id;//아이디
+                    friend_html.querySelector("#friend > a").href = "/pacebook/profile?user_no="+e.user_no;//프로필 페이지 주소
+                    friend_html.querySelector("#friend > button").setAttribute("data-un", e.user_no);
+                    document.querySelector("#friend_list").append(friend_html);
+                })
+                twoTime = false;
+                friendCount = document.querySelectorAll("#friend").length; 
+                friendFollow();
+            } else {
+                twoTime = true;
             }
         }
-        xhr.open("get", nextURL);
-        xhr.send();
-        xhr.responseType = "document";
     }
 
-    // let commentBtns = document.querySelectorAll("#comment_btn");
+    function commentText(){
+        let cb = document.querySelectorAll("#comment_btn");
+        cb.forEach( btn => {
+            btn.addEventListener("click", e => {
+                let content = { content: e.target.previousElementSibling.value};
+                let no = e.target.getAttribute("data-no");
+                let xhr = new XMLHttpRequest();
+                let url = "/pacebook/"+e.target.getAttribute("data-url")+"?no="+no;
+                xhr.open("POST", url);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(content);
+                xhr.onload = function() {
+                    showComment();
+                }
+            })
+        })
+    }
 
-    // commentBtns.forEach((btn) => {
-    //     btn.addEventListener("click", function(){
-    //         // let frm = this.parentElement.parentElement;
-    //         // commentButton(frm);
-    //     })
-    // })
-
-    // function commentButton(frm){
-    //     let xhr = new XMLHttpRequest();
-    //     let no = frm.querySelector("#hidden_board_comment").value;
-    //     let content = frm.querySelector("#board_comment").value;
-    //     xhr.open("post", frm.action+"?no="+no+"&content="+content);
-    //     xhr.setRequestHeader("Content-type", "application/json");
-    //     xhr.send();
-    // }
+    function pagingAfter(){
+        showMoreBtn();
+        showMoreBtn2();
+        boardMenu();
+        boardIcon();
+        boardFollow();
+        showComment();
+        showCmComment();
+        friendFollow();
+        commentText();
+    }
+    pagingAfter();
 }

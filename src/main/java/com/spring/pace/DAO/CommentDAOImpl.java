@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceCommentVO;
 import com.spring.pace.VO.PaceUCVO;
+import com.spring.pace.VO.PaceUCmCVO;
 
 @Repository
 public class CommentDAOImpl implements CommentDAO{
@@ -61,7 +62,14 @@ public class CommentDAOImpl implements CommentDAO{
 	@Override
 	public List<PaceUCVO> showComment(int board_no) {
 		List<PaceUCVO> list = new ArrayList<PaceUCVO>();
-		list = sqlSession.selectList("selectShowComment", board_no);
+		list = sqlSession.selectList("CommentDAO.selectShowComment", board_no);
+		return list;
+	}
+
+	@Override
+	public List<PaceUCmCVO> showCmComment(int comment_no) {
+		List<PaceUCmCVO> list = new ArrayList<PaceUCmCVO>();
+		list = sqlSession.selectList("CommentDAO.selectShowCmComment", comment_no);
 		return list;
 	}
 }

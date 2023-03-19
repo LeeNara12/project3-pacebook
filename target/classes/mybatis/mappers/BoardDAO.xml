@@ -53,43 +53,43 @@
 	</delete>
 	<select id="selectBoard" parameterType="int" resultMap="rmPaceUBVO">
 		SELECT *
-from(
-	SELECT * FROM(
-				SELECT
-					rownum AS rn,
-					board_no,
-					board_time,
-					board_modify,
-					board_content,
-					board_url,
-					user_no,
-					board_like,
-					board_modify_time,
-					cnt
-				from(
-					SELECT 
-						bb.board_no,
-						board_time,
-						board_modify,
-						board_content,
-						board_url,
-						bb.user_no,
-						board_like,
-						board_modify_time,
-						bc.cnt
-					FROM board bb LEFT OUTER JOIN (
-										SELECT 
-											board.board_no,
-											count(*) AS cnt
-										FROM board, board_comment
-										WHERE board.board_no = board_comment.board_no
-										GROUP BY board.board_no
-										) bc ON(bb.board_no = bc.board_no )
-					ORDER BY board_time DESC
-					)
-				)
-	WHERE rn BETWEEN (1-1)*5+1 AND 1*5
-	) a JOIN USER_info b ON (a.user_no = b.user_no)
+		from(
+			SELECT * FROM(
+						SELECT
+							rownum AS rn,
+							board_no,
+							board_time,
+							board_modify,
+							board_content,
+							board_url,
+							user_no,
+							board_like,
+							board_modify_time,
+							board_comment_cnt
+						from(
+							SELECT 
+								bb.board_no,
+								board_time,
+								board_modify,
+								board_content,
+								board_url,
+								bb.user_no,
+								board_like,
+								board_modify_time,
+								bc.board_comment_cnt
+							FROM board bb LEFT OUTER JOIN (
+												SELECT 
+													board.board_no,
+													count(*) AS board_comment_cnt
+												FROM board, board_comment
+												WHERE board.board_no = board_comment.board_no
+												GROUP BY board.board_no
+												) bc ON(bb.board_no = bc.board_no )
+							ORDER BY board_time DESC
+							)
+						)
+			WHERE rn BETWEEN (#{_parameter}-1)*5+1 AND #{_parameter}*5
+			) a JOIN USER_info b ON (a.user_no = b.user_no)
 	</select>
 	<select id="selectSearch" parameterType="String" resultType="PaceBoardVO">
 		SELECT * 

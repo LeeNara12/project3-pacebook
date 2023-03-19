@@ -12,8 +12,15 @@ public class PaceBoardVO {
 	private int board_like; // 좋아요 
 	private Date board_modify_time;// 게시글 수정 시간 
 	private int board_comment_cnt;// 댓글 갯수
+	private String board_time_s;
 	
 	
+	public String getBoard_time_s() {
+		return board_time_s;
+	}
+	public void setBoard_time_s(String board_time_s) {
+		this.board_time_s = board_time_s;
+	}
 	public String getBoard_url() {
 		return board_url;
 	}

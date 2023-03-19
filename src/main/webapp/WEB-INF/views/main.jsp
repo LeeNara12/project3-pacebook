@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                             <div id="board_image">
-                                <img class="board_image" src="/${curBoard.board_url }">
+                                <img class="board_image" src="${curBoard.board_url }">
                             </div>
                             <div id="board_tool">
                                 <div id="board_tool_left">
@@ -388,37 +388,36 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <form method="post" action="/pacebook/bcomment">
-                                    <div id="board_comment_box">
-                                    	<input id="hidden_board_comment" type="hidden" name="no" value="${board.board_no }">
-                                        <input id="board_comment" type="text" name="content">
-                                        <input id="comment_btn" type="submit" value="게시">
-                                    </div>
-                                </form>
+                                <div id="board_comment_box">
+                                    <textarea id="board_comment" name="content"></textarea>
+                                    <button id="comment_btn" data-url="bcomment" data-no="${board.board_no }">게시</button>
+                                </div>
                             </div>
                         </li>
                     </c:forEach>
                     </ul>
                 </div>
-                <ul id="friend_list">
-                    <c:forEach var="nfuser" items="${nfuList}">
-                    <li id="friend">
-                        <a href="/pacebook/profile?user_no=${nfuser.user_no}" class="friend_box">
-                            <div class="friend_profile_outline2">
-                                <div id="right_profile" class="profile_div">
-                                    <img class="profile" src="/${nfuser.user_profile}">
-                                </div>
-                            </div>
-                            <div id="right_name">
-                                <span>${nfuser.user_id}</span>
-                            </div>
-                        </a>
-                        <button class="nful_follow_btn follow_btn" data-un="${nfuser.user_no}">
-                            팔로우
-                        </button>
-                    </li>
-                    </c:forEach>
-                </ul>
+                <div id="friend_area">
+	                <ul id="friend_list">
+	                    <c:forEach var="nfuser" items="${nfuList}">
+	                    <li id="friend">
+	                        <a href="/pacebook/profile?user_no=${nfuser.user_no}" class="friend_box">
+	                            <div class="friend_profile_outline2">
+	                                <div id="right_profile" class="profile_div">
+	                                    <img class="profile" src="/${nfuser.user_profile}">
+	                                </div>
+	                            </div>
+	                            <div id="right_name">
+	                                <span>${nfuser.user_id}</span>
+	                            </div>
+	                        </a>
+	                        <button class="nful_follow_btn follow_btn" data-un="${nfuser.user_no}">
+	                            팔로우
+	                        </button>
+	                    </li>
+	                    </c:forEach>
+	                </ul>
+                <div>
             </div>
         </div>
     </div>

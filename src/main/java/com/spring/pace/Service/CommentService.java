@@ -9,6 +9,7 @@ import com.spring.pace.DAO.CommentDAOImpl;
 import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceCommentVO;
 import com.spring.pace.VO.PaceUCVO;
+import com.spring.pace.VO.PaceUCmCVO;
 
 @Service
 public class CommentService {
@@ -40,4 +41,7 @@ public class CommentService {
 		return commentDAO.showComment(board_no);
 	}
 	
+	public List<PaceUCmCVO> showCmComment(int comment_no){
+		return commentDAO.showCmComment(comment_no);
+	}
 }
