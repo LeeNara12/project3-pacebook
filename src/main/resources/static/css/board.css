@@ -1,0 +1,406 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'RixInooAriDuriR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/RixInooAriDuriR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.blackLayer{
+
+    display: none;
+    background-color: black;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  
+}
+
+
+/* 상단 */
+#top{
+    background-color: rgb(141, 141, 194);
+    margin: 1px 0px;
+    height: 80px;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    font-family: RixInooAriDuriR;
+}
+#logo{
+    font-size: 40px;
+    color: white;
+}
+
+.a{
+	text-decoration-line : none;
+	color: white;
+}
+#top_right{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width:500px;
+    height: 100%;
+}
+.top_btn{
+    padding: 10px;
+    width: 140px;
+    border: 1px solid white;
+    background-color: rgb(141, 141, 194);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    cursor: pointer;
+}
+.top_btn:hover{
+    background-color: rgb(108, 108, 153);
+}
+.btn_text{
+    margin-left: 10px;
+}
+
+/* 메인 */
+#main{
+    height: 815px;
+    display: flex;
+}
+/* 메인 왼쪾 */
+#main_left{
+    width:30%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+#left_box{
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 프로필 */
+#profile_box{
+    border: 1px solid rgb(141, 141, 194);
+    width: 100%;
+    height: 50%;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+#profile_top{
+    border-bottom: 1px solid rgb(141, 141, 194);
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: rgb(141, 141, 194);
+}
+#profile{
+    width: 100px;
+    height: 100px;
+}
+#id{
+    color: white;
+    font-size: 2em;
+}
+
+#profile_middle{
+    border-bottom: 1px solid rgb(141, 141, 194);
+    height: 30%;
+    color: rgb(141, 141, 194);
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+}
+#follow{
+    border-bottom: 1px solid rgb(141, 141, 194);
+    height: 50%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+#follow_count{
+    height: 50%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#profile_bottom{
+    height: 30%;
+    color: rgb(141, 141, 194);
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+}
+#following{
+    border-bottom: 1px solid rgb(141, 141, 194);
+    height: 50%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+#following_count{
+    height: 50%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 친구목록 */
+#friend_box{
+    width: 100%;
+    height: 50%;
+    box-sizing: border-box;
+    border: 1px solid rgb(141, 141, 194);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+#friend_box_top{
+    background-color: rgb(141, 141, 194);
+    height: 20%;
+    box-sizing: border-box;
+    color: white;
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#friend_list{
+    height: 80%;
+    max-height: 80%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+#friend{
+    box-sizing: border-box;
+    display: flex;
+    padding: 10px 20px;
+}
+#friend:hover{
+    background-color: rgb(230, 230, 230);
+    border-left: 2px solid rgb(141, 141, 194);
+}
+#friend_profile{
+    width: 50px;
+    height: 50px;
+}
+#friend_name{
+    margin-left: 20px;
+    display: flex;
+    max-width: 200px;
+    width: fit-content;
+    align-items: center;
+}
+
+/* 메인 중앙 */
+#main_center{
+    width:40%;
+    padding: 10px 10px 0px;
+    max-width: 40%;
+}
+#center_box{
+    border: 1px solid rgb(141, 141, 194);
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+/* 중앙 위쪽 */
+#image_box{
+    /* margin: 10px 0px; */
+    border-top: 1px  solid rgb(141, 141, 194);
+    border-bottom: 1px  solid rgb(141, 141, 194);
+    box-sizing: border-box;
+    background-color: white;
+    height: 60%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#file_none{
+    color: white;
+}
+.margin_left1{
+    /* margin-left: -21px; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 24px;
+    color: rgb(141, 141, 194);
+}
+#file_plus{
+    cursor: pointer;
+}
+#file_plus:hover{
+    cursor: pointer;
+    font-size: 27px;
+}
+
+
+
+#left{
+    color: rgba(255, 255, 255, 0);
+    position: absolute;
+    z-index: 100;
+    font-size: 80px;
+    right: 62%;
+    cursor: pointer;
+}
+
+#left:hover{
+    color: white;
+    position: absolute;
+    z-index: 100;
+    font-size: 80px;
+    right: 62%;
+    cursor: pointer;
+}
+
+
+#right{
+    color: rgba(255, 255, 255, 0);
+    position: absolute;
+    z-index: 100;
+    font-size: 80px;
+    left: 62%;
+    cursor: pointer;
+}
+
+#right:hover{
+    color: white;
+    position: absolute;
+    z-index: 100;
+    font-size: 80px;
+    left: 62%;
+    cursor: pointer;
+}
+
+/* 중앙 아래쪽 */
+#content_box{
+    height: 280px;
+    box-sizing: border-box;
+}
+#board_content{
+    resize: none;
+    outline: none;
+    font-size: 1.5em;
+    width: 95%;
+    height: 98%;
+    border: none;
+    padding: 5px;
+}
+
+/* 메인 오른쪽 */
+#main_right{
+    width: 30%;
+    max-width: 30%;
+    padding: 10px 10px 0px;
+}
+#right_box{
+    border: 1px solid rgb(141, 141, 194);
+    height: 100%;
+    border-radius: 5px;
+}
+#right_box_top{
+    height: 10%;
+    background-color: rgb(141, 141, 194);
+    color: white;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#my_board_list_wrap{
+    background-color: rgb(230, 230, 230);
+    height: 90%;
+}
+#my_board_list{
+    border-radius: 0px 0px 5px 5px;
+    /* height: 90%; */
+    box-sizing: border-box;
+    display: flex;
+    background-color: rgb(230, 230, 230);
+    overflow-y: scroll;
+    padding-left: 2px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#my_board{
+    box-sizing: border-box;
+    width: 117px;
+    height: 117px;
+    min-width: 117px;
+    min-height: 117px;
+    max-width: 117px;
+    max-height: 117px;
+    border: 1px solid red;
+    margin-right: 2px;
+    margin-top: 6px;
+}
+
+
+/* 공용 */
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+input{
+    outline: none;
+}
+.profile{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profile_div{
+    border-radius: 50%;
+    overflow: hidden;
+}
+.icon{
+    padding: 0;
+}
+.image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: top;
+}
+::-webkit-scrollbar{
+    display: none;
+}
+
+
+#popup_profile_wrap{
+    width: 50%;
+    height: 700px;
+    /* border: 1px solid red; */
+    position: absolute;
+    bottom: 9%;
+    left: 25%;
+    z-index: 1000;
+    background-color: black;
+    display: none;
+}
+#popup_profile{
+    width:100%;
+    height: 100%;
+    z-index: 1000;
+    object-fit: contain;
+}

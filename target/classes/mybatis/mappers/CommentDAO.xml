@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentDAO">
+
+	<resultMap type="PaceCommentVO" id="rmPaceCommentVO">
+		<result property="comment_no" column="comment_no"/>
+		<result property="comment_time" column="comment_time"/>
+		<result property="comment_content" column="comment_content"/>
+		<result property="user_no" column="user_no"/>
+		<result property="board_no" column="board_no"/>
+		<result property="comment_like" column="comment_like"/>
+		<result property="comment_modify" column="comment_modify"/>
+		<result property="comment_modify_time" column="comment_modify_time"/>
+		<result property="comment_cmc_cnt" column="comment_cmc_cnt"/>
+	</resultMap>
+	<resultMap type="PaceUserVO" id="rmPaceUserVO">
+		<result property="user_no" column="user_no"/>
+		<result property="user_id" column="user_id"/>
+		<result property="user_pw" column="user_pw"/>
+		<result property="user_time" column="user_time"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_email" column="user_email"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="user_profile" column="user_profile"/>
+		<result property="user_birth" column="user_birth"/>
+		<result property="user_gender" column="user_gender"/>
+		<result property="user_board_oc" column="user_board_oc"/>
+		<result property="user_sleep" column="user_sleep"/>
+	</resultMap>
+	<resultMap type="PaceCmCommentVO" id="rmPaceCmCommentVO">
+		<result property="cmComment_no" column="cmComment_no"/>
+		<result property="cmComment_time" column="cmComment_time"/>
+		<result property="cmComment_content" column="cmComment_content"/>
+		<result property="user_no" column="user_no"/>
+		<result property="comment_no" column="comment_no"/>
+		<result property="cmComment_like" column="cmComment_like"/>
+		<result property="cmComment_modify" column="cmComment_modify"/>
+		<result property="cmComment_modify_time" column="cmComment_modify_time"/>
+	</resultMap>
+	<resultMap type="PaceUCVO" id="rmPaceUCVO">
+		<collection property="paceUserVO" resultMap="rmPaceUserVO"/>
+		<collection property="paceCommentVO" resultMap="rmPaceCommentVO"/>
+	</resultMap>
+	<resultMap type="PaceUCmCVO" id="rmPaceUCmCVO">
+		<collection property="paceUserVO" resultMap="rmPaceUserVO"/>
+		<collection property="paceCmCommentVO" resultMap="rmPaceCmCommentVO"/>
+	</resultMap>
+
+	<insert id="insertBoardComment" parameterType="java.util.HashMap">
+		INSERT INTO board_comment(
+			comment_no, comment_time, comment_content,
+			user_no, board_no, comment_like, comment_modify, comment_modify_time)
+		values(seq_comment.nextval, current_date, #{content}, #{user_no}, #{board_no}, 0, 0, null)
+	</insert>
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM board_comment
+		WHERE comment_no = #{_parameter}
+	</delete>
+	<select id="selectComment" parameterType="int" resultType="PaceCommentVO">
+		SELECT * 
+		FROM board_comment
+		WHERE board_no = #{_parameter}
+		ORDER BY comment_time ASC
+	</select>
+	<select id="selectCmComment" parameterType="int" resultType="PaceCmCommentVO">
+		SELECT * 
+		FROM cmcomment
+		WHERE comment_no = {_parameter}
+		ORDER BY cmcomment_time ASC
+	</select>
+	<insert id="insertCmComment" parameterType="java.util.HashMap">
+		INSERT INTO cmcomment(cmComment_no, cmComment_time, cmComment_content,
+			user_no, comment_no, cmComment_like, cmComment_modify, cmComment_modify_time)
+		VALUES(seq_cmcomment.nextval, current_date, #{content}, #{user_no}, #{comment_no}, 0, 0, null)
+	</insert>
+	<select id="selectShowComment" parameterType="int" resultMap="rmPaceUCVO">
+		SELECT *
+		FROM (
+			SELECT 
+				a.COMMENT_NO,
+				COMMENT_TIME,
+				COMMENT_CONTENT,
+				USER_NO,
+				BOARD_NO,
+				COMMENT_LIKE,
+				COMMENT_MODIFY,
+				COMMENT_MODIFY_TIME,
+				COMMENT_CMC_CNT
+			from(		
+				SELECT *
+				FROM BOARD_COMMENT
+				WHERE board_no = #{_parameter}
+				) a LEFT OUTER JOIN (
+									 SELECT 
+									 	bc.comment_no,
+										count(*) AS COMMENT_CMC_CNT
+									 FROM (		
+											SELECT *
+											FROM BOARD_COMMENT
+											WHERE board_no = #{_parameter}
+											) bc, CMCOMMENT cc
+									 WHERE bc.comment_no = cc.comment_no
+									 GROUP BY bc.comment_no
+								     ) b ON (a.comment_no = b.comment_no)
+		) a JOIN user_info b ON (a.user_no = b.user_no)
+	</select>
+	<select id="selectShowCmComment" parameterType="int" resultMap="rmPaceUCmCVO">
+		SELECT *
+		FROM (
+			SELECT * 
+			FROM cmcomment
+			WHERE comment_no = #{_parameter}
+			ORDER BY cmcomment_time ASC
+			) a JOIN user_info b ON (a.user_no = b.user_no)
+	</select>
+</mapper>

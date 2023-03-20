@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentDAO">
+	<insert id="insertBoardComment" parameterType="java.util.HashMap">
+		INSERT INTO board_comment(
+			comment_no, comment_time, comment_content,
+			user_no, board_no, comment_like, comment_modify, comment_modify_time)
+		values(seq_comment.nextval, current_date, #{content}, #{user_no}, #{board_no}, 0, 0, null)
+	</insert>
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM board_comment
+		WHERE comment_no = #{_parameter}
+	</delete>
+	<select id="selectComment" parameterType="int" resultType="PaceCommentVO">
+		SELECT * 
+		FROM board_comment
+		WHERE board_no = #{_parameter}
+		ORDER BY comment_time ASC
+	</select>
+	<select id="selectCmComment" parameterType="int" resultType="PaceCmCommentVO">
+		SELECT * 
+		FROM cmcomment
+		WHERE comment_no = {_parameter}
+		ORDER BY cmcomment_time ASC
+	</select>
+	<insert id="insertCmComment" parameterType="java.util.HashMap">
+		INSERT INTO cmcomment(cmComment_no, cmComment_time, cmComment_content,
+			user_no, comment_no, cmComment_like, cmComment_modify, cmComment_modify_time)
+		VALUES(seq_cmcomment.nextval, current_date, #{content}, #{user_no}, #{comment_no}, 0, 0, null)
+	</insert>
+</mapper>
