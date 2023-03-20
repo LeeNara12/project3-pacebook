@@ -42,6 +42,8 @@
 			</div>
 		</div>
 	</div>
+    
+
 	<div id="middle">
 		<div id="side">
 			<div id="profile_box">
@@ -166,6 +168,27 @@
 			</div>
 		</div>
 	</div>
+
+    <div id="content_show_wrap">
+        <div id="image_show_wrap">
+            <img id='img_show_wrap' src="/image/slide1.jpg" >
+        </div>
+        <div id="comment_show_wrap">
+            <div id="comment_show_top">
+                <div>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+            </div>
+            <div id="comment_show_middle"></div>
+            <div id="comment_show_bottom1"></div>
+            <div id="comment_show_bottom2"></div>
+            <div id="comment_show_bottom3"></div>
+        </div>
+
+    </div>
+
 </body>
 
 </html>
