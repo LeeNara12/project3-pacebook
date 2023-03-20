@@ -20,7 +20,7 @@
 
 <body>
     <div id="wrap">
- 	<form action='/pacebook/pwFind1' method='post'>
+ 	<form action='/pacebook/user/pwFind1' method='post'>
 
         <div id="top_box">
             <span id="margin_left">비밀번호찾기</span>

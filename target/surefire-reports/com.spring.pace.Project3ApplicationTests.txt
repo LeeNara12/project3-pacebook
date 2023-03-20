@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.spring.pace.Project3ApplicationTests
 -------------------------------------------------------------------------------
-<<<<<<< HEAD
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.985 s - in com.spring.pace.Project3ApplicationTests
-=======
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.354 s - in com.spring.pace.Project3ApplicationTests
->>>>>>> 6b0fc72ecfdc742e9ae1e62a2f6312240d543db9
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.15 s - in com.spring.pace.Project3ApplicationTests

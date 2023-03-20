@@ -174,9 +174,14 @@ public class PaceUserController {
 		System.out.println("비밀번호 찾기 진입111");
 		System.out.println("vo.getUser_id + "+vo.getUser_id());
 		System.out.println("vo.getUser_name + "+vo.getUser_name());
-		boolean check = uService.pwCheck(vo);
 		
-		if(check) {
+		
+		Map<String, Object> map = uService.pwCheck(vo);
+		boolean result = (boolean)map.get("result");
+		String temPW = (String)map.get("temPW");
+//		PaceUserVO puvo = (PaceUserVO)map.get("vo");
+		
+		if(result) {
 			System.out.println("비밀번호는 true");
 			String str = vo.getUser_id();
 			StringBuffer sb = new StringBuffer();
@@ -184,10 +189,14 @@ public class PaceUserController {
 			while(sb.length() < str.length()) {
 				sb.append("*");
 			}
+			
 			String id = sb.toString();
 			System.out.println("아이디는 "+id);
 			request.setAttribute("id", id);
-			request.setAttribute("pw", vo.getUser_pw());
+			
+			System.out.println("temPW + "+ temPW );
+			request.setAttribute("pw", temPW);
+			
 			request.setAttribute("alert", false);
 			return "pwFind2";
 		}else {

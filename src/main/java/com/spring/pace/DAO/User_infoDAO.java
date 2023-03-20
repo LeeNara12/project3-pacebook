@@ -11,7 +11,7 @@ public interface User_infoDAO {
 	public Map<String, Object> login(PaceUserVO vo);
 	public boolean join(PaceUserVO vo);
 	public Map<String , Object> idCheck(PaceUserVO vo);
-	public boolean pwCheck(PaceUserVO vo);
+	public Map<String , Object> pwCheck(PaceUserVO vo);
 	public PaceUserVO getUserInfo(int user_no);
 	public String profile(int user_no);
 	public List<PaceUserVO> getFollowList(int user_no);

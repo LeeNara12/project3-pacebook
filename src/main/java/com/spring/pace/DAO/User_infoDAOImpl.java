@@ -84,28 +84,30 @@ public class User_infoDAOImpl implements User_infoDAO{
 	
 
 	@Override
-	public boolean pwCheck(PaceUserVO vo) {// 비밀번호 일치 불일치 메소드
+	public Map<String, Object> pwCheck(PaceUserVO vo) {// 비밀번호 일치 불일치 메소드
 		boolean result = false;
 		System.out.println("pwCheck메소드 진입");
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		TemporaryPW tem = new TemporaryPW();
 		String temPW = tem.temPW();
 		
-		map.put("vo", vo);
-		map.put("temPW",temPW);
-
+		map.put("temPW", temPW);//임시비밀번호 업데이트문 parameter
+		map.put("vo", vo);//vo.user_name, vo.user_id로 업데이트 where조건 입력
+		
 		List list = sqlSession.selectList("User_infoDAO.pwCheck1",vo);
 		
 		if(list.size() == 1) {
 
 			int count = sqlSession.update("User_infoDAO.pwCheck2",map);
-			System.out.println("임시비밀번호가 생성되었습니다.");
+			System.out.println("임시비밀번호가 "+count+"개 생성되었습니다.");
 			result = true;
 			
 		}
 		
-		return result;
+		map.put("result", result);
+		
+		return map;
 	}
 
 	
