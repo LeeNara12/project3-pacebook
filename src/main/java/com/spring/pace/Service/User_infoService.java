@@ -30,7 +30,7 @@ public class User_infoService {
 		return user_infoDAO.idCheck(vo);
 	}
 	
-	public boolean pwCheck(PaceUserVO vo) {
+	public Map<String, Object> pwCheck(PaceUserVO vo) {
 		return user_infoDAO.pwCheck(vo);
 	}
 	
