@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDAO">
+	
+	<insert id="insertBoard" parameterType="java.util.HashMap">
+		insert into board
+      	values(seq_board.nextval, current_date, 0,
+      			 #{pbvo.board_url}, #{user_no},
+      			 #{pbvo.board_like}, #{pbvo.board_modify_time},
+      			 #{pbvo.board_content})
+	</insert>
+	
+	<delete id="deleteBoardComment" parameterType="int">
+		delete from board_comment
+		where board_no = #{_parameter}
+	</delete>
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from board
+		where board_no = #{_parameter}
+	</delete>
+	<select id="selectBoard" parameterType="int" resultType="PaceBoardVO">
+		SELECT * FROM(
+					SELECT
+						rownum AS rn,
+						board_no,
+						board_time,
+						board_modify,
+						board_content,
+						board_url,
+						user_no,
+						board_like,
+						board_modify_time
+					from(
+						SELECT 
+							board_no,
+							board_time,
+							board_modify,
+							board_content,
+							board_url,
+							user_no,
+							board_like,
+							board_modify_time
+						FROM board
+						ORDER BY board_time DESC
+						)
+					)
+		WHERE rn BETWEEN (#{_parameter}-1)*5+1 AND #{_parameter}*5
+	</select>
+	<select id="selectSearch" parameterType="String" resultType="PaceBoardVO">
+		SELECT * 
+		FROM board
+		WHERE board_content LIKE '%'||#{_parameter}||'%'
+		ORDER BY board_time ASC
+	</select>
+	<select id="selectMyBoard" parameterType="int" resultType="PaceBoardVO">
+		SELECT * 
+		FROM board
+		WHERE user_no = #{_parameter}
+		ORDER BY board_time DESC
+	</select>
+</mapper>
