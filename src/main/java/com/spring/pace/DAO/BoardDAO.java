@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUBVO;
+import com.spring.pace.VO.PaceUserVO;
 
 public interface BoardDAO {
 	
@@ -14,4 +15,6 @@ public interface BoardDAO {
 	public List<PaceBoardVO> myBoard(int user_no);
 	public int followList_no(int user_no);
 	public int followerList_no(int user_no);
+	public List<PaceBoardVO> myBoardList(int user_no);
+	public List<PaceUserVO> myFollowList(int user_no);
 }

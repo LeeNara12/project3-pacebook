@@ -117,4 +117,24 @@
 	</select>
 	
 	
+	<select id='myBoardList' parameterType='int' resultType='PaceBoardVO'>
+		SELECT user_no, board_no, board_url
+		FROM BOARD b 
+		WHERE user_no = #{_parameter}
+		ORDER BY BOARD_NO 
+	</select>
+	
+	<select id='myFollowList' parameterType='int' resultType='PaceUserVO'>
+		SELECT user_no, user_id, user_profile
+		FROM USER_INFO ui 
+		WHERE user_no IN 
+		(
+			SELECT follow_u_no 
+			FROM FOLLOW_LIST fl 
+			WHERE user_no = #{_parameter}
+		)		
+	</select>
+	
+	
+	
 </mapper>

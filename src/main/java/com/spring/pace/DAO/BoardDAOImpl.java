@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUBVO;
+import com.spring.pace.VO.PaceUserVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -70,6 +71,19 @@ public class BoardDAOImpl implements BoardDAO {
 		return count;
 	}
 	
+	@Override
+	public List<PaceBoardVO> myBoardList(int user_no) {
+		List<PaceBoardVO> list = sqlSession.selectList("BoardDAO.myBoardList", user_no);
+		
+		return list;
+	}
+	
+	@Override
+	public List<PaceUserVO> myFollowList(int user_no){
+		List<PaceUserVO> list = sqlSession.selectList("BoardDAO.myFollowList", user_no);
+		
+		return list;
+	}
 	
 	
 	

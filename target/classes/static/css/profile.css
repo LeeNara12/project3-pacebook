@@ -70,10 +70,7 @@ body {
 	overflow: hidden;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3625a8463ccdd08a3f984e284f84a10be8bdd4de
 /* 미들 */
 #middle {
 	height: 2000px;
@@ -120,10 +117,7 @@ body {
 }
 
 .side_btn {
-<<<<<<< HEAD
-=======
     padding-left: 25px;
->>>>>>> 3625a8463ccdd08a3f984e284f84a10be8bdd4de
 	border: 1px solid rgb(170, 170, 170);
 	border-top: 0;
 	height: 70px;
@@ -254,9 +248,6 @@ input {
 #image_box {
 	/* border: 1px solid blue; */
 	
-<<<<<<< HEAD
-}
-=======
 }
 
 /* 상세페이지 */
@@ -320,4 +311,3 @@ input {
     height: 8%;
 }
 
->>>>>>> 3625a8463ccdd08a3f984e284f84a10be8bdd4de

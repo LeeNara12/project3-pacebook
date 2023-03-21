@@ -60,10 +60,14 @@ public class PaceBookController{
 		PaceUserVO vo1 = uService.getUserInfo(user_no);
 		int followList_no = bService.followList_no(user_no);
 		int followerList_no = bService.followerList_no(user_no);
+		List<PaceBoardVO> myBoardList = bService.myBoardList(user_no);
+		List<PaceUserVO> myFollowList = bService.myFollowList(user_no);
 		
 		request.setAttribute("vo1", vo1);
 		request.setAttribute("followList_no", followList_no);
 		request.setAttribute("followerList_no", followerList_no);
+		request.setAttribute("myBoardList", myBoardList);
+		request.setAttribute("myFollowList", myFollowList);
 		return "board";
 	}
 	

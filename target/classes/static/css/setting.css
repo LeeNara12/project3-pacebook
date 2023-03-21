@@ -66,7 +66,6 @@
     display: flex;
 }
 /* 사이드 */
-<<<<<<< HEAD
 #side {
 	display: inline-block;
 	width: 20%;
@@ -135,53 +134,6 @@
 a {
 	text-decoration: none;
 	color: inherit;
-=======
-#side{
-    display: inline-block;
-    width: 20%;
-    text-align: center;
-    height:100%
-}
-#profile_box{
-    color: white;
-    background-color: rgb(141, 141, 194);
-    height: 25%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 5px;
-}
-#profile{
-    overflow: hidden;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-}
-
-#show_id{
-    font-size: 2vh;
-    padding-bottom: 30px;
-}
-
-#side_tool > ul > li{
-    border: 1px solid rgb(170, 170, 170);
-    border-top: 0;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    font-size: 2vh;
-    font-weight: bold;
-    border-radius: 5px;
-    padding-left: 30px;
-    color:rgb(170, 170, 170);
-}
-#side_tool > ul > li:hover{
-    background-color: rgb(230, 230, 230);
-    color: rgb(141, 141, 194);
-    border-left: 5px solid rgb(141, 141, 194);
->>>>>>> 3625a8463ccdd08a3f984e284f84a10be8bdd4de
 }
 
 /* 메인 */

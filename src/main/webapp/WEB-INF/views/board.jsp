@@ -218,18 +218,18 @@
                     </div>
                     <ul id="friend_list">
                     
-                    
+                        <!-- 친구 목록 추가 -->
+                    <c:forEach var='myFollowList' items='${myFollowList}'>
                         <li id="friend">
                             <div id="friend_profile" class="profile_div">
-                                <img class="profile" src="/image/slide1.jpg">
+                                <img class="profile" src="/${myFollowList.user_profile}">
                             </div>
                             <div id="friend_name">
-                                <span>서한수</span>
+                                <span>${myFollowList.user_id}</span>
                             </div>
                         </li>
-                     
+                     </c:forEach>
 
-                        <!-- 친구 목록 추가 -->
                         
 
 
@@ -262,14 +262,14 @@
                 
                 <div id="my_board_list_wrap">
                     <div id="my_board_list">
-                        
-                        <!-- <div id='my_board'></div>
-                        <div id='my_board'></div>
-                        <div id='my_board'></div>
-                        <div id='my_board'></div>
-                        <div id='my_board'></div> -->
-
+                    
+                    
                         <!-- 내 게시글 목록 -->
+                        <c:forEach var='myBoardList' items='${myBoardList}'>
+	                     	<div id='my_board'>
+	                     		<img id='my_board_img' src='${myBoardList.board_url}'>
+	                     	</div>	                        
+                        </c:forEach>
 
 
                     </div>
