@@ -45,7 +45,7 @@ public class PaceBookController{
 	
 	
 	@RequestMapping(value="")
-	public String settingPage() {
+	public String loginPage() {
 		System.out.println("기본페이지로 로그인 페이지 실행");
 		return "login";
 	}
@@ -253,5 +253,11 @@ public class PaceBookController{
 			UCmClist.get(i).getPaceCmCommentVO().setCmComment_time_s(cmct);
 		}
 		return UCmClist;
+	}
+	
+	@RequestMapping(value="/setting_page")
+	public String settingPage() {
+		System.out.println("설정 페이지 실행");
+		return "setting";
 	}
 }
