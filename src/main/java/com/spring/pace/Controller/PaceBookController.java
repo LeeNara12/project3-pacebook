@@ -51,8 +51,19 @@ public class PaceBookController{
 	}
 	
 	@RequestMapping("/board_page")
-	public String board_page() {
+	public String board_page(
+			HttpServletRequest request
+			) {
 		System.out.println("게시판 작성 페이지 실행");
+		HttpSession se = request.getSession();
+		int user_no = (int) se.getAttribute("user_no");//세션에 유저넘버 값을 넣어줌 
+		PaceUserVO vo1 = uService.getUserInfo(user_no);
+		int followList_no = bService.followList_no(user_no);
+		int followerList_no = bService.followerList_no(user_no);
+		
+		request.setAttribute("vo1", vo1);
+		request.setAttribute("followList_no", followList_no);
+		request.setAttribute("followerList_no", followerList_no);
 		return "board";
 	}
 	

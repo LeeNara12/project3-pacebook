@@ -57,4 +57,20 @@ public class BoardDAOImpl implements BoardDAO {
 		list = sqlSession.selectList("BoardDAO.selectMyBoard", user_no);
 		return list;
 	}
+	
+	@Override
+	public int followList_no(int user_no) {
+		int count = sqlSession.selectOne("BoardDAO.followList_no",user_no);
+		return count;
+	}
+	
+	@Override
+	public int followerList_no(int user_no) {
+		int count = sqlSession.selectOne("BoardDAO.followerList_no",user_no);
+		return count;
+	}
+	
+	
+	
+	
 }

@@ -103,4 +103,18 @@
 		WHERE user_no = #{_parameter}
 		ORDER BY board_time DESC
 	</select>
+	
+	<select id='followList_no' parameterType='int' resultType='int' >
+		SELECT count(*) 
+		FROM FOLLOW_LIST fl  LEFT OUTER JOIN USER_INFO ui ON (fl.USER_NO = ui.user_no)
+		WHERE fl.user_no = #{_parameter}
+	</select>
+	
+	<select id='followerList_no' parameterType='int' resultType='int' >
+		SELECT count(*) 
+		FROM FOLLOWER_LIST fl LEFT OUTER JOIN USER_INFO ui ON (fl.USER_NO = ui.user_no)
+		WHERE fl.user_no = #{_parameter}
+	</select>
+	
+	
 </mapper>

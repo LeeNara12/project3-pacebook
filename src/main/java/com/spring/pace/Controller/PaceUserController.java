@@ -35,6 +35,8 @@ public class PaceUserController {
 	@Autowired
 	BoardService bService;
 	
+	
+	//로그인
 	@RequestMapping(value="")
 	public String settingPage() {
 		System.out.println("기본페이지로 로그인 페이지 실행");
@@ -86,7 +88,7 @@ public class PaceUserController {
 	
 	@RequestMapping(value="/join_page")
 	public String join_page() {
-		System.out.println("아이디 찾기 진입");
+		System.out.println("회원가입페이지 진입");
 		return "join";
 	}
 	
@@ -155,7 +157,7 @@ public class PaceUserController {
 			System.out.println("idCheck 실패");
 			request.setAttribute("alert", true);
 			request.setAttribute("text", "등록된 회원정보가 없습니다.");
-			return "idFind1";
+			return "forward:/pacebook/user/idFind1_page";
 		}
 	}
 	

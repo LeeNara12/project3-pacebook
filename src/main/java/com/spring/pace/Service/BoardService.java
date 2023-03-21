@@ -35,4 +35,13 @@ public class BoardService {
 	public List<PaceBoardVO> myBoard(int user_no){
 		return boardDAO.myBoard(user_no);
 	}
+	
+	public int followList_no(int user_no) {
+		return boardDAO.followList_no(user_no);
+	}
+	public int followerList_no(int user_no) {
+		return boardDAO.followerList_no(user_no);
+	}
+	
+	
 }

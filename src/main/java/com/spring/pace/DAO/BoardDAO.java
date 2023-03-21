@@ -12,4 +12,6 @@ public interface BoardDAO {
 	public List<PaceUBVO> getBoard(int pageNum);
 	public List<PaceBoardVO> search(String search_content);
 	public List<PaceBoardVO> myBoard(int user_no);
+	public int followList_no(int user_no);
+	public int followerList_no(int user_no);
 }

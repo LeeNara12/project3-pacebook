@@ -68,11 +68,11 @@ public class User_infoDAOImpl implements User_infoDAO{
 	@Override
 	public Map<String , Object> idCheck(PaceUserVO vo) {// 아이디찾기 메소드
 		Map<String , Object> map = new HashMap();
+		boolean result = false;
+		map.put("result", result);
 		
 		System.out.println("idCheck로 진입 + vo 는? "+vo);
-		boolean result = false;
 		List list = sqlSession.selectList("User_infoDAO.idCheck",vo);
-		
 		if(list.size() == 1) {
 			result = true;
 			map.put("result", result);
@@ -88,6 +88,7 @@ public class User_infoDAOImpl implements User_infoDAO{
 		boolean result = false;
 		System.out.println("pwCheck메소드 진입");
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
 		
 		TemporaryPW tem = new TemporaryPW();
 		String temPW = tem.temPW();
@@ -102,10 +103,10 @@ public class User_infoDAOImpl implements User_infoDAO{
 			int count = sqlSession.update("User_infoDAO.pwCheck2",map);
 			System.out.println("임시비밀번호가 "+count+"개 생성되었습니다.");
 			result = true;
-			
+			map.put("result", result);
 		}
 		
-		map.put("result", result);
+		
 		
 		return map;
 	}
