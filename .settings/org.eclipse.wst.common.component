@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
+        
+    <wb-module deploy-name="project3-0.0.1-SNAPSHOT">
+                
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+                
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
+                
+        <property name="context-root" value="project3"/>
+                
+        <property name="java-output-path" value="/project3/target/classes"/>
+            
+    </wb-module>
+    
+=======
                     
     
     
@@ -38,4 +57,5 @@
 
 
 
+>>>>>>> 4c3c78ad93108417fe63829203a92ddf3193853c
 </project-modules>
