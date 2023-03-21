@@ -259,7 +259,7 @@ input {
     top: 10%;
     left: 5%;
     z-index: 999;
-    display: flex
+    display: flex;
     
 }
 #image_show_wrap{
@@ -298,7 +298,7 @@ input {
 }
 #comment_show_bottom1{
     width: 100%;
-    height: 7%;
+    height: 6%;
     border: 1px solid red;
 }
 #comment_show_bottom2{
@@ -310,4 +310,199 @@ input {
     width: 100%;
     height: 8%;
 }
+<<<<<<< HEAD
 
+=======
+/*border영역*/
+#board_area{
+    height:100%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
+}
+#board_list{
+    width: 70%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+#board{
+    height:fit-content;
+    box-sizing: border-box;
+    margin-top: 20px;
+    border:1px solid rgb(141, 141, 194);
+}
+#board_top{
+    height:fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#board_top_left{
+    height:fit-content;
+    display: flex;
+    align-items: center;
+}
+#board_profile{
+    width:50px;
+    height:50px;
+    margin: 5px 10px;
+}
+#board_id{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 300px;
+}
+#board_menu{
+    margin-right: 20px;
+}
+#board_image{
+    height: 400px;
+    max-height: 400px;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+    line-height: 400px;
+    background-color: black;
+}
+.board_image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#board_tool{
+    height: 6%;
+    display: flex;
+    justify-content: space-between;
+}
+#board_tool_left{
+    display: flex;
+    justify-content: space-evenly;
+}
+#board_bottom{
+    padding: 5px 10px;
+}
+#like_count{
+    height: 3px;
+    max-width: 400px;
+    width: fit-content;
+    margin-bottom: 10px
+}
+#board_content{
+    height: 0px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+    word-wrap: break-word;
+    margin-bottom: 10px
+}
+#board_content_btn{
+    appearance: none;
+    cursor: pointer;
+    float: right;
+}
+#board_content_btn::before{
+    content: '더보기';
+}
+#board_content_btn:checked::before{
+    content: '닫기';
+}
+#comment_count{
+    margin-bottom: 10px;
+}
+#board_comment {
+    border: 1px solid rgb(141, 141, 194);
+    border-radius: 5px 0px 0px 5px;
+    flex-grow: 1;
+    resize: none;
+    outline: none;
+    font-size: 18px;
+    overflow-y: hidden;
+    height: 32px;
+}
+#comment_btn {
+    border: 1px solid rgb(141, 141, 194);
+    border-left: none;
+    background-color: rgb(141, 141, 194);
+    border-radius: 0px 5px 5px 0px;
+    color: white;
+    width: 50px;
+}
+#comment_btn:hover {
+    border: 1px solid rgb(141, 141, 194);
+    border-left: none;
+    background-color: rgb(123, 123, 228);
+    border-radius: 0px 5px 5px 0px;
+    color: white;
+    width: 50px;
+}
+#board_comment_box{
+    display: flex;
+}
+#board_top_left {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+}
+#board_profile {
+    width: 50px;
+    height: 50px;
+    margin: 5px 10px;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+#board_id {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 300px;
+}
+.board_btn {
+    margin: 5px 10px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background-color: white;
+    box-sizing: border-box;
+}
+#board_menu {
+    position: relative;
+}
+#board_menu_box {
+    position: absolute;
+    width: 150px;
+    height: fit-content;
+    right: -50px;
+    top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    visibility: hidden;
+}
+#board_menu_arrow {
+    width: 1px;
+    height: 1px;
+    border-right: 10px solid rgb(0,0,0,0);
+    border-left: 10px solid rgb(0,0,0,0);
+    border-top: 10px solid rgb(0,0,0,0);
+    border-bottom: 10px solid rgb(100, 100, 100, 0.9);
+}
+.board_menus {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(100, 100, 100, 0.9);
+    color: rgb(230, 230, 230);
+    font-size: 13px;
+}
+>>>>>>> f477aa7911663a96f107bd299a596f9c94d3179f
