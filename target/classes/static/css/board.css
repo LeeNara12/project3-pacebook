@@ -300,10 +300,17 @@
     resize: none;
     outline: none;
     font-size: 1.5em;
+<<<<<<< HEAD
     width: 95%;
     height: 98%;
     border: none;
     padding: 5px;
+=======
+    width: 90%;
+    height: 97%;
+    border: none;
+    padding: 5% 5%;
+>>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 }
 
 /* 메인 오른쪽 */
@@ -329,6 +336,10 @@
 #my_board_list_wrap{
     background-color: rgb(230, 230, 230);
     height: 90%;
+<<<<<<< HEAD
+=======
+    overflow-y: scroll;
+>>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 }
 #my_board_list{
     border-radius: 0px 0px 5px 5px;
@@ -336,7 +347,11 @@
     box-sizing: border-box;
     display: flex;
     background-color: rgb(230, 230, 230);
+<<<<<<< HEAD
     overflow-y: scroll;
+=======
+    
+>>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
     padding-left: 2px;
     flex-direction: row;
     flex-wrap: wrap;
@@ -349,11 +364,22 @@
     min-height: 117px;
     max-width: 117px;
     max-height: 117px;
+<<<<<<< HEAD
     border: 1px solid red;
     margin-right: 2px;
     margin-top: 6px;
 }
 
+=======
+    /* border: 1px solid red; */
+    margin-right: 2px;
+    margin-top: 6px;
+}
+#my_board_img{
+	width : 100%;
+	height : 100%;
+}
+>>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 
 /* 공용 */
 ul{

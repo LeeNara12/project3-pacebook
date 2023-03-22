@@ -300,10 +300,10 @@
     resize: none;
     outline: none;
     font-size: 1.5em;
-    width: 95%;
-    height: 98%;
+    width: 90%;
+    height: 97%;
     border: none;
-    padding: 5px;
+    padding: 5% 5%;
 }
 
 /* 메인 오른쪽 */
@@ -329,6 +329,7 @@
 #my_board_list_wrap{
     background-color: rgb(230, 230, 230);
     height: 90%;
+    overflow-y: scroll;
 }
 #my_board_list{
     border-radius: 0px 0px 5px 5px;
@@ -336,7 +337,7 @@
     box-sizing: border-box;
     display: flex;
     background-color: rgb(230, 230, 230);
-    overflow-y: scroll;
+    
     padding-left: 2px;
     flex-direction: row;
     flex-wrap: wrap;
@@ -349,11 +350,14 @@
     min-height: 117px;
     max-width: 117px;
     max-height: 117px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin-right: 2px;
     margin-top: 6px;
 }
-
+#my_board_img{
+	width : 100%;
+	height : 100%;
+}
 
 /* 공용 */
 ul{

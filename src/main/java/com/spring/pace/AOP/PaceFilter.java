@@ -53,26 +53,21 @@ public class PaceFilter extends HttpFilter implements Filter {
 						url.indexOf("/css") != -1
 						|| url.indexOf("/image") != -1
 						|| url.indexOf("/script") != -1
+						|| url.indexOf("/favicon.*") != -1
 				) 	{
 
 				System.out.println(1);
-				chain.doFilter(request, response);
+				chain.doFilter(request, response);//디스패처서블릿으로
 
 			}else {
 				
 				response.setContentType("text/html;charset=utf-8");
 				
-				if(url.indexOf("/pacebook") != -1
-//						|| url.indexOf("/join") != -1
-//						|| url.indexOf("/join_success") != -1						
-//						|| url.indexOf("/pacebook") != -1
-//						|| url.indexOf("/main") != -1
-//						|| url.indexOf("/pwFind1") != -1
-//						|| url.indexOf("/pwFind2") != -1//나중에 pwFind1이 성공하면 나오는걸로 바꾸기
-//						|| url.indexOf("/idFind1") != -1
-//						|| url.indexOf("/idFind2") != -1
-//						|| url.indexOf("/setting") != -1
-//						|| url.indexOf("/profile") != -1
+				if(
+						url.indexOf("/pacebook") != -1
+						|| url.indexOf("/pacebook/user/idFind1_page") != -1
+						|| url.indexOf("/pacebook/user/pwFind1_page") != -1
+					    || url.indexOf("/pacebook/user/join_page") != -1
 				){
 					System.out.println("그냥 통과");
 					chain.doFilter(request, response);
@@ -82,13 +77,12 @@ public class PaceFilter extends HttpFilter implements Filter {
 					System.out.println("filter => logon : "+ logon);
 					
 					if("true".equals(logon) ) {
-						System.out.println(123);
-						chain.doFilter(request, response);
+						System.out.println("(필터) 로그인 성공!! + "+logon);
+						chain.doFilter(request, response);//디스패처서블릿으로
 						
 					} else {
-						System.out.println(1234);
-//						chain.doFilter(request, response);
-						((HttpServletResponse)response).sendRedirect("/project2/login.jsp");
+						System.out.println("(핉터) 로그인 실패 다시 로그인!! + "+logon);
+						((HttpServletResponse)response).sendRedirect("/pacebook");//로그아웃기능 만들어지면 확인하기
 					}
 					
 					
@@ -98,7 +92,4 @@ public class PaceFilter extends HttpFilter implements Filter {
 			}
 		}		
 		
-	public void init(FilterConfig fConfig) throws ServletException {
-	}
-
 }

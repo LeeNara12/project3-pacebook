@@ -45,14 +45,29 @@ public class PaceBookController{
 	
 	
 	@RequestMapping(value="")
-	public String settingPage() {
+	public String loginPage() {
 		System.out.println("기본페이지로 로그인 페이지 실행");
 		return "login";
 	}
 	
 	@RequestMapping("/board_page")
-	public String board_page() {
+	public String board_page(
+			HttpServletRequest request
+			) {
 		System.out.println("게시판 작성 페이지 실행");
+		HttpSession se = request.getSession();
+		int user_no = (int) se.getAttribute("user_no");//세션에 유저넘버 값을 넣어줌 
+		PaceUserVO vo1 = uService.getUserInfo(user_no);
+		int followList_no = bService.followList_no(user_no);
+		int followerList_no = bService.followerList_no(user_no);
+		List<PaceBoardVO> myBoardList = bService.myBoardList(user_no);
+		List<PaceUserVO> myFollowList = bService.myFollowList(user_no);
+		
+		request.setAttribute("vo1", vo1);
+		request.setAttribute("followList_no", followList_no);
+		request.setAttribute("followerList_no", followerList_no);
+		request.setAttribute("myBoardList", myBoardList);
+		request.setAttribute("myFollowList", myFollowList);
 		return "board";
 	}
 	
@@ -131,15 +146,20 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("user_no") int user_no
 			) {
+		System.out.println("프로필페이지 진입");
+		System.out.println("@RequestParam user_no + "+user_no);
+		
 		HttpSession se = request.getSession();
 		PaceUserVO vo = uService.getUserInfo(user_no);
-		request.setAttribute("vo",vo);
 		List<PaceBoardVO> boardList = bService.myBoard(user_no);
-		request.setAttribute("boardList", boardList);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
-		request.setAttribute("followList", followList);
 		List<PaceUserVO> followerList = uService.getFollowerList(user_no);
+		
+		request.setAttribute("vo",vo);
+		request.setAttribute("boardList", boardList);
+		request.setAttribute("followList", followList);
 		request.setAttribute("followerList", followerList);
+		
 		int user_no1 = (int)se.getAttribute("user_no");
 		PaceUserVO vo1 = uService.getUserInfo(user_no1);
 		se.setAttribute("vo1", vo1);
@@ -242,5 +262,11 @@ public class PaceBookController{
 			UCmClist.get(i).getPaceCmCommentVO().setCmComment_time_s(cmct);
 		}
 		return UCmClist;
+	}
+	
+	@RequestMapping(value="/setting_page")
+	public String settingPage() {
+		System.out.println("설정 페이지 실행");
+		return "setting";
 	}
 }

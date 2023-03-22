@@ -104,7 +104,7 @@
                         </a>
                     </li>
                     <li id="set_btn" class="side_btn">
-                        <a href="/pacebook/setting" class="side_atag">
+                        <a href="/pacebook/setting_page" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                                 <path

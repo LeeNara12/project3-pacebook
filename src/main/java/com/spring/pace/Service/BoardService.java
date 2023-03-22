@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.spring.pace.DAO.BoardDAO;
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUBVO;
+import com.spring.pace.VO.PaceUserVO;
 
 @Service
 public class BoardService {
@@ -35,4 +36,20 @@ public class BoardService {
 	public List<PaceBoardVO> myBoard(int user_no){
 		return boardDAO.myBoard(user_no);
 	}
+	
+	public int followList_no(int user_no) {
+		return boardDAO.followList_no(user_no);
+	}
+	public int followerList_no(int user_no) {
+		return boardDAO.followerList_no(user_no);
+	}
+	
+	public List<PaceBoardVO> myBoardList(int user_no) {
+		return boardDAO.myBoardList(user_no);
+	}
+	
+	public List<PaceUserVO> myFollowList(int user_no){
+		return boardDAO.myFollowList(user_no);
+	}
+	
 }
