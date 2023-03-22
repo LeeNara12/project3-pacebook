@@ -61,7 +61,7 @@ public class User_infoService {
 		return user_infoDAO.notFollowUsers(user_no, pageNum);
 	}
 	
-	public List<PaceUserVO> rNum() {
+	public List rNum()  {
 		return user_infoDAO.rNum();
 	}
 	

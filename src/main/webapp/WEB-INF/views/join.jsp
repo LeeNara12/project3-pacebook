@@ -123,7 +123,7 @@
                 }
                 if(istrue == true){
                     join.method = "post";
-                    join.action = "/pacebook/user/join";
+                    join.action = "/pacebook/user/join_succes.do";
                     join.submit();
                 }
            });

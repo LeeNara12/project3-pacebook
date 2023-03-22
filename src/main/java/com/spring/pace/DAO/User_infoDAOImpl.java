@@ -207,12 +207,13 @@ public class User_infoDAOImpl implements User_infoDAO{
 	// 2. MATH.RANDOM을 사용하여 COUNT 값을 랜덤으로 출력 하게 한다.
 	
 	@Override
-	public List<PaceUserVO> rNum() {
+	public List rNum() {
 		
+		System.out.println("rNum 메소드 진입");
 		int maxRnum = sqlSession.selectOne("User_infoDAO.rNum1");
 		Random random = new Random();
 		Map map =random.randomFriend(maxRnum);
-		List<PaceUserVO> list = sqlSession.selectList("User_infoDAO.rNum2",map);
+		List list = (List)sqlSession.selectList("User_infoDAO.rNum2",map);
 
 		return list;
 	}

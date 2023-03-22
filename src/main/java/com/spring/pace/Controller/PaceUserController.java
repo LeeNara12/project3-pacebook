@@ -45,13 +45,23 @@ public class PaceUserController {
 	public String joinSucces(
 			HttpServletRequest request
 			) {
-		List<PaceUserVO> puvoList = uService.rNum();
-		request.setAttribute("puvoList", puvoList);
-		List<PaceBoardVO> pbvoList1 = uService.rFriend(puvoList.get(0).getUser_no());
-		request.setAttribute("pbvoList1", pbvoList1);
-		List<PaceBoardVO> pbvoList2 = uService.rFriend(puvoList.get(1).getUser_no());
-		request.setAttribute("pbvoList2", pbvoList2);
-		return "main";
+		System.out.println("회원가입성공페이지 진입");
+//		Map<String, Object> puvoList = uService.rNum();
+//		request.setAttribute("puvoList", puvoList);
+//		Map<String, Object> pbvoList1 = uService.rFriend(puvoList.get(0).getUser_no());
+//		request.setAttribute("pbvoList1", pbvoList1);
+//		Map<String, Object> pbvoList2 = uService.rFriend(puvoList.get(1).getUser_no());
+//		request.setAttribute("pbvoList2", pbvoList2);
+		
+		List list = uService.rNum();
+		Map map1 = (Map) list.get(0);
+		Map map2 = (Map) list.get(1);
+		request.setAttribute("map1", map1);
+		request.setAttribute("map2", map2);
+		
+		System.out.println(" map1 + map2 ==="+map1+"   "+map2);
+
+		return "join_success";
 	}
 	
 	@RequestMapping("/login.do")
