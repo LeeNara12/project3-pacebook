@@ -104,7 +104,8 @@
 									 WHERE bc.comment_no = cc.comment_no
 									 GROUP BY bc.comment_no
 								     ) b ON (a.comment_no = b.comment_no)
-		) a JOIN user_info b ON (a.user_no = b.user_no)
+				) a JOIN user_info b ON (a.user_no = b.user_no)
+		ORDER BY comment_time asc
 	</select>
 	<select id="selectShowCmComment" parameterType="int" resultMap="rmPaceUCmCVO">
 		SELECT *

@@ -51,9 +51,9 @@ public class CommentDAOImpl implements CommentDAO{
 	}
 	
 	@Override
-	public void createCmComment(int user_no, int comment_no,String content) {//댓글 작성 메소드
+	public void createCmComment(int user_no, int comment_no,String cmcomment_content) {//댓글 작성 메소드
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("content", content);
+		map.put("content", cmcomment_content);
 		map.put("user_no", user_no);
 		map.put("comment_no", comment_no);
 		sqlSession.insert("CommentDAO.insertCmComment", map);
