@@ -119,19 +119,37 @@
              </button> 
               설정
             </div>
+            
+            <!-- 활성화 비활성화 둘 중 하나만 눌리게 만들기!! -->
             <div class="lala">- 계정<br>
                 활성화<input type="radio">
                 비활성화<input type="radio" >
             </div>
-            <div class="look"><br>- 게시글 저장 페이지 보기</div>
+            
+            <!-- session.imvalidate -->
+            <!-- 로그아웃 하시겠습니다? yes no confirm창 띄우기 -->
             <div class="out"><br>- 로그아웃</div>
+            
+            <!-- 일단 보류 -->
             <div class="a"><br>- 휴면계정</div>
+            
+            
+            <!-- 계정 탈퇴 시 해당 user_info테이블에서 회원정보 삭제-->
+            <!-- 삭제하는 거는 게시판 만들기 테이블이 다 만들어진다음에!!! 아직 안 만들어짐 -->
+            <!-- 비밀번호 입력하는 div 아코디언으로 열리기 -->
             <div class="a1"><br>- 계정탈퇴</div>
+            
+            
+            <!-- 개인정보 변경하는 페이지 열리기 아코디언으로 -->
+            <!-- 프로필사진(어려워서 일단 보류), 비밀번호, 핸드폰번호, 이메일  -->
             <div class="a2"><br>- 개인정보 변경</div>
+            
+            
+            
             <div class="a3">PACEBOOK</div>
             <div class="a4"><br>계정 센터</div>
             <div class="a5"> 계정 및 게시글 작성 페이지 보기, 로그아웃, 휴면계정, 
-                                    <br> 계정탈퇴, 개인정보 변경을 관리 하새요.
+                                    <br> 계정탈퇴, 개인정보 변경을 관리하세요.
             </div>
         </div>
         <ul id="friend_list">

@@ -104,9 +104,9 @@
 						</c:if>
 							</a>
 						</c:if>
-						<a href="#" class="follow">게시물${boardList.size() }</a> <a href="#"
-							class="follow">팔로우${followList.size()}</a> <a href="#"
-							class="follow">팔로워${followerList.size()}</a>
+						<a href="/pacebook/profile" class="follow">게시물${boardList.size() }</a> 
+						<a href="" class="follow">팔로우${followList.size()}</a> 
+						<a href="" class="follow">팔로워${followerList.size()}</a>
 					</div>
 				</div>
 			</div>
@@ -191,6 +191,7 @@
 						<div id="image_box">
 							<div>
 								<div class="contact_section">
+								<!-- 프로필 게시물 페이지 -->
 									<c:forEach var="board" items="${boardList }">
 										<img
 											style="width: 300px; height: 300px; border-radius: 30px;"

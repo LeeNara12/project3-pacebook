@@ -146,15 +146,20 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("user_no") int user_no
 			) {
+		System.out.println("프로필페이지 진입");
+		System.out.println("@RequestParam user_no + "+user_no);
+		
 		HttpSession se = request.getSession();
 		PaceUserVO vo = uService.getUserInfo(user_no);
-		request.setAttribute("vo",vo);
 		List<PaceBoardVO> boardList = bService.myBoard(user_no);
-		request.setAttribute("boardList", boardList);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
-		request.setAttribute("followList", followList);
 		List<PaceUserVO> followerList = uService.getFollowerList(user_no);
+		
+		request.setAttribute("vo",vo);
+		request.setAttribute("boardList", boardList);
+		request.setAttribute("followList", followList);
 		request.setAttribute("followerList", followerList);
+		
 		int user_no1 = (int)se.getAttribute("user_no");
 		PaceUserVO vo1 = uService.getUserInfo(user_no1);
 		se.setAttribute("vo1", vo1);
