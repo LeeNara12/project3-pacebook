@@ -66,53 +66,6 @@
     display: flex;
 }
 /* 사이드 */
-<<<<<<< HEAD
-#side{
-    display: inline-block;
-    width: 20%;
-    text-align: center;
-    height:100%
-}
-#profile_box{
-    color: white;
-    background-color: rgb(141, 141, 194);
-    height: 25%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 5px;
-}
-#profile{
-    overflow: hidden;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-}
-
-#show_id{
-    font-size: 2vh;
-    padding-bottom: 30px;
-}
-
-#side_tool > ul > li{
-    border: 1px solid rgb(170, 170, 170);
-    border-top: 0;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    font-size: 2vh;
-    font-weight: bold;
-    border-radius: 5px;
-    padding-left: 30px;
-    color:rgb(170, 170, 170);
-}
-#side_tool > ul > li:hover{
-    background-color: rgb(230, 230, 230);
-    color: rgb(141, 141, 194);
-    border-left: 5px solid rgb(141, 141, 194);
-=======
 #side {
 	display: inline-block;
 	width: 20%;
@@ -181,7 +134,6 @@
 a {
 	text-decoration: none;
 	color: inherit;
->>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 }
 
 /* 메인 */
@@ -393,6 +345,111 @@ input{
 .profile_div{
     border-radius: 50%;
     overflow: hidden;
+}
+.cl{
+  padding-left: 25px;
+  padding-top: 5.5px;
+  /* padding-bottom: 5.5px; */
+  /* border: 1px solid red; */
+}
+.cl2 {
+    background-color: rgb(141, 141, 194);
+    border: 1px solid  rgb(251, 251, 251);
+    color: white;
+}
+.cl2:hover {
+    background-color:  rgb(108, 108, 153);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl3 {
+    padding-left: 25px;
+    padding-top: 5.5px;
+    /* background-color: rgb(141, 141, 194); */
+    border: 1px solid  rgb(251, 251, 251);
+    /* color: white; */
+}
+.cl4 {
+    background-color: rgb(141, 141, 194);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl4:hover {
+    background-color:  rgb(108, 108, 153);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl5 {
+    padding-left: 25px;
+    padding-top: 5.5px;
+    /* background-color: rgb(141, 141, 194); */
+    border: 1px solid  rgb(251, 251, 251);
+    /* color: white; */
+}
+.cl6 {
+    background-color: rgb(141, 141, 194);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl6:hover:hover {
+    background-color:  rgb(108, 108, 153);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl7 {
+    padding-left: 25px;
+    padding-top: 5.5px;
+    /* background-color: rgb(141, 141, 194); */
+    border: 1px solid  rgb(251, 251, 251);
+    /* color: white; */
+}
+.cl8 {
+    background-color: rgb(141, 141, 194);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl8:hover {
+    background-color:  rgb(108, 108, 153);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl9 {
+    padding-left: 25px;
+    padding-top: 5.5px;
+    /* background-color: rgb(141, 141, 194); */
+    border: 1px solid  rgb(251, 251, 251);
+    /* color: white; */
+}
+.cl10 {
+    background-color: rgb(141, 141, 194);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl10:hover {
+    background-color:  rgb(108, 108, 153);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+}
+.cl11 {
+    padding-left: 600px;
+    padding-top: 5.5px;
+    /* background-color: rgb(141, 141, 194); */
+    border: 1px solid  rgb(251, 251, 251);
+    /* color: white; */
+}
+.cl12 {
+    background-color: rgb(141, 141, 194);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+    width: 50px;
+    height: 30px;
+    /* margin-bottom: 5.5px; */
+}
+.cl12:hover {
+    background-color:  rgb(108, 108, 153);
+    border: 1px solid rgb(251, 251, 251);
+    color: white;
+   
 }
 ::-webkit-scrollbar{
     width:10px;

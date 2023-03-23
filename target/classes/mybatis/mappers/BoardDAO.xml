@@ -103,8 +103,6 @@
 		WHERE user_no = #{_parameter}
 		ORDER BY board_time DESC
 	</select>
-<<<<<<< HEAD
-=======
 	
 	<select id='followList_no' parameterType='int' resultType='int' >
 		SELECT count(*) 
@@ -139,5 +137,4 @@
 	
 	
 	
->>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 </mapper>
