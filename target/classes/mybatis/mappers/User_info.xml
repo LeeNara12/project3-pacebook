@@ -98,7 +98,7 @@
 	<select id="follow1" parameterType='java.util.HashMap' resultType='PaceUserVO'>
 		select *
 		from follow_list
-		where user_no = #{user_no}
+		where user_no = #{user_no} AND follow_u_no = #{buser_no}
 	</select>
 	<delete id="follow2" parameterType='java.util.HashMap'>
 		delete 

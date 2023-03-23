@@ -155,16 +155,10 @@ public class User_infoDAOImpl implements User_infoDAO{
 		map.put("buser_no",buser_no);
 		
 		List list = sqlSession.selectList("User_infoDAO.follow1", map);
-		
 		if(list.size() == 1) {
-			
-			int count = sqlSession.insert("User_infoDAO.follow2", map);
-			System.out.println(count+"명과 팔로우를 취소합니다");
-			
+			sqlSession.insert("User_infoDAO.follow2", map);
 		}else if(list.size() == 0) {
-			
-			int count = sqlSession.delete("User_infoDAO.follow3",map);
-			System.out.println(count+"명과 팔로우합니다");
+			sqlSession.delete("User_infoDAO.follow3",map);
 		}
 
 	}

@@ -390,7 +390,7 @@
                                 </div>
                                 <div id="board_comment_box">
                                     <textarea id="board_comment" name="content"></textarea>
-                                    <button id="comment_btn" data-url="bcomment" data-no="${board.board_no }">게시</button>
+                                    <button id="comment_btn" data-url="bcomment" data-no="${curBoard.board_no }">게시</button>
                                 </div>
                             </div>
                         </li>
