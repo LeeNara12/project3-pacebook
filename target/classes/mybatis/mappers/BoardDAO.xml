@@ -42,10 +42,10 @@
       			 #{pbvo.board_content})
 	</insert>
 	
-	<!-- 다운로드 업로드로 파일을 가져오는 방법 -->
+<!-- 	다운로드 업로드로 파일을 가져오는 방법 
 	<insert id='insertBoard2' parameterType='' >
 	
-	</insert>
+	</insert> -->
 	
 	
 	<delete id="deleteBoardComment" parameterType="int">

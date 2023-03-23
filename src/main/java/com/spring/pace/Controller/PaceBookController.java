@@ -53,6 +53,8 @@ public class PaceBookController{
 		return "login";
 	}
 	
+	
+	////1.
 	@RequestMapping("/board_page")
 	public String board_page(
 			HttpServletRequest request
@@ -73,6 +75,8 @@ public class PaceBookController{
 		request.setAttribute("myFollowList", myFollowList);
 		return "board";
 	}
+	
+	
 	
 	@RequestMapping("/board")
 	public String board(

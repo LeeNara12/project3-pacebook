@@ -15,6 +15,8 @@ public class FileDownloadController {
 
 	private static String CURR_IMAGE_REPO_PATH = "D:\\spring\\image_repo";
 	
+	
+	//6.
 	@RequestMapping("/download")
 	public void download(
 				@RequestParam("imageFileName") String imageFileName,
@@ -25,6 +27,7 @@ public class FileDownloadController {
 		String downFile = CURR_IMAGE_REPO_PATH + "\\" + imageFileName;
 		File file = new File(downFile);
 		
+		response.setContentType("text/html; charset=utf-8");
 		response.setHeader("Cache-Control", "no-cache");
 		response.addHeader("Content-disposition", "attachment; fileName=" + imageFileName);
 		FileInputStream in = new FileInputStream(file);
@@ -33,7 +36,7 @@ public class FileDownloadController {
 			int count = in.read(buffer);
 			if(count == -1) break;
 			out.write(buffer, 0, count);//buffer(바이트 배열)[0~count]까지의 바이트를 출력 스트림으로 보냄
-		}
+		}///인코딩 에러 무시하기
 		in.close();
 		out.close();
 		
