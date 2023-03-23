@@ -122,8 +122,9 @@
             
             <!-- 활성화 비활성화 둘 중 하나만 눌리게 만들기!! -->
             <div class="lala">- 계정<br>
-                활성화<input type="radio">
-                비활성화<input type="radio" >
+                <input type="radio" name="Account" value="Activation"> 활성화<br>
+                <input type="radio" name="Account" value="Deactivation"> 비활성화<br>
+<!--                 value  자바에서 값을 불러온다.-->
             </div>
             
             <!-- session.imvalidate -->
@@ -137,15 +138,36 @@
             <!-- 계정 탈퇴 시 해당 user_info테이블에서 회원정보 삭제-->
             <!-- 삭제하는 거는 게시판 만들기 테이블이 다 만들어진다음에!!! 아직 안 만들어짐 -->
             <!-- 비밀번호 입력하는 div 아코디언으로 열리기 -->
-            <div class="a1"><br>- 계정탈퇴</div>
+           <form action="/pacebook">           
+                <div class="a1"><br>- 계정탈퇴
+                    <div class="cl">
+                        비밀번호 : <input type="password"> <input class="cl2"type="submit" value="확인">
+                    </div>
+                </div>
+            </form>
             
             
             <!-- 개인정보 변경하는 페이지 열리기 아코디언으로 -->
             <!-- 프로필사진(어려워서 일단 보류), 비밀번호, 핸드폰번호, 이메일  -->
-            <div class="a2"><br>- 개인정보 변경</div>
-            
-            
-            
+           <form action="pacebook">
+                <div class="a2"><br>
+                    - 개인정보 변경
+                    <div class="cl3">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3N3Txd_kLDuwVSFGXEszhwRPpbKeyhkqDrZTPZLFHV1mgM-vNWka7Vq9-zz_SLihKU_s&usqp=CAU">
+                      <br>프로필 사진 변경 <input class="cl4"type="submit" value="변경">
+                    </div>
+                    <div class="cl5">
+                        비밀번호 :  <input type="password"> <input class="cl6"type="submit" value="확인">
+                    </div>
+                    <div class="cl7">
+                       이메일 :  <input type="text"> <input class="cl8"type="submit" value="확인">
+                    </div>
+                    <div class="cl9">
+                        핸드폰번호 :  <input type="text"> <input class="cl10"type="submit" value="확인">
+                    </div>
+                    <div class="cl11"> <input class="cl12"  type="submit" value="수정"></div>
+                </div>
+            </form>
             <div class="a3">PACEBOOK</div>
             <div class="a4"><br>계정 센터</div>
             <div class="a5"> 계정 및 게시글 작성 페이지 보기, 로그아웃, 휴면계정, 
