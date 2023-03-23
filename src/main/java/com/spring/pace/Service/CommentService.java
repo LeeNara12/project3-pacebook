@@ -33,8 +33,8 @@ public class CommentService {
 		return commentDAO.cmComment(comment_no);
 	}
 	
-	public void createCmComment(int user_no, int comment_no, String content) {
-		commentDAO.createCmComment(user_no, comment_no, content);
+	public void createCmComment(int user_no, int comment_no, String cmcomment_content) {
+		commentDAO.createCmComment(user_no, comment_no, cmcomment_content);
 	}
 	
 	public List<PaceUCVO> showComment(int board_no) {

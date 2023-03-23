@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.spring.pace.Algorithm.Time;
 import com.spring.pace.Service.BoardService;
 import com.spring.pace.Service.CommentService;
 import com.spring.pace.Service.User_infoService;
 import com.spring.pace.VO.PaceBoardVO;
+import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceUBVO;
 import com.spring.pace.VO.PaceUCVO;
 import com.spring.pace.VO.PaceUCmCVO;
@@ -95,28 +98,30 @@ public class PaceBookController{
 		return "main";
 	}
 	
-	@RequestMapping(value="/bcomment", method= {RequestMethod.POST})
+	@RequestMapping(value="/bcomment")
+	@ResponseBody
 	public void bComment(
-			@RequestParam("no") int board_no,
-			@RequestBody String comment_content,
+			@RequestBody ObjectNode obj,
 			HttpServletRequest request
 			) {
-		System.out.println();
+		String comment_content = obj.get("content").asText();
+		int board_no = obj.get("no").asInt();
         HttpSession se = request.getSession();
         int user_no = (int)se.getAttribute("user_no");
         cService.createComment(user_no, board_no, comment_content);
 	}
 	
 	@RequestMapping("/ccomment")
-	public String cComment(
+	@ResponseBody
+	public void cComment(
 			HttpServletRequest request,
-			@RequestBody String content,
-			@RequestParam("no") int comment_no
+			@RequestBody ObjectNode obj
 			) {
+		String cmcomment_content = obj.get("content").asText();
+		int comment_no = obj.get("no").asInt();
 		HttpSession se = request.getSession();
 	    int user_no = (int)se.getAttribute("user_no");
-	    cService.createCmComment(user_no, comment_no, content);
-	    return "/main";
+	    cService.createCmComment(user_no, comment_no, cmcomment_content);
 	}
 	
 	@RequestMapping("/del_comment")
@@ -200,17 +205,17 @@ public class PaceBookController{
 	}
 	
 	@RequestMapping("/follow")
-	public String follow(
+	@ResponseBody
+	public PaceUserVO follow(
 			HttpServletRequest request,
-			@RequestParam("user_no") int buser_no
+			@RequestBody ObjectNode obj
 			) {
+		int buser_no = obj.get("user_no").asInt();
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");
 		uService.follow(user_no, buser_no);
-		List<PaceUserVO> followList = new ArrayList<PaceUserVO>();
-		followList.add(uService.getUserInfo(buser_no));
-		request.setAttribute("followList", followList);
-		return "main";
+		PaceUserVO puvo = uService.getUserInfo(buser_no);
+		return puvo;
 	}
 	
 	@RequestMapping(value="/moreboard", method= {RequestMethod.POST})
