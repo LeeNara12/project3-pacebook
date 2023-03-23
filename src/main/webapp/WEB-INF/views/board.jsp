@@ -157,7 +157,7 @@
 </head>
 <body>
     <div class="blackLayer"></div>
-    <form action="/pacebook/main" method="post">
+    <form action="/upload" method="post" enctype='mutipart/form-data'>
     <div id="top">
         <a href='/pacebook/main' class='a'><span id="logo">PACEBOOK</span></a>
         <div id="top_right">

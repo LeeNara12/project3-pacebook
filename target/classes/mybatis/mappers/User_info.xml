@@ -153,7 +153,6 @@
 	
 	
 	<select id='rNum1' resultType='int'>
-<<<<<<< HEAD
 		SELECT max(rownum)
 		FROM user_info i LEFT OUTER JOIN board b ON (i.user_no=b.user_no)
 
@@ -168,21 +167,6 @@
 	)
 	WHERE rnum = #{a}
 	OR rnum = #{b}
-=======
-		select max(rownum)
-		from user_info
-	</select>
-	<select id='rNum2' parameterType='java.util.HashMap' resultType='PaceUserVO'>
-		
-		select *
-		from
-		(
-			select rownum as rnum, ui.*
-			from user_info ui
-		)
-		where rnum = #{a}
-		or rnum = #{b}
->>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 	</select>
 	
 	

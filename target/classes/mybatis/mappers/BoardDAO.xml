@@ -42,6 +42,12 @@
       			 #{pbvo.board_content})
 	</insert>
 	
+	<!-- 다운로드 업로드로 파일을 가져오는 방법 -->
+	<insert id='insertBoard2' parameterType='' >
+	
+	</insert>
+	
+	
 	<delete id="deleteBoardComment" parameterType="int">
 		delete from board_comment
 		where board_no = #{_parameter}
@@ -103,8 +109,6 @@
 		WHERE user_no = #{_parameter}
 		ORDER BY board_time DESC
 	</select>
-<<<<<<< HEAD
-=======
 	
 	<select id='followList_no' parameterType='int' resultType='int' >
 		SELECT count(*) 
@@ -139,5 +143,4 @@
 	
 	
 	
->>>>>>> 5d9c92f00834cf693216a08f77536431488aa9f3
 </mapper>
