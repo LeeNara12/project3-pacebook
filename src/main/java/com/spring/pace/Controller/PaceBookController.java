@@ -233,6 +233,7 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("pagenum") int pageNum
 			) {
+		System.out.println("pageNum : "+pageNum);
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, pageNum);
