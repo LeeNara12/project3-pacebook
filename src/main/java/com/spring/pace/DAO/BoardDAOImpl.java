@@ -39,9 +39,12 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<PaceUBVO> getBoard(int pageNum) {//게시물 가져오는 메소드
+	public List<PaceUBVO> getBoard(int user_no, int pageNum) {//게시물 가져오는 메소드
+		Map map = new HashMap();
+		map.put("user_no", user_no);
+		map.put("pageNum", pageNum);
 		List<PaceUBVO> list = new ArrayList<PaceUBVO>();
-		list = sqlSession.selectList("BoardDAO.selectBoard", pageNum);
+		list = sqlSession.selectList("BoardDAO.selectBoard", map);
 		return list;
 	}
 	
@@ -83,6 +86,17 @@ public class BoardDAOImpl implements BoardDAO {
 		List<PaceUserVO> list = sqlSession.selectList("BoardDAO.myFollowList", user_no);
 		
 		return list;
+	}
+
+	@Override
+	public int boardLike(int user_no, int board_no) {
+		Map map = new HashMap();
+		map.put("user_no", user_no);
+		map.put("board_no", board_no);
+		sqlSession.selectOne("BoardDAO.selectBLL", map);
+		
+		int n = sqlSession.update("BoardDAO.updateBoardLike", board_no);
+		return 0;/////////////////////
 	}
 	
 	

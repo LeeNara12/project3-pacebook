@@ -30,8 +30,8 @@ public class BoardService {
 		return boardDAO.search(search_content);
 	}
 	
-	public List<PaceUBVO> getBoard(int pageNum){
-		return boardDAO.getBoard(pageNum);
+	public List<PaceUBVO> getBoard(int user_no, int pageNum){
+		return boardDAO.getBoard(user_no, pageNum);
 	}
 	public List<PaceBoardVO> myBoard(int user_no){
 		return boardDAO.myBoard(user_no);
@@ -50,6 +50,10 @@ public class BoardService {
 	
 	public List<PaceUserVO> myFollowList(int user_no){
 		return boardDAO.myFollowList(user_no);
+	}
+	
+	public int boardLike(int user_no, int board_no){
+		return boardDAO.boardLike(user_no, board_no);
 	}
 	
 }

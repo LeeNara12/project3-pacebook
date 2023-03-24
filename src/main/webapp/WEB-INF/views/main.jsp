@@ -16,9 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pacebook</title>
     <link rel="stylesheet" href="/css/main.css">
-    <script>
-    	var myNo = ${sessionScope.user_no};
-    </script>
     <script type="text/javascript" src="/script/main.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
@@ -129,7 +126,7 @@
                 <div id="notice_top">
                     <div id="notice_top_text">
                         <span>알림</span>
-                    </div>
+    			    </div>
                     <button id="notice_close">
                         <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor"
                             viewBox="0 0 16 16">
@@ -198,7 +195,7 @@
                                     <c:if test="${sessionScope.user_no != BoardUser.user_no}">
                                         <button class="board_menus board_follow_btn" data-un="${BoardUser.user_no }">
                                             <c:choose>
-                                                <c:when test="0">
+                                                <c:when test="${curBoard.board_follow != 0}">
                                                     <span>팔로우 취소</span>
                                                 </c:when>
                                                 <c:otherwise>
