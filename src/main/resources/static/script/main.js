@@ -664,6 +664,10 @@ window.onload = function () {
         })
     }
 
+
+    
+    
+    
     function pagingAfter(){
         showMoreBtn();
         showMoreBtn2();
@@ -674,6 +678,34 @@ window.onload = function () {
         showCmComment();
         friendFollow();
         commentText();
+        
     }
     pagingAfter();
 }
+    //게시글 이미지 여러개 좌우로 넘기는 이벤트
+            //이미지 하나씩 보는 이벤트
+     
+
+        function fnRight() {
+            console.log('right 들어감');
+            console.log($('#flex_image'));
+            $("#flex_image").animate({ "margin-left": "-485.98px"}, 300, function () {
+                $("#flex_image").css({ "margin-left": "0px" });
+                $("#flex_image img:first-child").insertAfter("#flex_image img:last-child");
+               
+            });
+
+        };
+
+        function fnLeft() {
+            console.log('left 들어감');
+            console.log($('#flex_image'));
+            $("#flex_image").css({ "margin-left": "-485.98px" });
+            $("#flex_image img:last-child").insertBefore("#flex_image img:first-child");
+            // 옮기기
+            $("#flex_image").animate({ "margin-left": "0"}, 300, function () {
+                // $("#images").css({ "margin-left": "479.61px" });
+               
+               
+            });
+        }

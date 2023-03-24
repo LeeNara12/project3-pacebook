@@ -53,6 +53,8 @@ public class PaceBookController{
 		return "login";
 	}
 	
+	
+	////1.
 	@RequestMapping("/board_page")
 	public String board_page(
 			HttpServletRequest request
@@ -74,14 +76,21 @@ public class PaceBookController{
 		return "board";
 	}
 	
+	
+	
 	@RequestMapping("/board")
 	public String board(
 			@ModelAttribute PaceBoardVO pbvo,
 			HttpServletRequest request
 			) {
+		
+		System.out.println("보드작성 메소드 실행");
+		
 		HttpSession se = request.getSession();//세션 생성 및 가져오기
 		int user_no = (int) se.getAttribute("user_no");//세션에 유저넘버 값을 넣어줌 
 		bService.createBoard(user_no, pbvo);// dao의 createBoard메소드에 유저넘버랑 내용을 넘김//DB에 게시글 내용 저장
+		
+		System.out.println("보드작성 메소드 실행 ==> 메인으로 이동 중 ");
 		return "main";
 	}
 	
