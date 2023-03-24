@@ -247,7 +247,7 @@
                     <div id="right" onclick="fnRight()"><i class="bi bi-chevron-right"></i></div>
                 </div>
                 <div id="content_box">
-                    <textarea id="board_content" placeholder="내용을 입력해 주세요."></textarea>
+                    <textarea id="board_content" name='board_content' placeholder="내용을 입력해 주세요."></textarea>
                 </div>
             </div>
         </div>

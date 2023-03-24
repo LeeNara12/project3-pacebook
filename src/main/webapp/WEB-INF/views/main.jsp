@@ -213,13 +213,9 @@
                                 <!-- ----------------------여기에다 다운받은 이미지 삽입-------------------------- -->
                             <div id="board_image">
                                 <div id="left" onclick="fnLeft()"><i class="bi bi-chevron-left"></i></div>
-                                    <div id="flex_image">
-                                        <img class="board_image" src="">
-                                        <img class="board_image" src="">
-                                        <img class="board_image" src="">
-
-                                    </div>
-                    
+                                     <img class="board_image" src="">
+                                     <img class="board_image" src="">
+                                     <img class="board_image" src="">
                                 <div id="right" onclick="fnRight()"><i class="bi bi-chevron-right"></i></div>
                             </div>
                             
