@@ -35,21 +35,15 @@ public class FileUploadController {
 		
 		System.out.println("파일업로드 메소드 진입");
 		multipartRequest.setCharacterEncoding("utf-8");
-		Map map = new HashMap();
-		
-
 		
 		List fileList = fileProcess(multipartRequest);
-		map.put("fileList", fileList);
+		
 		System.out.println("fileList의 사이즈는? "+ fileList.size());
 		
-		request.setAttribute("map", map);
-		
-//		ModelAndView mav = new ModelAndView();
-//		mav.addObject("map", map);
+		request.setAttribute("fileList", fileList);
 		
 		
-		return "fileDownload";
+		return "forward:/pacebook/board";
 	}
 	
 	

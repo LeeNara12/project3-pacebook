@@ -12,5 +12,7 @@
 		<typeAlias alias="PaceUBVO" type="com.spring.pace.VO.PaceUBVO"/>
 		<typeAlias alias="PaceUCVO" type="com.spring.pace.VO.PaceUCVO"/>
 		<typeAlias alias="PaceUCmCVO" type="com.spring.pace.VO.PaceUCmCVO"/>
+		<typeAlias alias="FileListVO" type="com.spring.pace.VO.FileListVO"/>
+		
 	</typeAliases>
 </configuration>

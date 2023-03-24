@@ -36,17 +36,26 @@
 	</resultMap>
 	
 	<insert id="insertBoard" parameterType="java.util.HashMap">
-		insert into board
-      	values(seq_board.nextval, current_date, 0,
-      			 #{pbvo.board_url}, #{user_no},
-      			 #{pbvo.board_like}, #{pbvo.board_modify_time},
-      			 #{pbvo.board_content})
+		insert into board(board_no, board_time, BOARD_CONTENT, USER_NO)
+		values(seq_board.nextval, current_date, #{pbvo.board_content}, #{user_no})
 	</insert>
+	<select id='selectBoard_no' resultType='int'>
+		SELECT max(board_no)
+		FROM board
+	</select>
+	<insert id='insertFileList' parameterType='FileListVO'>
+		insert into file_list(user_no, board_no, file_image)
+		values(#{user_no}, #{board_no}, #{file_image})
+	</insert>
+	<select id='selectFileList' parameterType='FileListVO' resultType='String'>
+		select file_image
+		from file_list
+		where user_no = #{user_no}
+		and board_no = #{board_no}
+	</select>
 	
-<!-- 	다운로드 업로드로 파일을 가져오는 방법 
-	<insert id='insertBoard2' parameterType='' >
 	
-	</insert> -->
+
 	
 	
 	<delete id="deleteBoardComment" parameterType="int">

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.pace.VO.FileListVO;
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUBVO;
 import com.spring.pace.VO.PaceUserVO;
@@ -26,11 +27,34 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void createBoard(int user_no, PaceBoardVO pbvo) {//게시글 작성 메소드
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("user_no", user_no);
 		map.put("pbvo", pbvo);
 		int count = sqlSession.insert("BoardDAO.insertBoard", map);
 		System.out.println("추가된 게시물 갯수 : "+count);
 	}
+	
+	@Override
+	public int selectBoard_no() {
+		int board_no = sqlSession.selectOne("BoardDAO.selectBoard_no");
+		return board_no;
+	}
+	
+	@Override
+	public void uploadImage(FileListVO vo ) {
+		int count = sqlSession.insert("BoardDAO.insertFileList", vo);
+		System.out.println("업로드되는 이미지 갯수는 ? "+ count);
+	}
+	
+	
+	@Override
+	public List<String> downloadImage(FileListVO vo) {
+		List<String> list = sqlSession.selectList("BoardDAO.selectFileList",vo);
+		
+		return list;
+	}
+	
+	
 	
 	@Override
 	public void delBoard(int board_no) {//게시물 삭제 메소드

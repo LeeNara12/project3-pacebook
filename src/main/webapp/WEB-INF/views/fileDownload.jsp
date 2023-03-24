@@ -12,10 +12,10 @@
 
 
 	<!-- 4. -->
-	<h1>파일 업로드가 완료되었습니다. ${map.fileList}</h1>
+	<h1>파일 업로드가 완료되었습니다. ${fileList}</h1>
 	
 	<div class = 'result-images'>
-	<c:forEach var='imageFileName' items='${map.fileList}'>
+	<c:forEach var='imageFileName' items='${fileList}'>
 		<!-- 5. -->
 		<img src="/download?imageFileName=${imageFileName}">
 		<br><br>
