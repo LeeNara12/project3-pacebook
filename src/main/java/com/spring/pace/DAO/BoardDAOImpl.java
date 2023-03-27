@@ -48,9 +48,9 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	
 	@Override
-	public List<String> downloadImage(FileListVO vo) {
-		List<String> list = sqlSession.selectList("BoardDAO.selectFileList",vo);
-		
+	public List downloadImage(FileListVO vo) {
+		List list = sqlSession.selectList("BoardDAO.selectFileList",vo);
+		System.out.println("fileName 리스트 생성");
 		return list;
 	}
 	
@@ -96,8 +96,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<PaceBoardVO> myBoardList(int user_no) {
-		List<PaceBoardVO> list = sqlSession.selectList("BoardDAO.myBoardList", user_no);
+	public List<String> myBoardList(int user_no) {
+		List<String> list = sqlSession.selectList("BoardDAO.myBoardList", user_no);
 		
 		return list;
 	}

@@ -12,13 +12,13 @@ public interface BoardDAO {
 	public void createBoard(int user_no, PaceBoardVO pbvo);
 	public int selectBoard_no();
 	public void uploadImage(FileListVO vo );
-	public List<String> downloadImage(FileListVO vo);
+	public List downloadImage(FileListVO vo);
 	public void delBoard(int board_no);
 	public List<PaceUBVO> getBoard(int pageNum);
 	public List<PaceBoardVO> search(String search_content);
 	public List<PaceBoardVO> myBoard(int user_no);
 	public int followList_no(int user_no);
 	public int followerList_no(int user_no);
-	public List<PaceBoardVO> myBoardList(int user_no);
+	public List<String> myBoardList(int user_no);
 	public List<PaceUserVO> myFollowList(int user_no);
 }

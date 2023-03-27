@@ -27,7 +27,7 @@ public class BoardService {
 	public void uploadImage(FileListVO vo ) {
 		boardDAO.uploadImage(vo);
 	}
-	public List<String> downloadImage(FileListVO vo) {
+	public List downloadImage(FileListVO vo) {
 		return boardDAO.downloadImage(vo);
 	}
 	
@@ -54,7 +54,7 @@ public class BoardService {
 		return boardDAO.followerList_no(user_no);
 	}
 	
-	public List<PaceBoardVO> myBoardList(int user_no) {
+	public List<String> myBoardList(int user_no) {
 		return boardDAO.myBoardList(user_no);
 	}
 	

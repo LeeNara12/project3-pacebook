@@ -686,24 +686,30 @@ window.onload = function () {
             //이미지 하나씩 보는 이벤트
      
 
-        function fnRight() {
+        function fnRight(dom) {
+
+            let d = $(dom).parent().find('ul');
             console.log('right 들어감');
-            console.log($('#flex_image'));
-            $("#flex_image").animate({ "margin-left": "-485.98px"}, 300, function () {
-                $("#flex_image").css({ "margin-left": "0px" });
-                $("#flex_image img:first-child").insertAfter("#flex_image img:last-child");
+            console.log(d.find('#images'));
+           
+
+            d.find('#images').animate({ "margin-left": "-485.98px"}, 300, function () {
+                d.find('#images').css({ "margin-left": "0px" });
+                d.find("#images img:first-child").insertAfter(d.find("#images img:last-child"));
                
             });
 
         };
 
-        function fnLeft() {
+        function fnLeft(dom) {
+            let d = $(dom).parent().find('ul');
             console.log('left 들어감');
-            console.log($('#flex_image'));
-            $("#flex_image").css({ "margin-left": "-485.98px" });
-            $("#flex_image img:last-child").insertBefore("#flex_image img:first-child");
+            console.log($('#images'));
+
+            d.find("#images").css({ "margin-left": "-485.98px" });
+            d.find("#images img:last-child").insertBefore(d.find("#images img:first-child"));
             // 옮기기
-            $("#flex_image").animate({ "margin-left": "0"}, 300, function () {
+            d.find("#images").animate({ "margin-left": "0"}, 300, function () {
                 // $("#images").css({ "margin-left": "479.61px" });
                
                

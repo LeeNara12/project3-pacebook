@@ -1,6 +1,7 @@
 package com.spring.pace.VO;
 
 import java.sql.Date;
+import java.util.List;
 
 public class PaceBoardVO {
 	private int board_no; //게시판 번호

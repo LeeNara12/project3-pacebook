@@ -29,9 +29,17 @@
 		<result property="user_board_oc" column="user_board_oc"/>
 		<result property="user_sleep" column="user_sleep"/>
 	</resultMap>
+	<resultMap type="FileListVO" id="rmFileListVO">
+		<result property='user_no' column='user_no'/>
+		<result property='board_no' column='board_no'/>
+		<result property='file_image' column='file_image'/>
+	</resultMap>
+	
+	
 	<resultMap type="PaceUBVO" id="rmPaceUBVO">
 		<collection property="paceUserVO" resultMap="rmPaceUserVO"/>
 		<collection property="paceBoardVO" resultMap="rmPaceBoardVO"/>
+		<collection property="fileListVO" resultMap="rmFileListVO"/>
 	</resultMap>
 	
 	<insert id="insertBoard" parameterType="java.util.HashMap">
@@ -132,11 +140,17 @@
 	</select>
 	
 	
-	<select id='myBoardList' parameterType='int' resultType='PaceBoardVO'>
-		SELECT user_no, board_no, board_url
-		FROM BOARD b 
-		WHERE user_no = #{_parameter}
-		ORDER BY BOARD_NO 
+	
+	<select id='myBoardList' parameterType='int' resultType='String'>
+		SELECT file_image 
+		FROM (
+			SELECT
+				board_no, file_image,
+				ROW_NUMBER() over(PARTITION BY board_no ORDER BY file_image) rnum
+			FROM file_list		
+			WHERE user_no = #{_parameter}
+		)
+		WHERE rnum = 1
 	</select>
 	
 	<select id='myFollowList' parameterType='int' resultType='PaceUserVO'>

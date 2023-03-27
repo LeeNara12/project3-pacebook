@@ -1,8 +1,8 @@
 package com.spring.pace.Controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,7 +64,7 @@ public class PaceBookController{
 		PaceUserVO vo1 = uService.getUserInfo(user_no);
 		int followList_no = bService.followList_no(user_no);
 		int followerList_no = bService.followerList_no(user_no);
-		List<PaceBoardVO> myBoardList = bService.myBoardList(user_no);
+		List<String> myBoardList = bService.myBoardList(user_no);
 		List<PaceUserVO> myFollowList = bService.myFollowList(user_no);
 		
 		request.setAttribute("vo1", vo1);
@@ -106,10 +106,10 @@ public class PaceBookController{
 //		request.setAttribute("FileListVO", vo);
 		
 //		FileListVO vo1 = (FileListVO) request.getAttribute("FileListVO");
-		List<String> list2 = bService.downloadImage(vo);
-		request.setAttribute("fileList", list2);
+//		List<String> list2 = bService.downloadImage(vo);
+//		request.setAttribute("fileList", list2);
 		
-		System.out.println("보드작성 메소드 실행 ==> result로 이동 중 ");
+		System.out.println("보드작성 메소드 실행 ==> main로 이동 중 ");
 		return "forward:/pacebook/main";
 	}
 	
@@ -225,11 +225,25 @@ public class PaceBookController{
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
 		List<PaceUBVO> UBList = bService.getBoard(1);
+		
+		
+		
+		for(PaceUBVO ub : UBList) {
+			FileListVO vo = new FileListVO();
+			int board_no = ub.getPaceBoardVO().getBoard_no();
+			vo.setUser_no(user_no);
+			vo.setBoard_no(board_no);
+			List<String> list = bService.downloadImage(vo);
+			ub.setFile_image(list);
+			for(String str: list) {
+				System.out.println(str);
+			}
+			
+		}
+		
 		request.setAttribute("UBList", UBList);
 		
-//		FileListVO vo = (FileListVO) request.getAttribute("FileListVO");
-//		List<String> list = bService.downloadImage(vo);
-//		request.setAttribute("fileList", list);
+
 		
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, 1);
 		request.setAttribute("nfuList", nfuList);
