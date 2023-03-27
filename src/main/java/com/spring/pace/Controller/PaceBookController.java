@@ -226,8 +226,8 @@ public class PaceBookController{
 		se.setAttribute("puvo", puvo);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
-<<<<<<< HEAD
-		List<PaceUBVO> UBList = bService.getBoard(1);
+
+		List<PaceUBVO> UBList = bService.getBoard(1,1);
 		
 		
 		
@@ -244,15 +244,15 @@ public class PaceBookController{
 			
 		}
 		
-=======
-		List<PaceUBVO> UBList = bService.getBoard(user_no, 1);
-		for(PaceUBVO ub : UBList) {
-			int boardUserNo = ub.getPaceBoardVO().getUser_no();
-			if(boardUserNo == user_no) {
-				ub.getPaceBoardVO().setBoard_mine(1);
-			}
-		}
->>>>>>> 069087f28957fb19372bda20224b820b0068e63a
+//=======
+//		List<PaceUBVO> UBList = bService.getBoard(user_no, 1);
+//		for(PaceUBVO ub : UBList) {
+//			int boardUserNo = ub.getPaceBoardVO().getUser_no();
+//			if(boardUserNo == user_no) {
+//				ub.getPaceBoardVO().setBoard_mine(1);
+//			}
+//		}
+//>>>>>>> 069087f28957fb19372bda20224b820b0068e63a
 		request.setAttribute("UBList", UBList);
 		
 
