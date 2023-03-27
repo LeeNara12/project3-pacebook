@@ -173,7 +173,9 @@ public class PaceBookController{
 	public String getBoard(
 			HttpServletRequest request
 			) {
-		List<PaceUBVO> boardList = bService.getBoard(1);
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		List<PaceUBVO> boardList = bService.getBoard(user_no, 1);
 		request.setAttribute("boardList", boardList);
 		return "main";
 	}
@@ -224,6 +226,7 @@ public class PaceBookController{
 		se.setAttribute("puvo", puvo);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
+<<<<<<< HEAD
 		List<PaceUBVO> UBList = bService.getBoard(1);
 		
 		
@@ -241,6 +244,15 @@ public class PaceBookController{
 			
 		}
 		
+=======
+		List<PaceUBVO> UBList = bService.getBoard(user_no, 1);
+		for(PaceUBVO ub : UBList) {
+			int boardUserNo = ub.getPaceBoardVO().getUser_no();
+			if(boardUserNo == user_no) {
+				ub.getPaceBoardVO().setBoard_mine(1);
+			}
+		}
+>>>>>>> 069087f28957fb19372bda20224b820b0068e63a
 		request.setAttribute("UBList", UBList);
 		
 
@@ -270,13 +282,22 @@ public class PaceBookController{
 	@RequestMapping(value="/moreboard", method= {RequestMethod.POST})
 	@ResponseBody
 	public List<PaceUBVO> moreboard(
-			@RequestParam("pagenum") int pageNum
+			@RequestParam("pagenum") int pageNum,
+			HttpServletRequest request
 			) {
-		List<PaceUBVO> boardList = bService.getBoard(pageNum);
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		List<PaceUBVO> boardList = bService.getBoard(user_no, pageNum);
 		for(int i=0; i<boardList.size(); i++) {
 			Date boardTime = boardList.get(i).getPaceBoardVO().getBoard_time();
 			String bt = Time.calculateTime(boardTime);
 			boardList.get(i).getPaceBoardVO().setBoard_time_s(bt);
+		}
+		for(PaceUBVO ub : boardList) {
+			int boardUserNo = ub.getPaceBoardVO().getUser_no();
+			if(boardUserNo == user_no) {
+				ub.getPaceBoardVO().setBoard_mine(1);
+			}
 		}
 		return boardList;
 	}
@@ -287,6 +308,7 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("pagenum") int pageNum
 			) {
+		System.out.println("pageNum : "+pageNum);
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, pageNum);
@@ -327,5 +349,18 @@ public class PaceBookController{
 	public String settingPage() {
 		System.out.println("설정 페이지 실행");
 		return "setting";
+	}
+	
+	@RequestMapping("/boardLike")
+	@ResponseBody
+	public int boardLike(
+			@RequestBody ObjectNode obj,
+			HttpServletRequest request
+			) {
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		int board_no = obj.get("board_no").asInt();
+		int likeCnt = bService.boardLike(user_no, board_no); 
+		return likeCnt;
 	}
 }

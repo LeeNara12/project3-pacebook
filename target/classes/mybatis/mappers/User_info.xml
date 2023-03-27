@@ -131,7 +131,7 @@
 				user_no
 			FROM(
 				SELECT 
-					rownum,
+					rownum as rn,
 					user_no
 				from(
 					SELECT
@@ -145,7 +145,7 @@
 					WHERE user_no = #{user_no}
 					)
 			)
-			WHERE rownum BETWEEN (#{pageNum} -1)*20 AND #{pageNum}*20
+			WHERE rn BETWEEN (#{pageNum} -1)*20 AND #{pageNum}*20
 		)	
 		
 	</select>

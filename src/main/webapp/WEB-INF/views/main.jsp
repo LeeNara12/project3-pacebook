@@ -127,7 +127,7 @@
                 <div id="notice_top">
                     <div id="notice_top_text">
                         <span>알림</span>
-                    </div>
+    			    </div>
                     <button id="notice_close">
                         <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor"
                             viewBox="0 0 16 16">
@@ -197,7 +197,7 @@
                                     <c:if test="${sessionScope.user_no != BoardUser.user_no}">
                                         <button class="board_menus board_follow_btn" data-un="${BoardUser.user_no }">
                                             <c:choose>
-                                                <c:when test="0">
+                                                <c:when test="${curBoard.board_follow != 0}">
                                                     <span>팔로우 취소</span>
                                                 </c:when>
                                                 <c:otherwise>
