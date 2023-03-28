@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>pacebook</title>
 <link rel="stylesheet" href="/css/profile.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 <script>
 	window.onload = function(){// 페이지가 로딩한 후 실행한 메소드
 		init();
@@ -28,7 +29,7 @@
 		let blackLayer = document.querySelector('.blackLayer');
 		let popup = document.querySelector('.detail_popup');
 
-		profile.addEventListener('click',function(e){
+			profile.addEventListener('click',function(e){
 
 			e.stopPropagation();
 
@@ -55,6 +56,7 @@
 		})
 	}	
 </script>
+
 </head>
 
 
@@ -204,10 +206,31 @@
 			</div>
 		</div>
 	</div>
-
-
+   
 	<div class="detail_popup">
 		<div id="content_show_wrap">
+            <div id="content_click_wrap">
+                <div class="sect01">
+                    <div class="line-box">
+                      <span class="line-01"></span>
+                      <span class="line-02"></span>
+                    </div>
+                  </div>
+                  <div class="right-button">
+                    <div dlass="right">
+                        <div id="right-buttons" >
+                            <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="left-button">
+                    <div dlass="left">
+                        <div id="left-buttons" >
+                            <i class="bi bi-chevron-left"></i>
+                        </div>
+                    </div>
+                  </div>
+            <div id="content_modal_wrap">
 			<div id="image_show_wrap">
 				<img id='img_show_wrap' src="/${BoardUser.user_profile }" >
 			</div>
@@ -329,11 +352,10 @@
 					</div>
 				</div>
 			</div>
-
-		</div>
+        </div>
 
 	</div>
-
+</div>
 </body>
 
 </html>

@@ -98,7 +98,7 @@
 	<select id="follow1" parameterType='java.util.HashMap' resultType='PaceUserVO'>
 		select *
 		from follow_list
-		where user_no = #{user_no}
+		where user_no = #{user_no} AND follow_u_no = #{buser_no}
 	</select>
 	<delete id="follow2" parameterType='java.util.HashMap'>
 		delete 
@@ -153,19 +153,20 @@
 	
 	
 	<select id='rNum1' resultType='int'>
-		select max(rownum)
-		from user_info
+		SELECT max(rownum)
+		FROM user_info i LEFT OUTER JOIN board b ON (i.user_no=b.user_no)
+
 	</select>
-	<select id='rNum2' parameterType='java.util.HashMap' resultType='PaceUserVO'>
+	<select id='rNum2' parameterType='java.util.HashMap' resultType='java.util.HashMap'>
 		
-		select *
-		from
-		(
-			select rownum as rnum, ui.*
-			from user_info ui
-		)
-		where rnum = #{a}
-		or rnum = #{b}
+	SELECT *
+	FROM
+	(
+	SELECT rownum AS rnum, i.user_no, user_id, user_profile,board_url
+	FROM user_info i LEFT OUTER JOIN board b ON (i.user_no=b.user_no)
+	)
+	WHERE rnum = #{a}
+	OR rnum = #{b}
 	</select>
 	
 	

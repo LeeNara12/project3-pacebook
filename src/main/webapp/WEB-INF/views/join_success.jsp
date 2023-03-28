@@ -46,23 +46,22 @@
                     <div class="other_user">
                         <div class="user_section">
                             <div class="bname">
-                                <p><b>${puvoList.get(0).getUser_id()}</b></p>
+                                <p><b>${map1.USER_ID}</b></p>
                             </div>
-                            <div class="src">
-                              <img src="${puvoList.get(0).getUser_profile() }"
-                                alt="">
+                            <div class="porfile">
+                              	<img src="/${map1.USER_PROFILE}" alt="">
                             </div>
                         </div>
                         <div class="contact_section">
                             <!-- <img src="https://i.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U"
                                 alt=""> -->
                             <c:choose>
-                            <c:when test="${empty pbvoList1.get(0).getBoard_url() }">
-                            <img src="/image/logo.png"
+                            <c:when test="/${map1.USER_URl}">
+                            <img src="${map1.USER_PROFILE}"
                                 alt="">
                             </c:when>
                             <c:otherwise>
-                            <img src="${pbvoList1.get(0).getBoard_url()}"
+                            <img src="${map1.USER_PROFILE}"
                                 alt="">
                             </c:otherwise>
                             </c:choose>
@@ -86,12 +85,12 @@
                         <div class="other_user">
                             <div class="user_section">
                                 <div class="bname1">
-                                    <p><b>${puvoList.get(1).getUser_id()}</b></p>
+                                    <p><b>${map2.USER_ID}</b></p>
                                 </div>
                                 <div class="src1">
 <!--                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7yWNG_boOH4cgRzFeABhwl5JCQ3qdre4AcA&usqp=CAU" -->
 <!--                                         alt=""> -->
-										<img src="${puvoList.get(1).getUser_profile() }">
+										<img src=" /${map2.USER_PROFILE}">
                                 </div>
                             </div>
                             <div class="contact_section">
@@ -119,7 +118,7 @@
                             </c:choose>
                             </div>
                             <div class="bottom_section">
-                           	 <h1>${pl.user_id}</h1>
+                           	 
                                 <a href="/pacebook/main" class="follow">팔로우</a>
                             </div>
                         </div>

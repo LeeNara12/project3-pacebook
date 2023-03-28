@@ -240,7 +240,7 @@ window.onload = function () {
                         xhr.onload = function(){
                             let data = JSON.parse(xhr.response);
                             data.forEach( ucmc => {
-                                cmComment_html = "<li id='c_comment'>"
+                                let cmComment_html = "<li id='c_comment'>"
                                 + "<span id='c_commet_arrow'>└</span>"
                                 + "<div id='board_comment_profile' class='profile_div'>"
                                 + "    <img class='profile' src='/"+ucmc.paceUserVO.user_profile+"'>"
@@ -286,7 +286,7 @@ window.onload = function () {
                                 + "    </div>"
                                 + "</div>"
                                 + "</li>";
-                                e.target.offsetParent.querySelector("#c_comment_list").innerHTML += cmComment_html;
+                                e.target.parentElement.parentElement.parentElement.parentElement.nextElementSibling.innerHTML += cmComment_html;
                             })
                             showMoreBtn();
                             showMoreBtn2();
@@ -393,24 +393,31 @@ window.onload = function () {
         followBtns.forEach((btn) =>{
             btn.addEventListener("click", function(){
                 let xhr = new XMLHttpRequest();
-                let userNo = btn.getAttribute("data-un");
-                xhr.onreadystatechange = function(){
-                    if(xhr.readyState == xhr.DONE){
-                        if(xhr.status === 200 || xhr.status === 201){
-                            let data = xhr.response;
-                            let add = data.querySelector("#pl");
-                            document.querySelector("#profile_list").appendChild(add);
-                            btn.parentElement.remove();
-                            oneTime = false;
-                            pagingAfter();
-                        } else {
-                            console.error(xhr.response);
-                        }
-                    }
+                let userNo = { user_no : btn.getAttribute("data-un")};
+                xhr.open("post", "/pacebook/follow");
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.send(JSON.stringify(userNo));
+                xhr.onload = () => {
+                    let data = JSON.parse(xhr.response);
+                    console.log(data);
+                    let pl_html = "<li id='pl' data-un='"+data.user_no+"'>"
+                    + "<div class='friend_profile_outline1'>"
+                    + "    <a href='/pacebook/profile?user_no="+data.user_no+"' class='friend_profile_a'>"
+                    + "           <div class='friend_profile_outline2'>"
+                    + "            <div id='friend_profile' class='profile_div'>"
+                    + "                <img class='profile' src='/"+data.user_profile+"'>"
+                    + "             </div>"
+                    + "        </div>"
+                    + "    </a>"
+                    + "   </div>"
+                    + "<div id='friend_profile_name'>"
+                    + "    <span>"+data.user_name+"</span>"
+                    + "</div>"
+                    + "</li>"
+                    document.querySelector("#profile_list").innerHTML += pl_html;
+                    btn.parentElement.remove();
                 }
-                xhr.open("get", "/project2/pacebook/follow?user_no="+userNo);
-                xhr.send();
-                xhr.responseType = "document";
             })
         })
     }
@@ -590,20 +597,77 @@ window.onload = function () {
         let cb = document.querySelectorAll("#comment_btn");
         cb.forEach( btn => {
             btn.addEventListener("click", e => {
-                let content = { content: e.target.previousElementSibling.value};
                 let no = e.target.getAttribute("data-no");
+                let content = { content: e.target.previousElementSibling.value
+                                , no: no}
                 let xhr = new XMLHttpRequest();
-                let url = "/pacebook/"+e.target.getAttribute("data-url")+"?no="+no;
-                xhr.open("POST", url);
+                let url = "/pacebook/"+e.target.getAttribute("data-url");
+                xhr.open("post", url);
                 xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(content);
-                xhr.onload = function() {
-                    showComment();
+                xhr.send(JSON.stringify(content));
+                xhr.onload = () => {
+                    if(url.indexOf("bcomment") != -1){
+                        if(e.target.parentElement.parentElement.querySelector(".show_comment").innerHTML == "댓글 달기"){
+                            //댓글이 없는 상태에서 댓글을 달았을 때
+                            e.target.parentElement.parentElement.querySelector(".show_comment").innerHTML = "댓글 1개 모두보기";
+                            e.target.parentElement.parentElement.querySelector(".show_comment").click();
+                            e.target.previousElementSibling.value = "";
+                        } else {
+                            //comment_list가 열려있지 않은 상태에서 댓글 달았을 때
+    
+                            if(e.target.parentElement.parentElement.querySelector(".show_comment").innerHTML.indexOf("닫기") != -1){
+                                //comment_list가 열려있는 상태에서 댓글을 달았을 때
+                                e.target.parentElement.parentElement.querySelector(".show_comment").click();
+                            }
+    
+                            let text = e.target.parentElement.parentElement.querySelector(".show_comment").innerHTML;
+                            let cn = Number(text.substring(text.indexOf("댓글")+2, text.indexOf("개")))+1;
+                            let newText = e.target.parentElement.parentElement.querySelector(".show_comment").innerHTML = "댓글 "+cn+"개 모두보기";
+                            let cmbObject = {no, bftext: newText};
+                            cmbArrayB = cmbArrayB.filter(e => e.number == no);
+                            cmbArrayB.push(cmbObject);
+                            e.target.parentElement.parentElement.querySelector(".show_comment").click();
+                            e.target.previousElementSibling.value = "";
+                        }
+                    } else if(url.indexOf("ccomment") != -1) {
+                        debugger
+                        let comments = e.target.parentElement.parentElement.querySelectorAll("#comment");
+                        comments.forEach( cc => {
+                            if(cc.querySelector("#c_comment_btn").getAttribute("data-con") == no){
+                                if(cc.querySelector("#c_comment_btn").innerHTML == "답글달기"){
+                                    //답글이 없는 상태에서 댓글을 달았을 때
+                                    cc.querySelector("#c_comment_btn").innerHTML = "답글 1개 더보기";
+                                    cc.querySelector("#c_comment_btn").click();
+                                    e.target.previousElementSibling.value = "";
+                                } else {
+                                    //c_comment_list가 열려있지 않은 상태에서 답글 달았을 때
+            
+                                    if(cc.querySelector("#c_comment_btn").innerHTML.indexOf("닫기") != -1){
+                                        //c_comment_list가 열려있는 상태에서 답글을 달았을 때
+                                        cc.querySelector("#c_comment_btn").click();
+                                    }
+            
+                                    let text = cc.querySelector("#c_comment_btn").innerHTML;
+                                    let cn = Number(text.substring(text.indexOf("답글")+2, text.indexOf("개")))+1;
+                                    let newText = cc.querySelector("#c_comment_btn").innerHTML = "답글 "+cn+"개 더보기";
+                                    let cmbObject = {no, bftext: newText};
+                                    cmbArrayC = cmbArrayC.filter(e => e.number == no);
+                                    cmbArrayC.push(cmbObject);
+                                    cc.querySelector("#c_comment_btn").click();
+                                    e.target.previousElementSibling.value = "";
+                                }
+                            }
+                        })
+                    }
                 }
             })
         })
     }
 
+
+    
+    
+    
     function pagingAfter(){
         showMoreBtn();
         showMoreBtn2();
@@ -614,6 +678,34 @@ window.onload = function () {
         showCmComment();
         friendFollow();
         commentText();
+        
     }
     pagingAfter();
 }
+    //게시글 이미지 여러개 좌우로 넘기는 이벤트
+            //이미지 하나씩 보는 이벤트
+     
+
+        function fnRight() {
+            console.log('right 들어감');
+            console.log($('#flex_image'));
+            $("#flex_image").animate({ "margin-left": "-485.98px"}, 300, function () {
+                $("#flex_image").css({ "margin-left": "0px" });
+                $("#flex_image img:first-child").insertAfter("#flex_image img:last-child");
+               
+            });
+
+        };
+
+        function fnLeft() {
+            console.log('left 들어감');
+            console.log($('#flex_image'));
+            $("#flex_image").css({ "margin-left": "-485.98px" });
+            $("#flex_image img:last-child").insertBefore("#flex_image img:first-child");
+            // 옮기기
+            $("#flex_image").animate({ "margin-left": "0"}, 300, function () {
+                // $("#images").css({ "margin-left": "479.61px" });
+               
+               
+            });
+        }

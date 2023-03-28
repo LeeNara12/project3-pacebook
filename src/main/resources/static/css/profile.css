@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-body {
+   body {
    /* margin: 0; */
    
 }
@@ -252,15 +252,15 @@ input {
 
 /* 상세페이지 */
 #content_show_wrap{
-    width: 90%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     border: 1px solid red;
     position: fixed;
-    top: 10%;
-    left: 5%;
+    top: 0%;
+    left: 0%;
     z-index: 999;
     display: flex;
-    
+    background-color: #808080a6;
 }
 #image_show_wrap{
     border: 1px solid blue;
@@ -508,4 +508,134 @@ input {
 }
 .detail_popup{
 	display: none;
+}
+#content_modal_wrap{
+    width: 90%;
+    height: 80%;
+    border: 1px solid red;
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    z-index: 999;
+    display: flex;
+}
+#content_click_wrap{
+    width: 96%;
+    height: 90%;
+    border: 1px solid red;
+    position: absolute;
+    top: 6%;
+    left: 2%;
+    z-index: 999;
+    display: flex;
+}
+.sect01 {
+  position: relative;
+  width: 64px; /* X 사이즈 */
+  height: 64px; /* X 세로 중앙 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.sect01 .line-box {
+    position: absolute;
+    top: 16%;
+    left: 1550%;
+    transform: translate(-50%, -50%);
+    width: 48%;
+    height: 48%;
+}
+
+.sect01 .line-box > span {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+}
+
+.sect01 .line-01 {
+  transform: rotate(135deg) translateX(0%);
+}
+
+.sect01 .line-02 {
+  transform: rotate(45deg) translateX(0%);
+}
+.right-button {
+  position: relative;
+  width: 64px; /* X 사이즈 */
+  height: 64px; /* X 세로 중앙 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.right {
+    position: absolute;
+    top: 16%;
+    left: 906%;
+    transform: translate(-50%, -50%);
+    width: 48%;
+    height: 48%;
+}
+
+#right-buttons {
+    position: fixed;
+    top: 50%;
+    width: 4%;
+    height: 6%;
+    background-color: silver;
+    margin-left: 48%;
+    font-size: 30px;
+    border-radius: 50%;
+}
+.left-button {
+  position: relative;
+  width: 64px; /* X 사이즈 */
+  height: 64px; /* X 세로 중앙 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.left {
+    position: absolute;
+    top: 16%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 48%;
+    height: 48%;
+}
+
+#left-buttons {
+    position: fixed;
+    top: 50%;
+    right: 13.5%;
+    width: 4%;
+    height: 6%;
+    background-color: silver;
+    font-size: 30px;
+    border-radius: 50%;
+    margin-right: 82%;
+}
+.bi bi-chevron-right{
+margin: 0%;
+}
+.bi bi-chevron-left{
+    margin-left: 0%;
+}
+.bi::before, [class^="bi-"]::before, [class*=" bi-"]::before {
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 0;
+    vertical-align: -0.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.bi-chevron-left::before {
+    content: "\f284";
+    margin: 16%;
+}
+.bi-chevron-right::before {
+    content: "\f285";
+    margin-left: 24%;
 }

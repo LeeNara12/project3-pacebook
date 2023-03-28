@@ -19,7 +19,7 @@ public interface User_infoDAO {
 	public void follow(int user_no, int buser_no);
 	public boolean isFollow(int user_no, int buser_no);
 	public List<PaceUserVO> notFollowUsers(int user_no, int pageNum);
-	public List<PaceUserVO> rNum();
+	public List rNum();
 	public List<PaceBoardVO> rFriend(int user_no);
 	
 	

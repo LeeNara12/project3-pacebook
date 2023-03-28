@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.spring.pace.Algorithm.Time;
 import com.spring.pace.Service.BoardService;
 import com.spring.pace.Service.CommentService;
 import com.spring.pace.Service.User_infoService;
 import com.spring.pace.VO.PaceBoardVO;
+import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceUBVO;
 import com.spring.pace.VO.PaceUCVO;
 import com.spring.pace.VO.PaceUCmCVO;
@@ -50,6 +53,8 @@ public class PaceBookController{
 		return "login";
 	}
 	
+	
+	////1.
 	@RequestMapping("/board_page")
 	public String board_page(
 			HttpServletRequest request
@@ -71,14 +76,21 @@ public class PaceBookController{
 		return "board";
 	}
 	
+	
+	
 	@RequestMapping("/board")
 	public String board(
 			@ModelAttribute PaceBoardVO pbvo,
 			HttpServletRequest request
 			) {
+		
+		System.out.println("보드작성 메소드 실행");
+		
 		HttpSession se = request.getSession();//세션 생성 및 가져오기
 		int user_no = (int) se.getAttribute("user_no");//세션에 유저넘버 값을 넣어줌 
 		bService.createBoard(user_no, pbvo);// dao의 createBoard메소드에 유저넘버랑 내용을 넘김//DB에 게시글 내용 저장
+		
+		System.out.println("보드작성 메소드 실행 ==> 메인으로 이동 중 ");
 		return "main";
 	}
 	
@@ -90,28 +102,30 @@ public class PaceBookController{
 		return "main";
 	}
 	
-	@RequestMapping(value="/bcomment", method= {RequestMethod.POST})
+	@RequestMapping(value="/bcomment")
+	@ResponseBody
 	public void bComment(
-			@RequestParam("no") int board_no,
-			@RequestBody String comment_content,
+			@RequestBody ObjectNode obj,
 			HttpServletRequest request
 			) {
-		System.out.println();
+		String comment_content = obj.get("content").asText();
+		int board_no = obj.get("no").asInt();
         HttpSession se = request.getSession();
         int user_no = (int)se.getAttribute("user_no");
         cService.createComment(user_no, board_no, comment_content);
 	}
 	
 	@RequestMapping("/ccomment")
-	public String cComment(
+	@ResponseBody
+	public void cComment(
 			HttpServletRequest request,
-			@RequestBody String content,
-			@RequestParam("no") int comment_no
+			@RequestBody ObjectNode obj
 			) {
+		String cmcomment_content = obj.get("content").asText();
+		int comment_no = obj.get("no").asInt();
 		HttpSession se = request.getSession();
 	    int user_no = (int)se.getAttribute("user_no");
-	    cService.createCmComment(user_no, comment_no, content);
-	    return "/main";
+	    cService.createCmComment(user_no, comment_no, cmcomment_content);
 	}
 	
 	@RequestMapping("/del_comment")
@@ -146,15 +160,20 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("user_no") int user_no
 			) {
+		System.out.println("프로필페이지 진입");
+		System.out.println("@RequestParam user_no + "+user_no);
+		
 		HttpSession se = request.getSession();
 		PaceUserVO vo = uService.getUserInfo(user_no);
-		request.setAttribute("vo",vo);
 		List<PaceBoardVO> boardList = bService.myBoard(user_no);
-		request.setAttribute("boardList", boardList);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
-		request.setAttribute("followList", followList);
 		List<PaceUserVO> followerList = uService.getFollowerList(user_no);
+		
+		request.setAttribute("vo",vo);
+		request.setAttribute("boardList", boardList);
+		request.setAttribute("followList", followList);
 		request.setAttribute("followerList", followerList);
+		
 		int user_no1 = (int)se.getAttribute("user_no");
 		PaceUserVO vo1 = uService.getUserInfo(user_no1);
 		se.setAttribute("vo1", vo1);
@@ -190,17 +209,17 @@ public class PaceBookController{
 	}
 	
 	@RequestMapping("/follow")
-	public String follow(
+	@ResponseBody
+	public PaceUserVO follow(
 			HttpServletRequest request,
-			@RequestParam("user_no") int buser_no
+			@RequestBody ObjectNode obj
 			) {
+		int buser_no = obj.get("user_no").asInt();
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");
 		uService.follow(user_no, buser_no);
-		List<PaceUserVO> followList = new ArrayList<PaceUserVO>();
-		followList.add(uService.getUserInfo(buser_no));
-		request.setAttribute("followList", followList);
-		return "main";
+		PaceUserVO puvo = uService.getUserInfo(buser_no);
+		return puvo;
 	}
 	
 	@RequestMapping(value="/moreboard", method= {RequestMethod.POST})

@@ -6,6 +6,7 @@
     import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +17,8 @@
     <title>pacebook</title>
     <link rel="stylesheet" href="/css/main.css">
     <script type="text/javascript" src="/script/main.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -104,7 +107,7 @@
                         </a>
                     </li>
                     <li id="set_btn" class="side_btn">
-                        <a href="/pacebook/setting" class="side_atag">
+                        <a href="/pacebook/setting_page" class="side_atag">
                             <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                                 <path
@@ -206,9 +209,20 @@
                                     </button>
                                 </div>
                             </div>
+                            
+                                <!-- ----------------------여기에다 다운받은 이미지 삽입-------------------------- -->
                             <div id="board_image">
-                                <img class="board_image" src="${curBoard.board_url }">
+                                <div id="left" onclick="fnLeft()"><i class="bi bi-chevron-left"></i></div>
+                                    <div id="flex_image">
+                                        <img class="board_image" src="">
+                                        <img class="board_image" src="">
+                                        <img class="board_image" src="">
+
+                                    </div>
+                    
+                                <div id="right" onclick="fnRight()"><i class="bi bi-chevron-right"></i></div>
                             </div>
+                            
                             <div id="board_tool">
                                 <div id="board_tool_left">
                                     <button id="board_like_btn" class="board_btn">
@@ -390,7 +404,7 @@
                                 </div>
                                 <div id="board_comment_box">
                                     <textarea id="board_comment" name="content"></textarea>
-                                    <button id="comment_btn" data-url="bcomment" data-no="${board.board_no }">게시</button>
+                                    <button id="comment_btn" data-url="bcomment" data-no="${curBoard.board_no }">게시</button>
                                 </div>
                             </div>
                         </li>
