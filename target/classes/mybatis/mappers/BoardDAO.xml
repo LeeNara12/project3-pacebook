@@ -14,6 +14,7 @@
 		<result property="board_like" column="board_like"/>
 		<result property="board_modify_time" column="board_modify_time"/>
 		<result property="board_comment_cnt" column="board_comment_cnt"/>
+		<result property="board_follow" column="board_follow"/>
 	</resultMap>
 	<resultMap type="PaceUserVO" id="rmPaceUserVO">
 		<result property="user_no" column="user_no"/>
@@ -29,23 +30,40 @@
 		<result property="user_board_oc" column="user_board_oc"/>
 		<result property="user_sleep" column="user_sleep"/>
 	</resultMap>
+	<resultMap type="FileListVO" id="rmFileListVO">
+		<result property='user_no' column='user_no'/>
+		<result property='board_no' column='board_no'/>
+		<result property='file_image' column='file_image'/>
+	</resultMap>
+	
+	
 	<resultMap type="PaceUBVO" id="rmPaceUBVO">
 		<collection property="paceUserVO" resultMap="rmPaceUserVO"/>
 		<collection property="paceBoardVO" resultMap="rmPaceBoardVO"/>
+		<collection property="fileListVO" resultMap="rmFileListVO"/>
 	</resultMap>
 	
 	<insert id="insertBoard" parameterType="java.util.HashMap">
-		insert into board
-      	values(seq_board.nextval, current_date, 0,
-      			 #{pbvo.board_url}, #{user_no},
-      			 #{pbvo.board_like}, #{pbvo.board_modify_time},
-      			 #{pbvo.board_content})
+		insert into board(board_no, board_time, BOARD_CONTENT, USER_NO)
+		values(seq_board.nextval, current_date, #{pbvo.board_content}, #{user_no})
 	</insert>
+	<select id='selectBoard_no' resultType='int'>
+		SELECT max(board_no)
+		FROM board
+	</select>
+	<insert id='insertFileList' parameterType='FileListVO'>
+		insert into file_list(user_no, board_no, file_image)
+		values(#{user_no}, #{board_no}, #{file_image})
+	</insert>
+	<select id='selectFileList' parameterType='FileListVO' resultType='String'>
+		select file_image
+		from file_list
+		where user_no = #{user_no}
+		and board_no = #{board_no}
+	</select>
 	
-<!-- 	다운로드 업로드로 파일을 가져오는 방법 
-	<insert id='insertBoard2' parameterType='' >
 	
-	</insert> -->
+
 	
 	
 	<delete id="deleteBoardComment" parameterType="int">
@@ -57,45 +75,74 @@
 		delete from board
 		where board_no = #{_parameter}
 	</delete>
-	<select id="selectBoard" parameterType="int" resultMap="rmPaceUBVO">
-		SELECT *
-		from(
-			SELECT * FROM(
-						SELECT
-							rownum AS rn,
-							board_no,
-							board_time,
-							board_modify,
-							board_content,
-							board_url,
-							user_no,
-							board_like,
-							board_modify_time,
-							board_comment_cnt
-						from(
-							SELECT 
-								bb.board_no,
+	<select id="selectBoard" parameterType="java.util.HashMap" resultMap="rmPaceUBVO">
+		SELECT * 
+		FROM (
+			SELECT 
+				RN,
+				BOARD_NO,
+				BOARD_TIME,
+				BOARD_MODIFY,
+				BOARD_CONTENT,
+				BOARD_URL,
+				a.USER_NO,
+				BOARD_LIKE,
+				BOARD_MODIFY_TIME,
+				CNT,
+				USER_ID,
+				USER_PW,
+				USER_TIME,
+				USER_NAME,
+				USER_EMAIL,
+				USER_PHONE,
+				USER_PROFILE,
+				USER_BIRTH,
+				USER_GENDER,
+				USER_BOARD_OC,
+				USER_SLEEP
+			from(
+				SELECT * FROM(
+							SELECT
+								rownum AS rn,
+								board_no,
 								board_time,
 								board_modify,
 								board_content,
 								board_url,
-								bb.user_no,
+								user_no,
 								board_like,
 								board_modify_time,
-								bc.board_comment_cnt
-							FROM board bb LEFT OUTER JOIN (
-												SELECT 
-													board.board_no,
-													count(*) AS board_comment_cnt
-												FROM board, board_comment
-												WHERE board.board_no = board_comment.board_no
-												GROUP BY board.board_no
-												) bc ON(bb.board_no = bc.board_no )
-							ORDER BY board_time DESC
+								cnt
+							from(
+								SELECT 
+									bb.board_no,
+									board_time,
+									board_modify,
+									board_content,
+									board_url,
+									bb.user_no,
+									board_like,
+									board_modify_time,
+									bc.cnt
+								FROM board bb LEFT OUTER JOIN (
+													SELECT 
+														board.board_no,
+														count(*) AS cnt
+													FROM board, board_comment
+													WHERE board.board_no = board_comment.board_no
+													GROUP BY board.board_no
+													) bc ON(bb.board_no = bc.board_no )
+								ORDER BY board_time DESC
+								)
 							)
-						)
-			WHERE rn BETWEEN (#{_parameter}-1)*5+1 AND #{_parameter}*5
-			) a JOIN USER_info b ON (a.user_no = b.user_no)
+				WHERE rn BETWEEN (#{pageNum}-1)*5+1 AND #{pageNum}*5
+					) a JOIN user_info b ON (a.user_no = b.user_no)
+			) sq LEFT OUTER JOIN (
+									SELECT 
+										follow_u_no AS board_follow
+									FROM follow_list
+									WHERE user_no = #{user_no}
+								)f ON (sq.user_no = f.board_follow)
 	</select>
 	<select id="selectSearch" parameterType="String" resultType="PaceBoardVO">
 		SELECT * 
@@ -123,11 +170,17 @@
 	</select>
 	
 	
-	<select id='myBoardList' parameterType='int' resultType='PaceBoardVO'>
-		SELECT user_no, board_no, board_url
-		FROM BOARD b 
-		WHERE user_no = #{_parameter}
-		ORDER BY BOARD_NO 
+	
+	<select id='myBoardList' parameterType='int' resultType='String'>
+		SELECT file_image 
+		FROM (
+			SELECT
+				board_no, file_image,
+				ROW_NUMBER() over(PARTITION BY board_no ORDER BY file_image) rnum
+			FROM file_list		
+			WHERE user_no = #{_parameter}
+		)
+		WHERE rnum = 1
 	</select>
 	
 	<select id='myFollowList' parameterType='int' resultType='PaceUserVO'>
@@ -139,6 +192,11 @@
 			FROM FOLLOW_LIST fl 
 			WHERE user_no = #{_parameter}
 		)		
+	</select>
+	<select id="selectBLL" parameterType="java.util.HashMap" resultType="int">
+		select *
+		from board_like_list
+		where board_no = #{board_no}
 	</select>
 	
 	

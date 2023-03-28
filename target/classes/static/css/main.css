@@ -335,7 +335,16 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
    
+}
+.margin_left1{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 24px;
+    align-items: center;
+    
 }
 
 #flex_image{
@@ -351,12 +360,12 @@ body{
 
 
 #left{
-    color: rgba(255, 255, 255, 0);
+    color: rgba(255, 0, 0, 0);
     position: absolute;
     z-index: 100;
     font-size: 80px;
-    right: 81%;
-    top: 29%;
+    right: 83%;
+    top: 10%;
     cursor: pointer;
 }
 
@@ -365,19 +374,19 @@ body{
     position: absolute;
     z-index: 100;
     font-size: 80px;
-    right: 81%;
-    top: 29%;
+    right: 83%;
+    top: 10%;
     cursor: pointer;
 }
 
 
 #right{
-    color: rgba(255, 255, 255, 0);
+	color: rgba(255, 0, 0, 0);
     position: absolute;
     z-index: 100;
     font-size: 80px;
-    left: 49%;
-    top: 29%;
+    left: 83%;
+    top: 10%;
     cursor: pointer;
 }
 
@@ -386,8 +395,8 @@ body{
     position: absolute;
     z-index: 100;
     font-size: 80px;
-    left: 49%;
-    top: 29%;
+    left: 83%;
+    top: 10%;
     cursor: pointer;
 }
 

@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -126,7 +127,7 @@
                 <div id="notice_top">
                     <div id="notice_top_text">
                         <span>알림</span>
-                    </div>
+    			    </div>
                     <button id="notice_close">
                         <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor"
                             viewBox="0 0 16 16">
@@ -170,6 +171,7 @@
             <div id="main_middle">
                 <div id="board_area">
                     <ul id="board_list">
+                     <!---------------------------------------------------------------------  -->
                     <c:forEach var="UB" items="${UBList }">
                     <c:set var="curBoard" value="${UB.paceBoardVO }"/>
                     <c:set var="BoardUser" value="${UB.paceUserVO }"/>
@@ -195,7 +197,7 @@
                                     <c:if test="${sessionScope.user_no != BoardUser.user_no}">
                                         <button class="board_menus board_follow_btn" data-un="${BoardUser.user_no }">
                                             <c:choose>
-                                                <c:when test="0">
+                                                <c:when test="${curBoard.board_follow != 0}">
                                                     <span>팔로우 취소</span>
                                                 </c:when>
                                                 <c:otherwise>
@@ -211,17 +213,24 @@
                             </div>
                             
                                 <!-- ----------------------여기에다 다운받은 이미지 삽입-------------------------- -->
-                            <div id="board_image">
-                                <div id="left" onclick="fnLeft()"><i class="bi bi-chevron-left"></i></div>
-                                    <div id="flex_image">
-                                        <img class="board_image" src="">
-                                        <img class="board_image" src="">
-                                        <img class="board_image" src="">
-
-                                    </div>
-                    
-                                <div id="right" onclick="fnRight()"><i class="bi bi-chevron-right"></i></div>
-                            </div>
+                                
+                                
+                                <div id="board_image">
+                                    <div id="left" onclick="fnLeft(this)"><i class="bi bi-chevron-left"></i></div>
+                                    <ul>
+                                    
+                                        <li class="margin_left1" id="images">
+                                        	<c:forEach var='fileName' items='${UB.file_image}'>
+                                            <img class="board_image" src='/download?imageFileName=${fileName}'>
+                                            </c:forEach>
+                                        </li>
+                                      
+                                    </ul>
+                                    <div id="right" onclick="fnRight(this)"><i class="bi bi-chevron-right"></i></div>
+                                </div>
+                                
+                                
+                                
                             
                             <div id="board_tool">
                                 <div id="board_tool_left">
@@ -409,6 +418,10 @@
                             </div>
                         </li>
                     </c:forEach>
+                    <!---------------------------------------------------------------------  -->
+                    
+                    
+                    
                     </ul>
                 </div>
                 <div id="friend_area">

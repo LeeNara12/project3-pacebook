@@ -356,42 +356,52 @@ window.onload = function () {
                 console.log("클릭");
                 let xhr = new XMLHttpRequest();
                 let userNo = btn.getAttribute("data-un");
-                xhr.onreadystatechange = function(){
-                    if(xhr.readyState == xhr.DONE){
-                        if(xhr.status === 200 || xhr.status === 201){
-                            let data = xhr.response;
-                            let add = data.querySelector("#pl");
-                            if(btn.querySelector("span").innerHTML == "팔로우"){
-                                document.querySelector("#profile_list").appendChild(add);
-                                btn.querySelector("span").innerHTML = "팔로우 취소"
-                            } else {
-                                let pl = document.querySelectorAll("#pl");
-                                pl.forEach(function(e){
-                                    if(e.getAttribute("data-un") == userNo){
-                                        e.remove();
-                                    }
-                                })
-                                btn.querySelector("span").innerHTML = "팔로우"
+                let obj = {user_no: userNo};
+                xhr.open("post", "/pacebook/follow");
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.send(JSON.stringify(obj));
+                xhr.onload = () => {
+                    let data = JSON.parse(xhr.response);
+                    console.log(data);
+                    if(btn.querySelector("span").innerHTML == "팔로우"){
+                        let pl_html = "<li id='pl' data-un='"+data.user_no+"'>"
+                        + "<div class='friend_profile_outline1'>"
+                        + "    <a href='/pacebook/profile?user_no="+data.user_no+"' class='friend_profile_a'>"
+                        + "           <div class='friend_profile_outline2'>"
+                        + "            <div id='friend_profile' class='profile_div'>"
+                        + "                <img class='profile' src='/"+data.user_profile+"'>"
+                        + "             </div>"
+                        + "        </div>"
+                        + "    </a>"
+                        + "   </div>"
+                        + "<div id='friend_profile_name'>"
+                        + "    <span>"+data.user_name+"</span>"
+                        + "</div>"
+                        + "</li>"
+                        document.querySelector("#profile_list").innerHTML += pl_html;
+                        btn.querySelector("span").innerHTML = "팔로우 취소"
+                    } else {
+                        let pl = document.querySelectorAll("#pl");
+                        pl.forEach(function(e){
+                            if(e.getAttribute("data-un") == userNo){
+                                e.remove();
                             }
-                            oneTime = false;
-                        } else {
-                            console.error(xhr.response);
-                        }
+                        })
+                        btn.querySelector("span").innerHTML = "팔로우"
                     }
+                    oneTime = false;
                 }
-                xhr.open("get", "/project2/pacebook/follow?user_no="+userNo);
-                xhr.send();
-                xhr.responseType = "document";
             })
         })
     }
     
+    let followBtns = document.querySelectorAll(".follow_btn");
     // 팔로우버튼
     function friendFollow(){
-        let followBtns = document.querySelectorAll(".follow_btn");
-    
+        
         followBtns.forEach((btn) =>{
-            btn.addEventListener("click", function(){
+            btn.addEventListener("click", () => {
                 let xhr = new XMLHttpRequest();
                 let userNo = { user_no : btn.getAttribute("data-un")};
                 xhr.open("post", "/pacebook/follow");
@@ -400,7 +410,6 @@ window.onload = function () {
                 xhr.send(JSON.stringify(userNo));
                 xhr.onload = () => {
                     let data = JSON.parse(xhr.response);
-                    console.log(data);
                     let pl_html = "<li id='pl' data-un='"+data.user_no+"'>"
                     + "<div class='friend_profile_outline1'>"
                     + "    <a href='/pacebook/profile?user_no="+data.user_no+"' class='friend_profile_a'>"
@@ -421,7 +430,7 @@ window.onload = function () {
             })
         })
     }
-
+    
 
     // 페이징
     let nextURL;
@@ -468,8 +477,17 @@ window.onload = function () {
                     + "        </svg>"
                     + "    </button>"
                     + "    <div id='board_menu_box'>"
-                    + "        <div id='board_menu_arrow'></div>"
-                    + "        <button class='board_menus'>"
+                    + "        <div id='board_menu_arrow'></div>";
+                    if(e.paceBoardVO.board_mine != 1){
+                        board_html += "<button class='board_menus board_follow_btn' data-un='"+e.paceUserVO.user_no+"'>";
+                        if(e.paceBoardVO.board_follow != 0){
+                            board_html += "                            <span>팔로우 취소</span>";
+                        } else {
+                            board_html += "                            <span>팔로우</span>";
+                        }
+                        board_html += "                </button>";
+                    }
+                    board_html += "        <button class='board_menus'>"
                     + "            게시글 상세보기"
                     + "        </button>"
                     + "    </div>"
@@ -543,7 +561,14 @@ window.onload = function () {
                 })
                 oneTime = false;
                 boardCount = document.querySelectorAll("#board").length; 
-                pagingAfter();
+                showMoreBtn();
+                showMoreBtn2();
+                boardMenu();
+                boardIcon();
+                boardFollow();
+                showComment();
+                showCmComment();
+                commentText();
             } else {
                 oneTime = true;
             }
@@ -583,6 +608,7 @@ window.onload = function () {
                     friend_html.querySelector("#friend > a").href = "/pacebook/profile?user_no="+e.user_no;//프로필 페이지 주소
                     friend_html.querySelector("#friend > button").setAttribute("data-un", e.user_no);
                     document.querySelector("#friend_list").append(friend_html);
+                    followBtns.append(friend_html.querySelector("#friend > button"));
                 })
                 twoTime = false;
                 friendCount = document.querySelectorAll("#friend").length; 
@@ -593,6 +619,7 @@ window.onload = function () {
         }
     }
 
+    //댓글,답글 입력
     function commentText(){
         let cb = document.querySelectorAll("#comment_btn");
         cb.forEach( btn => {
@@ -665,9 +692,6 @@ window.onload = function () {
     }
 
 
-    
-    
-    
     function pagingAfter(){
         showMoreBtn();
         showMoreBtn2();
@@ -676,9 +700,8 @@ window.onload = function () {
         boardFollow();
         showComment();
         showCmComment();
-        friendFollow();
         commentText();
-        
+        friendFollow();
     }
     pagingAfter();
 }
@@ -686,24 +709,30 @@ window.onload = function () {
             //이미지 하나씩 보는 이벤트
      
 
-        function fnRight() {
+        function fnRight(dom) {
+
+            let d = $(dom).parent().find('ul');
             console.log('right 들어감');
-            console.log($('#flex_image'));
-            $("#flex_image").animate({ "margin-left": "-485.98px"}, 300, function () {
-                $("#flex_image").css({ "margin-left": "0px" });
-                $("#flex_image img:first-child").insertAfter("#flex_image img:last-child");
+            console.log(d.find('#images'));
+           
+
+            d.find('#images').animate({ "margin-left": "-485.98px"}, 300, function () {
+                d.find('#images').css({ "margin-left": "0px" });
+                d.find("#images img:first-child").insertAfter(d.find("#images img:last-child"));
                
             });
 
         };
 
-        function fnLeft() {
+        function fnLeft(dom) {
+            let d = $(dom).parent().find('ul');
             console.log('left 들어감');
-            console.log($('#flex_image'));
-            $("#flex_image").css({ "margin-left": "-485.98px" });
-            $("#flex_image img:last-child").insertBefore("#flex_image img:first-child");
+            console.log($('#images'));
+
+            d.find("#images").css({ "margin-left": "-485.98px" });
+            d.find("#images img:last-child").insertBefore(d.find("#images img:first-child"));
             // 옮기기
-            $("#flex_image").animate({ "margin-left": "0"}, 300, function () {
+            d.find("#images").animate({ "margin-left": "0"}, 300, function () {
                 // $("#images").css({ "margin-left": "479.61px" });
                
                

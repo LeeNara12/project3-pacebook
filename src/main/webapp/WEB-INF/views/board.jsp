@@ -101,7 +101,7 @@
                     //file을 브라우저에 로드하고 가상의 주소 만들기
                     img.src = URL.createObjectURL(file);
                     img.style.width = '100%';
-                    img.style.width = '100%';
+                    /* img.style.width = '100%'; */
                     
                     //만들어놓은 이미지 태그에 넣기
                     document.querySelector('#images').appendChild(img);
@@ -247,7 +247,7 @@
                     <div id="right" onclick="fnRight()"><i class="bi bi-chevron-right"></i></div>
                 </div>
                 <div id="content_box">
-                    <textarea id="board_content" placeholder="내용을 입력해 주세요."></textarea>
+                    <textarea id="board_content" name='board_content' placeholder="내용을 입력해 주세요."></textarea>
                 </div>
             </div>
         </div>
@@ -264,7 +264,7 @@
                         <!-- 내 게시글 목록 -->
                         <c:forEach var='myBoardList' items='${myBoardList}'>
 	                     	<div id='my_board'>
-	                     		<img id='my_board_img' src='${myBoardList.board_url}'>
+	                     		<img id='my_board_img' src='/download?imageFileName=${myBoardList}'>
 	                     	</div>	                        
                         </c:forEach>
 

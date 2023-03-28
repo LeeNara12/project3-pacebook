@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.pace.VO.FileListVO;
 import com.spring.pace.VO.PaceBoardVO;
 import com.spring.pace.VO.PaceUBVO;
 import com.spring.pace.VO.PaceUserVO;
@@ -26,11 +27,34 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void createBoard(int user_no, PaceBoardVO pbvo) {//게시글 작성 메소드
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("user_no", user_no);
 		map.put("pbvo", pbvo);
 		int count = sqlSession.insert("BoardDAO.insertBoard", map);
 		System.out.println("추가된 게시물 갯수 : "+count);
 	}
+	
+	@Override
+	public int selectBoard_no() {
+		int board_no = sqlSession.selectOne("BoardDAO.selectBoard_no");
+		return board_no;
+	}
+	
+	@Override
+	public void uploadImage(FileListVO vo ) {
+		int count = sqlSession.insert("BoardDAO.insertFileList", vo);
+		System.out.println("업로드되는 이미지 갯수는 ? "+ count);
+	}
+	
+	
+	@Override
+	public List downloadImage(FileListVO vo) {
+		List list = sqlSession.selectList("BoardDAO.selectFileList",vo);
+		System.out.println("fileName 리스트 생성");
+		return list;
+	}
+	
+	
 	
 	@Override
 	public void delBoard(int board_no) {//게시물 삭제 메소드
@@ -39,9 +63,12 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<PaceUBVO> getBoard(int pageNum) {//게시물 가져오는 메소드
+	public List<PaceUBVO> getBoard(int user_no, int pageNum) {//게시물 가져오는 메소드
+		Map map = new HashMap();
+		map.put("user_no", user_no);
+		map.put("pageNum", pageNum);
 		List<PaceUBVO> list = new ArrayList<PaceUBVO>();
-		list = sqlSession.selectList("BoardDAO.selectBoard", pageNum);
+		list = sqlSession.selectList("BoardDAO.selectBoard", map);
 		return list;
 	}
 	
@@ -72,8 +99,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<PaceBoardVO> myBoardList(int user_no) {
-		List<PaceBoardVO> list = sqlSession.selectList("BoardDAO.myBoardList", user_no);
+	public List<String> myBoardList(int user_no) {
+		List<String> list = sqlSession.selectList("BoardDAO.myBoardList", user_no);
 		
 		return list;
 	}
@@ -83,6 +110,17 @@ public class BoardDAOImpl implements BoardDAO {
 		List<PaceUserVO> list = sqlSession.selectList("BoardDAO.myFollowList", user_no);
 		
 		return list;
+	}
+
+	@Override
+	public int boardLike(int user_no, int board_no) {
+		Map map = new HashMap();
+		map.put("user_no", user_no);
+		map.put("board_no", board_no);
+		sqlSession.selectOne("BoardDAO.selectBLL", map);
+		
+		int n = sqlSession.update("BoardDAO.updateBoardLike", board_no);
+		return 0;/////////////////////
 	}
 	
 	

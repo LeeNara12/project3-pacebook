@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.spring.pace.Algorithm.Time;
 import com.spring.pace.Service.BoardService;
 import com.spring.pace.Service.CommentService;
 import com.spring.pace.Service.User_infoService;
+import com.spring.pace.VO.FileListVO;
 import com.spring.pace.VO.PaceBoardVO;
-import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceUBVO;
 import com.spring.pace.VO.PaceUCVO;
 import com.spring.pace.VO.PaceUCmCVO;
@@ -65,7 +64,7 @@ public class PaceBookController{
 		PaceUserVO vo1 = uService.getUserInfo(user_no);
 		int followList_no = bService.followList_no(user_no);
 		int followerList_no = bService.followerList_no(user_no);
-		List<PaceBoardVO> myBoardList = bService.myBoardList(user_no);
+		List<String> myBoardList = bService.myBoardList(user_no);
 		List<PaceUserVO> myFollowList = bService.myFollowList(user_no);
 		
 		request.setAttribute("vo1", vo1);
@@ -73,7 +72,7 @@ public class PaceBookController{
 		request.setAttribute("followerList_no", followerList_no);
 		request.setAttribute("myBoardList", myBoardList);
 		request.setAttribute("myFollowList", myFollowList);
-		return "board";
+		return "/board";
 	}
 	
 	
@@ -86,13 +85,37 @@ public class PaceBookController{
 		
 		System.out.println("보드작성 메소드 실행");
 		
+		
 		HttpSession se = request.getSession();//세션 생성 및 가져오기
 		int user_no = (int) se.getAttribute("user_no");//세션에 유저넘버 값을 넣어줌 
+		System.out.println("게시글 작성 메소드 진입 "+user_no + "/// " + pbvo.getBoard_content());
 		bService.createBoard(user_no, pbvo);// dao의 createBoard메소드에 유저넘버랑 내용을 넘김//DB에 게시글 내용 저장
+		int board_no = bService.selectBoard_no();
 		
-		System.out.println("보드작성 메소드 실행 ==> 메인으로 이동 중 ");
-		return "main";
+		FileListVO vo = new FileListVO();
+		vo.setUser_no(user_no);
+		vo.setBoard_no(board_no);
+		System.out.println("board_no ==" +board_no);
+		
+		List<String> list = (List) request.getAttribute("fileList");
+		for(String str: list) {
+			vo.setFile_image(str);
+			bService.uploadImage(vo);
+		}
+		
+//		request.setAttribute("FileListVO", vo);
+		
+//		FileListVO vo1 = (FileListVO) request.getAttribute("FileListVO");
+//		List<String> list2 = bService.downloadImage(vo);
+//		request.setAttribute("fileList", list2);
+		
+		System.out.println("보드작성 메소드 실행 ==> main로 이동 중 ");
+		return "forward:/pacebook/main";
 	}
+	
+	
+	
+	
 	
 	@RequestMapping("/del_board")
 	public String delBoard(
@@ -150,7 +173,9 @@ public class PaceBookController{
 	public String getBoard(
 			HttpServletRequest request
 			) {
-		List<PaceUBVO> boardList = bService.getBoard(1);
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		List<PaceUBVO> boardList = bService.getBoard(user_no, 1);
 		request.setAttribute("boardList", boardList);
 		return "main";
 	}
@@ -201,12 +226,44 @@ public class PaceBookController{
 		se.setAttribute("puvo", puvo);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
-		List<PaceUBVO> UBList = bService.getBoard(1);
+
+		List<PaceUBVO> UBList = bService.getBoard(1,1);
+		
+		
+		
+		for(PaceUBVO ub : UBList) {
+			FileListVO vo = new FileListVO();
+			int board_no = ub.getPaceBoardVO().getBoard_no();
+			vo.setUser_no(user_no);
+			vo.setBoard_no(board_no);
+			List<String> list = bService.downloadImage(vo);
+			ub.setFile_image(list);
+			for(String str: list) {
+				System.out.println(str);
+			}
+			
+		}
+		
+//=======
+//		List<PaceUBVO> UBList = bService.getBoard(user_no, 1);
+//		for(PaceUBVO ub : UBList) {
+//			int boardUserNo = ub.getPaceBoardVO().getUser_no();
+//			if(boardUserNo == user_no) {
+//				ub.getPaceBoardVO().setBoard_mine(1);
+//			}
+//		}
+//>>>>>>> 069087f28957fb19372bda20224b820b0068e63a
 		request.setAttribute("UBList", UBList);
+		
+
+		
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, 1);
 		request.setAttribute("nfuList", nfuList);
 		return "main";
 	}
+	
+	
+	
 	
 	@RequestMapping("/follow")
 	@ResponseBody
@@ -225,13 +282,22 @@ public class PaceBookController{
 	@RequestMapping(value="/moreboard", method= {RequestMethod.POST})
 	@ResponseBody
 	public List<PaceUBVO> moreboard(
-			@RequestParam("pagenum") int pageNum
+			@RequestParam("pagenum") int pageNum,
+			HttpServletRequest request
 			) {
-		List<PaceUBVO> boardList = bService.getBoard(pageNum);
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		List<PaceUBVO> boardList = bService.getBoard(user_no, pageNum);
 		for(int i=0; i<boardList.size(); i++) {
 			Date boardTime = boardList.get(i).getPaceBoardVO().getBoard_time();
 			String bt = Time.calculateTime(boardTime);
 			boardList.get(i).getPaceBoardVO().setBoard_time_s(bt);
+		}
+		for(PaceUBVO ub : boardList) {
+			int boardUserNo = ub.getPaceBoardVO().getUser_no();
+			if(boardUserNo == user_no) {
+				ub.getPaceBoardVO().setBoard_mine(1);
+			}
 		}
 		return boardList;
 	}
@@ -242,6 +308,7 @@ public class PaceBookController{
 			HttpServletRequest request,
 			@RequestParam("pagenum") int pageNum
 			) {
+		System.out.println("pageNum : "+pageNum);
 		HttpSession se = request.getSession();
 		int user_no = (int)se.getAttribute("user_no");
 		List<PaceUserVO> nfuList = uService.notFollowUsers(user_no, pageNum);
@@ -282,5 +349,18 @@ public class PaceBookController{
 	public String settingPage() {
 		System.out.println("설정 페이지 실행");
 		return "setting";
+	}
+	
+	@RequestMapping("/boardLike")
+	@ResponseBody
+	public int boardLike(
+			@RequestBody ObjectNode obj,
+			HttpServletRequest request
+			) {
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		int board_no = obj.get("board_no").asInt();
+		int likeCnt = bService.boardLike(user_no, board_no); 
+		return likeCnt;
 	}
 }

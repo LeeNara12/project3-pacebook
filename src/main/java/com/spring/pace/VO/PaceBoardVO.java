@@ -1,6 +1,7 @@
 package com.spring.pace.VO;
 
 import java.sql.Date;
+import java.util.List;
 
 public class PaceBoardVO {
 	private int board_no; //게시판 번호
@@ -13,7 +14,8 @@ public class PaceBoardVO {
 	private Date board_modify_time;// 게시글 수정 시간 
 	private int board_comment_cnt;// 댓글 갯수
 	private String board_time_s;
-	
+	private int board_follow;
+	private int board_mine;
 	
 	public String getBoard_time_s() {
 		return board_time_s;
@@ -77,6 +79,18 @@ public class PaceBoardVO {
 	}
 	public void setBoard_comment_cnt(int board_comment_cnt) {
 		this.board_comment_cnt = board_comment_cnt;
+	}
+	public int getBoard_follow() {
+		return board_follow;
+	}
+	public void setBoard_follow(int board_follow) {
+		this.board_follow = board_follow;
+	}
+	public int getBoard_mine() {
+		return board_mine;
+	}
+	public void setBoard_mine(int board_is) {
+		this.board_mine = board_is;
 	}
 	
 }
