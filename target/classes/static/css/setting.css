@@ -209,18 +209,21 @@ input{
     padding-left: 15px;
 }
 .a1{
+  padding-bottom: 15px;
     border: 1px solid rgb(141, 141, 194);
     width: 98%;
-    height: 70px;
+    /*height: 70px;*/
     border-radius: 5px;
     padding-left: 15px;
+    padding-top: 15px;
 }
 .a2{
     border: 1px solid rgb(141, 141, 194);
     width: 98%;
-    height: 70px;
+    /* height: 390px; */
     border-radius: 5px;
     padding-left: 15px;
+    padding-bottom: 15px;
 }
 .a3 {
     border: 1px solid rgb(141, 141, 194);
@@ -451,6 +454,9 @@ input{
     color: white;
    
 }
+summary{
+        list-style: none;
+ }
 ::-webkit-scrollbar{
     width:10px;
 }
