@@ -54,6 +54,8 @@ public class PaceFilter extends HttpFilter implements Filter {
 						|| url.indexOf("/image") != -1
 						|| url.indexOf("/script") != -1
 						|| url.indexOf("/favicon.*") != -1
+						|| url.indexOf("/upload") != -1
+						|| url.indexOf("/download") != -1
 				) 	{
 
 				System.out.println(1);

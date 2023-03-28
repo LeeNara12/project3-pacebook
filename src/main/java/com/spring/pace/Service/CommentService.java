@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.pace.DAO.CommentDAOImpl;
+import com.spring.pace.DAO.CommentDAO;
 import com.spring.pace.VO.PaceCmCommentVO;
 import com.spring.pace.VO.PaceCommentVO;
 import com.spring.pace.VO.PaceUCVO;
@@ -15,7 +15,7 @@ import com.spring.pace.VO.PaceUCmCVO;
 public class CommentService {
 
 	@Autowired
-	CommentDAOImpl commentDAO;
+	CommentDAO commentDAO;
 	
 	public void createComment(int user_no, int board_no, String content) {
 		commentDAO.createComment(user_no, board_no, content);

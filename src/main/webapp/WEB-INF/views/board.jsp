@@ -101,7 +101,7 @@
                     //file을 브라우저에 로드하고 가상의 주소 만들기
                     img.src = URL.createObjectURL(file);
                     img.style.width = '100%';
-                    img.style.width = '100%';
+                    /* img.style.width = '100%'; */
                     
                     //만들어놓은 이미지 태그에 넣기
                     document.querySelector('#images').appendChild(img);
@@ -112,11 +112,7 @@
             })
 
             
-           
-
-
-
-
+            
 
 
 
@@ -124,7 +120,7 @@
 
 
 
-                //이미지 하나씩 보는 이벤트
+        //이미지 하나씩 보는 이벤트
         //479.61px
         // function fnSlide() {
         //     $("#images").animate({ "margin-left": "-479.61px"}, 300)
@@ -157,7 +153,8 @@
 </head>
 <body>
     <div class="blackLayer"></div>
-    <form action="/upload" method="post" enctype='mutipart/form-data'>
+    <!-- 2. -->
+    <form action="/upload" method="post" enctype='multipart/form-data'>
     <div id="top">
         <a href='/pacebook/main' class='a'><span id="logo">PACEBOOK</span></a>
         <div id="top_right">
@@ -167,7 +164,7 @@
                 </svg>
                 <a href='/pacebook/main' class='a'><span class='btn_text'>뒤로가기</span></a>
             </button>
-            <input type="file" style="display:none" id="input_file" multiple="multiple">
+            <input type="file" style="display:none" id="input_file" name='input_file' multiple="multiple">
             <button type="button" id="file_upload_btn" class="top_btn">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-folder2-open" viewBox="0 0 16 16">
                     <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/>
@@ -250,7 +247,7 @@
                     <div id="right" onclick="fnRight()"><i class="bi bi-chevron-right"></i></div>
                 </div>
                 <div id="content_box">
-                    <textarea id="board_content" placeholder="내용을 입력해 주세요."></textarea>
+                    <textarea id="board_content" name='board_content' placeholder="내용을 입력해 주세요."></textarea>
                 </div>
             </div>
         </div>
@@ -267,7 +264,7 @@
                         <!-- 내 게시글 목록 -->
                         <c:forEach var='myBoardList' items='${myBoardList}'>
 	                     	<div id='my_board'>
-	                     		<img id='my_board_img' src='${myBoardList.board_url}'>
+	                     		<img id='my_board_img' src='/download?imageFileName=${myBoardList}'>
 	                     	</div>	                        
                         </c:forEach>
 
