@@ -221,6 +221,7 @@
                                     
                                         <li class="margin_left1" id="images">
                                         	<c:forEach var='fileName' items='${UB.file_image}'>
+                                        	
                                             <img class="board_image" src='/download?imageFileName=${fileName}'>
                                             </c:forEach>
                                         </li>

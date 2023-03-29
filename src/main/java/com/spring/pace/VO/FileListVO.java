@@ -26,5 +26,9 @@ public class FileListVO {
 	public void setFile_image(String file_image) {
 		this.file_image = file_image;
 	}
+	@Override
+	public String toString() {
+		return "FileListVO [user_no=" + user_no + ", board_no=" + board_no + ", file_image=" + file_image + "]";
+	}
 
 }

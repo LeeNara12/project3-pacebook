@@ -91,6 +91,9 @@ public class PaceBookController{
 		int user_no = (int) se.getAttribute("user_no");//세션에 유저넘버 값을 넣어줌 
 		System.out.println("게시글 작성 메소드 진입 "+user_no + "/// " + pbvo.getBoard_content());
 		bService.createBoard(user_no, pbvo);// dao의 createBoard메소드에 유저넘버랑 내용을 넘김//DB에 게시글 내용 저장
+		
+		
+		
 		int board_no = bService.selectBoard_no();
 		
 		FileListVO vo = new FileListVO();
@@ -103,6 +106,7 @@ public class PaceBookController{
 			vo.setFile_image(str);
 			bService.uploadImage(vo);
 		}
+		
 		
 //		request.setAttribute("FileListVO", vo);
 		
@@ -266,7 +270,8 @@ public class PaceBookController{
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		request.setAttribute("followList", followList);
 
-		List<PaceUBVO> UBList = bService.getBoard(1,1);
+//		List<PaceUBVO> UBList = bService.getBoard(1,1);
+		List<PaceUBVO> UBList = bService.getBoard(user_no, 1);
 		
 		
 		
@@ -276,22 +281,22 @@ public class PaceBookController{
 			vo.setUser_no(user_no);
 			vo.setBoard_no(board_no);
 			List<String> list = bService.downloadImage(vo);
+			System.out.println(list);
 			ub.setFile_image(list);
 			for(String str: list) {
-				System.out.println(str);
+				System.out.println("str? "+str);
 			}
 			
 		}
 		
-//=======
-//		List<PaceUBVO> UBList = bService.getBoard(user_no, 1);
-//		for(PaceUBVO ub : UBList) {
-//			int boardUserNo = ub.getPaceBoardVO().getUser_no();
-//			if(boardUserNo == user_no) {
-//				ub.getPaceBoardVO().setBoard_mine(1);
-//			}
-//		}
-//>>>>>>> 069087f28957fb19372bda20224b820b0068e63a
+
+		for(PaceUBVO ub : UBList) {
+			int boardUserNo = ub.getPaceBoardVO().getUser_no();
+			if(boardUserNo == user_no) {
+				ub.getPaceBoardVO().setBoard_mine(1);
+			}
+		}
+
 		request.setAttribute("UBList", UBList);
 		
 

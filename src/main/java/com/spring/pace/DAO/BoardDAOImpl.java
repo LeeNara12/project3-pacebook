@@ -50,7 +50,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public List downloadImage(FileListVO vo) {
 		List list = sqlSession.selectList("BoardDAO.selectFileList",vo);
-		System.out.println("fileName 리스트 생성");
+		System.out.println("fileName 리스트 생성"+list.size()+vo);
 		return list;
 	}
 	

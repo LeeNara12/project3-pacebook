@@ -336,6 +336,7 @@ body{
     justify-content: center;
     align-items: center;
     position: relative;
+    flex-wrap: wrap;
    
 }
 .margin_left1{
@@ -360,44 +361,56 @@ body{
 
 
 #left{
-    color: rgba(255, 0, 0, 0);
+	color:  #f0f0f000;;
     position: absolute;
+    height: 100%;
     z-index: 100;
     font-size: 80px;
     right: 83%;
-    top: 10%;
+    top: 0%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 #left:hover{
-    color: white;
+	color: white;
     position: absolute;
+    height: 100%;
     z-index: 100;
     font-size: 80px;
     right: 83%;
-    top: 10%;
+    top: 0%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 
 #right{
-	color: rgba(255, 0, 0, 0);
-    position: absolute;
+	color:  #f0f0f000;;
+	position: absolute;
+	height: 100%;
     z-index: 100;
     font-size: 80px;
     left: 83%;
-    top: 10%;
+    top: 0%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 #right:hover{
-    color: white;
-    position: absolute;
+	color: white;
+	position: absolute;
+	height: 100%;
     z-index: 100;
     font-size: 80px;
     left: 83%;
-    top: 10%;
+    top: 0%;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 

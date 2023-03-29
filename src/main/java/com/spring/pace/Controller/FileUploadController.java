@@ -10,18 +10,26 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.spring.pace.Service.BoardService;
+import com.spring.pace.VO.FileListVO;
+
 
 
 @Controller
 public class FileUploadController {
 
+	@Autowired
+	BoardService bService;
+	
 	private static final String CURR_IMAGE_REPO_PATH = "D:\\spring\\image_repo";
 	
 	
@@ -42,6 +50,7 @@ public class FileUploadController {
 		
 		request.setAttribute("fileList", fileList);
 		
+
 		
 		return "forward:/pacebook/board";
 	}
