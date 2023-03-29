@@ -201,4 +201,33 @@
 	
 	
 	
+	<!-- 프로필 관련 메소드 -->
+	<select id="selectfileList" parameterType='int' resultType='FileListVO'>
+		SELECT file_image, board_no 
+		FROM (
+			SELECT
+				board_no,file_image,
+				ROW_NUMBER() over(PARTITION BY board_no ORDER BY file_image) rnum
+			FROM file_list		
+			WHERE user_no = 43
+		)
+		WHERE rnum = 1
+		
+	</select>
+	
+	
+	<select id="select_detail1" parameterType='FileListVO' resultType='java.util.HashMap'>
+		SELECT ui.USER_NO, user_id, USER_PROFILE, b.BOARD_NO  
+		FROM USER_INFO ui LEFT OUTER JOIN BOARD b ON (ui.user_no = b.user_no)
+		WHERE b.USER_NO = #{user_no}
+		AND b.BOARD_NO = #{board_no}
+	</select>
+	<select id='select_detail2' parameterType='int' resultType='FileListVO'>
+		SELECT *
+		FROM FILE_LIST fl 
+		WHERE board_no = #{_parameter}
+	</select>
+	
+	
+	
 </mapper>

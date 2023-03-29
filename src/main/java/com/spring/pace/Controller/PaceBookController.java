@@ -1,8 +1,9 @@
 package com.spring.pace.Controller;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -190,7 +191,8 @@ public class PaceBookController{
 		
 		HttpSession se = request.getSession();
 		PaceUserVO vo = uService.getUserInfo(user_no);
-		List<PaceBoardVO> boardList = bService.myBoard(user_no);
+//		List<PaceBoardVO> boardList = bService.myBoard(user_no);
+		List<FileListVO> boardList = bService.selectProfileImage(user_no);
 		List<PaceUserVO> followList = uService.getFollowList(user_no);
 		List<PaceUserVO> followerList = uService.getFollowerList(user_no);
 		
@@ -203,6 +205,43 @@ public class PaceBookController{
 		PaceUserVO vo1 = uService.getUserInfo(user_no1);
 		se.setAttribute("vo1", vo1);
 		return "profile";
+	}
+	
+	@RequestMapping(value = "/profile_ajax", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> profile_detail(
+			HttpServletRequest request,
+			@RequestParam("board_no") int board_no
+			) {
+		System.out.println("profile_ajax 진입 : board_no = "+board_no);
+		Map<String, Object> totalList = new HashMap<String, Object>(); 
+		
+		HttpSession se = request.getSession();
+		int user_no = (int)se.getAttribute("user_no");
+		System.out.println("user_no = "+user_no);
+		
+		FileListVO vo = new FileListVO();
+		vo.setBoard_no(board_no);
+		vo.setUser_no(user_no);
+		
+		System.out.println(vo.getBoard_no());
+		System.out.println(vo.getUser_no());
+		Map map= bService.select_detail1(vo);
+		List list = bService.select_detail2(board_no);
+		System.out.println(map);
+		System.out.println(list);
+		
+		
+		totalList.put("map", map);
+		totalList.put("list", list);
+		
+		
+		System.out.println("map.user_profile ? "+map.get("USER_PROFILE"));
+		System.out.println("map.user_id ? "+map.get("USER_ID"));
+		
+		System.out.println("list.file_image ? "+((FileListVO) list.get(0)).getFile_image());
+		
+		return totalList;
 	}
 	
 	@RequestMapping("/profilefollow")

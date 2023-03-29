@@ -29,10 +29,38 @@
 		let blackLayer = document.querySelector('.blackLayer');
 		let popup = document.querySelector('.detail_popup');
 
-			profile.addEventListener('click',function(e){
+		profile.addEventListener('click',function(e){
 
 			e.stopPropagation();
+			
+			let dom = e.target;
+			console.log(dom.dataset.board_no);
+			
+		    let xhr = new XMLHttpRequest();
+	        xhr.open("get", "/pacebook/profile_ajax?board_no="+dom.dataset.board_no); 
+	        xhr.send(); 
+	
+	        xhr.onload = function(/*a,b,c,d*/){
+	            console.log(xhr.responseText) // String
+	            let data = JSON.parse(xhr.responseText);
+	            console.log(data);
+	            console.log("유저프로필"+data.map.USER_PROFILE);
+	            console.log("유저아이디",data.map.USER_ID);
+	            
+	            console.log(data.list[0].file_image);
+	            
+	            let img_show_wrap = document.body.querySelector('#img_show_wrap');
+	            console.log(img_show_wrap);
+	            console.log(img_show_wrap.getAttribute('src'));
+	            img_show_wrap.setAttribute('src','/download?imageFileName='+data.list[0].file_image);
+	            console.log(img_show_wrap.getAttribute('src'));
+	            
+	         /*    let data1 = data[0];
+	            // data1["phone"]
+	            console.log(data1.phone) */
+	        } 
 
+			
 			let width1 = document.body.clientWidth;
 			let height1 = document.body.clientHeight; 
 
@@ -46,6 +74,8 @@
 			
 		})
 		
+		
+		
 		document.body.addEventListener('click',function(){
 			if(popup.style.display = "block"){
 
@@ -54,6 +84,17 @@
 			}
 
 		})
+		
+		
+		
+		let img = document.body.querySelector('#board_img')
+		img.addEventListener('click', function(e){
+			
+			
+		
+		})
+		
+		
 	}	
 </script>
 
@@ -194,9 +235,8 @@
 							<div>
 								<div class="contact_section">
 									<c:forEach var="board" items="${boardList }">
-										<img
-											style="width: 300px; height: 300px; border-radius: 30px;"
-											src="${board.board_url }" alt="">
+										<img id='board_img'style="width: 300px; height: 300px; border-radius: 30px;"
+											src="/download?imageFileName=${board.file_image }" data-board_no='${board.board_no}'>
 									</c:forEach>
 								</div>
 							</div>
@@ -207,7 +247,10 @@
 		</div>
 	</div>
    
+   
+   <!-- ----------------------------------------------------------------------------------------------------------------------- -->
 	<div class="detail_popup">
+	
 		<div id="content_show_wrap">
             <div id="content_click_wrap">
                 <div class="sect01">
@@ -232,17 +275,19 @@
                   </div>
             <div id="content_modal_wrap">
 			<div id="image_show_wrap">
-				<img id='img_show_wrap' src="/${BoardUser.user_profile }" >
+			<!-- ------------------------------------------------------------------------------------------ -->
+				<img id='img_show_wrap' src="" >
+			
 			</div>
 			<div id="comment_show_wrap">
 				<div id="comment_show_top">
 					<div id="board_top">
 						<div id="board_top_left">
 							<div id="board_profile" class="profile_div">
-								<img class="profile" src="/${BoardUser.user_profile }">
+								<img class="profile" src="/${map.user_profile}">
 							</div>
 							<div id="board_id">
-								${BoardUser.user_id }
+								${map.user_id}
 							</div>
 						</div>
 						<button id="board_menu" class="board_btn">

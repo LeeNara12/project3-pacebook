@@ -1,6 +1,7 @@
 package com.spring.pace.DAO;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.pace.VO.FileListVO;
 import com.spring.pace.VO.PaceBoardVO;
@@ -22,4 +23,10 @@ public interface BoardDAO {
 	public List<String> myBoardList(int user_no);
 	public List<PaceUserVO> myFollowList(int user_no);
 	public int boardLike(int user_no, int board_no);
+	
+	
+	//////프로필 관련 메소드///////////////
+	public List<FileListVO> selectProfileImage(int user_no);
+	public Map select_detail1(FileListVO vo);
+	public List<FileListVO> select_detail2(int board_no);
 }

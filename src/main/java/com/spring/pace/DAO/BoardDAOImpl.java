@@ -124,5 +124,21 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	
+	//	프로필 관련 메소드
+	@Override
+	public List<FileListVO> selectProfileImage(int user_no) {
+		List<FileListVO> list = sqlSession.selectList("BoardDAO.selectfileList", user_no);
+		return list;		
+	}
+	@Override
+	public Map select_detail1(FileListVO vo) {
+		Map map = sqlSession.selectOne("BoardDAO.select_detail1",vo);
+		return map;
+	}
+	@Override
+	public List<FileListVO> select_detail2(int board_no){
+		List<FileListVO> list = sqlSession.selectList("BoardDAO.select_detail2",board_no);
+		return list;
+	}
 	
 }
