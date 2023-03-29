@@ -1,6 +1,7 @@
 package com.spring.pace.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,5 +66,19 @@ public class BoardService {
 	public int boardLike(int user_no, int board_no){
 		return boardDAO.boardLike(user_no, board_no);
 	}
+	
+	////////프로필 메소드////////////////
+	public List<FileListVO> selectProfileImage(int user_no) {
+		return boardDAO.selectProfileImage(user_no);
+	}
+	public Map select_detail1(FileListVO vo) {
+		return boardDAO.select_detail1(vo);
+	}
+	public List<FileListVO> select_detail2(int board_no){
+		return boardDAO.select_detail2(board_no);
+	}
+	
+	
+	
 	
 }
